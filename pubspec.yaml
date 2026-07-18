@@ -39,10 +39,9 @@ dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/app_icon.jpeg"
-  # Optional: For Android 8.0+ adaptive icons
+  image_path: "assets/icons/app_icon.png"
   adaptive_icon_background: "#FFFFFF" 
-  adaptive_icon_foreground: "assets/icons/app_icon.jpeg"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
 
 dev_dependencies:
   flutter_test:
