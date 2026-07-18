@@ -6,7 +6,11 @@ class Spleshscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      body: Column(
+        children: [
+          Image.asset("assets/icons/spleshScreen_image.png")
+        ],
+      ),
     );
   }
 }
