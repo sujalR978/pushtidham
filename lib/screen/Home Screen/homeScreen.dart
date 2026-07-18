@@ -227,7 +227,77 @@ class _HomePageState extends State<HomePage> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
-                      if (item["title"] == "જપ માળા (Counter)") {
+                      if (item["title"] == "શ્રી મહાપ્રભુજી વિશે") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "કિર્તન") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "પાઠાવલી (ષોડશ ગ્રંથ)") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "ટિપ્પણી (Calendar)") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "જપ માળા (Counter)") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "૨૫૨ વૈષ્ણવની વાર્તા") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] =="અભિપ્રાય (Review)") {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => JapMalaScreen(),
+                          ),
+                        );
+                      }
+                       if (item["title"] == "સંપર્ક") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
