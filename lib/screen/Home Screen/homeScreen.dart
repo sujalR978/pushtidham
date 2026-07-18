@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pushtidham/Setting%20Screen%20/settingScreen.dart';
+import 'package:pushtidham/screen/Setting%20Screen%20/settingScreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,11 +13,12 @@ class _HomePageState extends State<HomePage> {
 
   // Grid Data matching your image items
   final List<Map<String, dynamic>> gridItems = [
-    {"title": "શ્રી મહાપ્રભુજી વિશે", "icon": Icons.person},
+    {"title": "શ્રી મહાપ્રભુજી વિશે", "icon": Icons.person, },
     {"title": "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી", "icon": Icons.grid_view},
     {"title": "કિર્તન", "icon": Icons.queue_music},
     {"title": "પાઠાવલી (ષોડશ ગ્રંથ)", "icon": Icons.menu_book},
     {"title": "ટિપ્પણી (Calendar)", "icon": Icons.calendar_month},
+    {"title": "જપ માળા (Counter)", "icon": Icons.ads_click,},
     {"title": "૮૪ વૈષ્ણવની વાર્તા", "icon": Icons.rate_review},
     {
       "title": "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)",
@@ -25,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     },
     {"title": "૨૫૨ વૈષ્ણવની વાર્તા", "icon": Icons.menu_book_outlined},
     {"title": "અભિપ્રાય (Review)", "icon": Icons.comment},
-    {"title": "સંપર્ક", "icon": Icons.contact_phone},
     {"title": "સંપર્ક", "icon": Icons.contact_phone},
   ];
 
@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
-                      // Handle section navigation
+                    
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
