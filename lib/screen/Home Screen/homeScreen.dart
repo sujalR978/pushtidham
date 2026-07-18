@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
 import 'package:pushtidham/screen/Setting%20Screen%20/settingScreen.dart';
@@ -235,73 +236,71 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       }
-                       if (item["title"] == "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી") {
+                      if (item["title"] == "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "કિર્તન") {
+                      if (item["title"] == "કિર્તન") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "પાઠાવલી (ષોડશ ગ્રંથ)") {
+                      if (item["title"] == "પાઠાવલી (ષોડશ ગ્રંથ)") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "ટિપ્પણી (Calendar)") {
+                      if (item["title"] == "ટિપ્પણી (Calendar)") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "જપ માળા (Counter)") {
+                      if (item["title"] == "જપ માળા (Counter)") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા") {
+                      if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)") {
+                      if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] == "૨૫૨ વૈષ્ણવની વાર્તા") {
+                      if (item["title"] == "૨૫૨ વૈષ્ણવની વાર્તા") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => JapMalaScreen(),
                           ),
                         );
                       }
-                       if (item["title"] =="અભિપ્રાય (Review)") {
+                      if (item["title"] == "અભિપ્રાય (Review)") {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ReviewPage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => ReviewPage()),
                         );
                       }
-                       if (item["title"] == "સંપર્ક") {
+                      if (item["title"] == "સંપર્ક") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
+                            builder: (context) => ContactPage(),
                           ),
                         );
                       }
