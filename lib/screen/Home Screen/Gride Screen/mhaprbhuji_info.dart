@@ -5,8 +5,7 @@ class AboutMahaprabhujiPage extends StatelessWidget {
 
   // Dummy list of high-quality image paths or network URLs for the gallery
   final List<String> galleryImages = const [
-    'https://upload.wikimedia.org/wikipedia/commons/4/4b/Vallabhacharya.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/512px-Om_symbol.svg.png',
+    'assets/images/spleshScreen_image.png',
   ];
 
   @override
@@ -28,7 +27,13 @@ class AboutMahaprabhujiPage extends StatelessWidget {
                 "શ્રી મહાપ્રભુજી વિશે",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  shadows: [Shadow(blurRadius: 10, color: Colors.black54, offset: Offset(0, 2))],
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10,
+                      color: Colors.black54,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
                 ),
               ),
               background: Stack(
@@ -43,7 +48,11 @@ class AboutMahaprabhujiPage extends StatelessWidget {
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
                             color: theme.colorScheme.primary.withOpacity(0.2),
-                            child: Icon(Icons.image, size: 50, color: theme.colorScheme.primary),
+                            child: Icon(
+                              Icons.image,
+                              size: 50,
+                              color: theme.colorScheme.primary,
+                            ),
                           );
                         },
                       );
@@ -102,21 +111,36 @@ class AboutMahaprabhujiPage extends StatelessWidget {
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: theme.colorScheme.primary.withOpacity(0.2)),
+                      side: BorderSide(
+                        color: theme.colorScheme.primary.withOpacity(0.2),
+                      ),
                     ),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       leading: CircleAvatar(
-                        backgroundColor: theme.colorScheme.primary.withOpacity(0.15),
-                        child: Icon(Icons.picture_as_pdf, color: theme.colorScheme.primary),
+                        backgroundColor: theme.colorScheme.primary.withOpacity(
+                          0.15,
+                        ),
+                        child: Icon(
+                          Icons.picture_as_pdf,
+                          color: theme.colorScheme.primary,
+                        ),
                       ),
                       title: const Text(
                         "PDF Resource Available",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                       subtitle: Text(
                         "Shri Mahaprabhuji Tavasmi",
-                        style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.8)),
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withOpacity(0.8),
+                        ),
                       ),
                       trailing: ElevatedButton.icon(
                         onPressed: () {
@@ -125,8 +149,13 @@ class AboutMahaprabhujiPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
                           foregroundColor: theme.colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                         icon: const Icon(Icons.download, size: 16),
                         label: const Text("Open"),
