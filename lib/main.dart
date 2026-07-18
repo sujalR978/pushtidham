@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/screen/spleshScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Spleshscreen());
 }
 
 class MyApp extends StatelessWidget {
