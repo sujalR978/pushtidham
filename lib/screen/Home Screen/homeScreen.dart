@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
+import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
 import 'package:pushtidham/screen/Setting%20Screen%20/settingScreen.dart';
 
@@ -232,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                       if (item["title"] == "શ્રી મહાપ્રભુજી વિશે") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
+                            builder: (context) => AboutMahaprabhujiPage(),
                           ),
                         );
                       }
