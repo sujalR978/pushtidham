@@ -3,7 +3,8 @@ import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dar
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
-import 'package:pushtidham/screen/Setting%20Screen%20/settingScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/galleryScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -126,7 +127,11 @@ class _HomePageState extends State<HomePage> {
                 "મીડિયા ગેલેરી (Gallery)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => GalleryPage()));
+              },
             ),
             ListTile(
               leading: Icon(
@@ -199,13 +204,21 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildQuickActionButton(context, Icons.collections, "ગેલેરી (Gallery)"),
+                _buildQuickActionButton(
+                  context,
+                  Icons.collections,
+                  "ગેલેરી (Gallery)",
+                ),
                 _buildQuickActionButton(
                   context,
                   Icons.cloud_download,
                   "ઓફલાઇન (Offline)",
                 ),
-                _buildQuickActionButton(context, Icons.edit_note, "નોંધો (Notes)"),
+                _buildQuickActionButton(
+                  context,
+                  Icons.edit_note,
+                  "નોંધો (Notes)",
+                ),
               ],
             ),
           ),
