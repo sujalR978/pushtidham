@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       "ૐ", // You can use "ॐ" for Hindi/Devanagari style or "ૐ" for Gujarati style
                       style: TextStyle(
-                        fontSize: 42,
+                        fontSize: 60,
                         fontWeight: FontWeight.bold,
                         color: theme.colorScheme.onPrimary,
                       ),
