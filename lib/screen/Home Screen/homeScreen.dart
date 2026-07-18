@@ -208,16 +208,31 @@ class _HomePageState extends State<HomePage> {
                   context,
                   Icons.collections,
                   "ગેલેરી (Gallery)",
+                  () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => GalleryPage()),
+                    );
+                  },
                 ),
                 _buildQuickActionButton(
                   context,
                   Icons.cloud_download,
                   "ઓફલાઇન (Offline)",
+                  () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => GalleryPage()),
+                    );
+                  },
                 ),
                 _buildQuickActionButton(
                   context,
                   Icons.edit_note,
                   "નોંધો (Notes)",
+                  () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => GalleryPage()),
+                    );
+                  },
                 ),
               ],
             ),
@@ -360,6 +375,7 @@ class _HomePageState extends State<HomePage> {
     BuildContext context,
     IconData icon,
     String label,
+    VoidCallback onpressed,
   ) {
     final theme = Theme.of(context);
     return ActionChip(
@@ -370,7 +386,7 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: theme.colorScheme.primary.withOpacity(0.08),
       side: BorderSide(color: theme.colorScheme.primary.withOpacity(0.2)),
-      onPressed: () {},
+      onPressed: onpressed,
     );
   }
 }
