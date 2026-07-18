@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     },
     {"title": "૨૫૨ વૈષ્ણવની વાર્તા", "icon": Icons.menu_book_outlined},
     {"title": "અભિપ્રાય (Review)", "icon": Icons.comment},
-    {"title": "સંપર્ક", "icon": Icons.contact_phone},
+    {"title": "સંપર્ક (Contant)", "icon": Icons.contact_phone},
   ];
 
   @override
