@@ -111,7 +111,7 @@ class _SpleshscreenState extends State<Spleshscreen>
 
                     // App Name with clean typography
                     const Text(
-                      "पुष्टिधाम",
+                      "પુષ્ટિધામ",
                       style: TextStyle(
                         fontFamily:
                             'Devanagari', // Use a beautiful Devanagari font if imported
@@ -132,7 +132,7 @@ class _SpleshscreenState extends State<Spleshscreen>
 
                     // Subtitle / Tagline
                     Text(
-                      "जय श्री कृष्ण",
+                      "જય શ્રી કૃષ્ણ",
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white.withOpacity(0.9),
