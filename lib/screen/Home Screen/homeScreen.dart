@@ -68,10 +68,13 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: theme.colorScheme.onPrimary.withOpacity(
                       0.2,
                     ),
-                    child: Icon(
-                      Icons.brightness_7,
-                      size: 45,
-                      color: theme.colorScheme.onPrimary,
+                    child: Text(
+                      "ૐ", // You can use "ॐ" for Hindi/Devanagari style or "ૐ" for Gujarati style
+                      style: TextStyle(
+                        fontSize: 42,
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
