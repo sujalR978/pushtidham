@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pushtidham/Provider/theme_manager.dart';
 
-class ThemeSettingsPage extends StatelessWidget {
-  const ThemeSettingsPage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

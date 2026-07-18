@@ -18,7 +18,7 @@ class _SpleshscreenState extends State<Spleshscreen>
 
     Navigator.of(
       context,
-    ).pushReplacement(MaterialPageRoute(builder: (context) => Homescreen()));
+    ).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   @override
