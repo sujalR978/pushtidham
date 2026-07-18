@@ -3,7 +3,10 @@ import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dar
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/galleryScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/notesScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/offlineContantScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,7 +55,9 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.bookmark_border),
             onPressed: () {
-              // Action for Quick Favorites Access
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => FavoritesPage()));
             },
           ),
         ],
@@ -108,7 +113,11 @@ class _HomePageState extends State<HomePage> {
                 "મારા મનપસંદ (Favorites)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => FavoritesPage()),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.note_alt, color: theme.colorScheme.primary),
@@ -116,7 +125,11 @@ class _HomePageState extends State<HomePage> {
                 "વ્યક્તિગત નોંધો (Personal Notes)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => NotesPage()));
+              },
             ),
             ListTile(
               leading: Icon(
@@ -142,7 +155,11 @@ class _HomePageState extends State<HomePage> {
                 "ઓફલાઇન કન્ટેન્ટ (Offline contant)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => OfflineContentPage()),
+                );
+              },
             ),
             const Divider(),
             ListTile(
@@ -220,7 +237,9 @@ class _HomePageState extends State<HomePage> {
                   "ઓફલાઇન (Offline)",
                   () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => GalleryPage()),
+                      MaterialPageRoute(
+                        builder: (context) => OfflineContentPage(),
+                      ),
                     );
                   },
                 ),
@@ -230,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                   "નોંધો (Notes)",
                   () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => GalleryPage()),
+                      MaterialPageRoute(builder: (context) => NotesPage()),
                     );
                   },
                 ),
