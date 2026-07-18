@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.home, color: theme.colorScheme.primary),
               title: Text(
-                "હોમ",
+                "હોમ (Home)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () => Navigator.pop(context),
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                 color: theme.colorScheme.primary,
               ),
               title: Text(
-                "ઓફલાઇન કન્ટેન્ટ",
+                "ઓફલાઇન કન્ટેન્ટ (Offline contant)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {},
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                 color: theme.colorScheme.onSurface.withOpacity(0.6),
               ),
               title: Text(
-                "સેટીંગ્સ",
+                "સેટીંગ્સ (Setting)",
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
@@ -199,13 +199,13 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildQuickActionButton(context, Icons.collections, "ગેલેરી"),
+                _buildQuickActionButton(context, Icons.collections, "ગેલેરી (Gallery)"),
                 _buildQuickActionButton(
                   context,
                   Icons.cloud_download,
-                  "ઓફલાઇન",
+                  "ઓફલાઇન (Offline)",
                 ),
-                _buildQuickActionButton(context, Icons.edit_note, "નોંધો"),
+                _buildQuickActionButton(context, Icons.edit_note, "નોંધો (Notes)"),
               ],
             ),
           ),
@@ -298,7 +298,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(builder: (context) => ReviewPage()),
                         );
                       }
-                      if (item["title"] == "સંપર્ક") {
+                      if (item["title"] == "સંપર્ક (Contant)") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ContactPage(),
