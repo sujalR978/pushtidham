@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
+import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
 import 'package:pushtidham/screen/Setting%20Screen%20/settingScreen.dart';
 
 class HomePage extends StatefulWidget {
@@ -293,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                        if (item["title"] =="અભિપ્રાય (Review)") {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
+                            builder: (context) => ReviewPage(),
                           ),
                         );
                       }
