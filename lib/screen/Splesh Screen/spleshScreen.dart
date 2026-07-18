@@ -8,7 +8,7 @@ class Spleshscreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Image.asset("assets/icons/spleshScreen_image.png")
+          Image.asset("assets/images/spleshScreen_image.png")
         ],
       ),
     );
