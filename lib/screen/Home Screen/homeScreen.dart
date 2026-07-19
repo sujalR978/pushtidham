@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
@@ -44,9 +45,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text(
-          "પુષ્ટિધામ",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(AppLocalizations.of(context)!.language,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
