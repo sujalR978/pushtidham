@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:pushtidham/Provider/theme_manager.dart';
 import 'package:pushtidham/screen/Home%20Screen/homeScreen.dart';
 
 class LanguageSelectionPage extends StatefulWidget {

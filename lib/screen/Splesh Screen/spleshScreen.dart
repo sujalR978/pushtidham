@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pushtidham/screen/Home%20Screen/homeScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/language%20Screen/app_lan.dart';
 
 class Spleshscreen extends StatefulWidget {
