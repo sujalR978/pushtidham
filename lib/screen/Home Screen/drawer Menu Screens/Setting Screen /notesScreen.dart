@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class NoteItem {
   final String id;
   final String content;
   final DateTime timestamp;
 
-  NoteItem({
-    required this.id,
-    required this.content,
-    required this.timestamp,
-  });
+  NoteItem({required this.id, required this.content, required this.timestamp});
 }
 
 class NotesPage extends StatefulWidget {
@@ -23,7 +20,8 @@ class _NotesPageState extends State<NotesPage> {
   final List<NoteItem> _notes = [
     NoteItem(
       id: '1',
-      content: 'શ્રી મહાપ્રભુજીના ઉત્સવ સંબંધી વિશેષ નિયમો અને પાઠ વિધિ વાંચવી.',
+      content:
+          'શ્રી મહાપ્રભુજીના ઉત્સવ સંબંધી વિશેષ નિયમો અને પાઠ વિધિ વાંચવી.',
       timestamp: DateTime.now().subtract(const Duration(days: 2)),
     ),
     NoteItem(
@@ -38,6 +36,8 @@ class _NotesPageState extends State<NotesPage> {
   void _addNote() {
     if (_noteController.text.trim().isEmpty) return;
 
+    final l10n = AppLocalizations.of(context)!;
+
     setState(() {
       _notes.insert(
         0,
@@ -50,23 +50,26 @@ class _NotesPageState extends State<NotesPage> {
     });
     _noteController.clear();
     FocusScope.of(context).unfocus(); // Close the virtual keyboard
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("નોંધ સાચવવામાં આવી છે! 🙏"),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(l10n.btn_submit),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
 
   void _deleteNote(int index) {
+    final l10n = AppLocalizations.of(context)!;
+
     setState(() {
       _notes.removeAt(index);
     });
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("નોંધ કાઢી નાખવામાં આવી છે."),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(l10n.btn_delete),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -84,11 +87,15 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("વ્યક્તિગત નોંધો (Notes)", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          l10n.nav_notes,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -109,18 +116,31 @@ class _NotesPageState extends State<NotesPage> {
                       maxLines: null, // Dynamic expanding box heights
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
-                        hintText: "અહીં નવી નોંધ લખો (Write personal note...)",
-                        hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4), fontSize: 14),
+                        hintText: l10n.nav_notes,
+                        hintStyle: TextStyle(
+                          color: theme.colorScheme.onSurface.withOpacity(0.4),
+                          fontSize: 14,
+                        ),
                         filled: true,
                         fillColor: theme.cardTheme.color,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.5),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.primary,
+                            width: 1.5,
+                          ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(color: theme.colorScheme.onSurface.withOpacity(0.15)),
+                          borderSide: BorderSide(
+                            color: theme.colorScheme.onSurface.withOpacity(
+                              0.15,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -137,7 +157,7 @@ class _NotesPageState extends State<NotesPage> {
                 ],
               ),
             ),
-            
+
             // 2. ACTIVE NOTES LIST VIEW
             Expanded(
               child: _notes.isEmpty
@@ -145,19 +165,31 @@ class _NotesPageState extends State<NotesPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.note_alt_outlined, size: 60, color: theme.colorScheme.onSurface.withOpacity(0.2)),
+                          Icon(
+                            Icons.note_alt_outlined,
+                            size: 60,
+                            color: theme.colorScheme.onSurface.withOpacity(0.2),
+                          ),
                           const SizedBox(height: 12),
                           Text(
-                            "કોઈપણ નોંધ ઉપલબ્ધ નથી\n(No personal notes added yet)",
+                            l10n.nav_notes,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4), fontSize: 14),
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.4,
+                              ),
+                              fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
                     )
                   : ListView.builder(
                       itemCount: _notes.length,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       itemBuilder: (context, index) {
                         final note = _notes[index];
                         return Padding(
@@ -173,7 +205,10 @@ class _NotesPageState extends State<NotesPage> {
                                 color: theme.colorScheme.error,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Icon(Icons.delete_sweep, color: Colors.white),
+                              child: const Icon(
+                                Icons.delete_sweep,
+                                color: Colors.white,
+                              ),
                             ),
                             onDismissed: (direction) => _deleteNote(index),
                             child: Card(
@@ -187,15 +222,22 @@ class _NotesPageState extends State<NotesPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Icon(Icons.edit_note, color: theme.colorScheme.primary.withOpacity(0.7), size: 20),
+                                        Icon(
+                                          Icons.edit_note,
+                                          color: theme.colorScheme.primary
+                                              .withOpacity(0.7),
+                                          size: 20,
+                                        ),
                                         Text(
                                           _formatDate(note.timestamp),
                                           style: TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.w600,
-                                            color: theme.colorScheme.onSurface.withOpacity(0.4),
+                                            color: theme.colorScheme.onSurface
+                                                .withOpacity(0.4),
                                           ),
                                         ),
                                       ],

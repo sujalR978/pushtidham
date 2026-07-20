@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class GalleryPage extends StatelessWidget {
   const GalleryPage({super.key});
 
-  // Curated list of high-quality image paths or network URLs for Shri Mahaprabhuji
   final List<String> galleryImages = const [
     'https://upload.wikimedia.org/wikipedia/commons/4/4b/Vallabhacharya.jpg',
     'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/512px-Om_symbol.svg.png',
@@ -16,11 +16,15 @@ class GalleryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("મીડિયા ગેલેરી (Gallery)", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          l10n.nav_gallery,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -29,11 +33,10 @@ class GalleryPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Curated Gallery Top Subtitle Label
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Text(
-                "શ્રી મહાપ્રભુજી દિવ્ય દર્શન",
+                l10n.grid_about_mahaprabhuji,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -44,7 +47,7 @@ class GalleryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                "A curated static gallery for high-quality visual content.",
+                l10n.nav_gallery,
                 style: TextStyle(
                   fontSize: 13,
                   color: theme.colorScheme.onSurface.withOpacity(0.6),
@@ -53,15 +56,17 @@ class GalleryPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Responsive Image Grid Engine
             Expanded(
               child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4,
+                ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // 3 Columns for a clean gallery setup
+                  crossAxisCount: 3,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 1.0, // Perfect Squares
+                  childAspectRatio: 1.0,
                 ),
                 itemCount: galleryImages.length,
                 itemBuilder: (context, index) {
@@ -79,7 +84,10 @@ class GalleryPage extends StatelessWidget {
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
                             color: theme.colorScheme.primary.withOpacity(0.1),
-                            child: Icon(Icons.image, color: theme.colorScheme.primary),
+                            child: Icon(
+                              Icons.image,
+                              color: theme.colorScheme.primary,
+                            ),
                           );
                         },
                       ),
@@ -94,10 +102,9 @@ class GalleryPage extends StatelessWidget {
     );
   }
 
-  // Interactive Full-Screen Image Overlay Viewer
   void _openFullScreenViewer(BuildContext context, int initialIndex) {
-    final theme = Theme.of(context);
-    
+    final l10n = AppLocalizations.of(context)!;
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -107,7 +114,10 @@ class GalleryPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
             elevation: 0,
-            title: const Text("દર્શન", style: TextStyle(color: Colors.white)),
+            title: Text(
+              l10n.nav_gallery,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
           body: Center(
             child: PageView.builder(
@@ -117,12 +127,16 @@ class GalleryPage extends StatelessWidget {
                 return InteractiveViewer(
                   panEnabled: true,
                   minScale: 0.5,
-                  maxScale: 3.0, // Allows users to pinch-to-zoom into photos
+                  maxScale: 3.0,
                   child: Image.network(
                     galleryImages[index],
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.broken_image, size: 60, color: Colors.white38);
+                      return const Icon(
+                        Icons.broken_image,
+                        size: 60,
+                        color: Colors.white38,
+                      );
                     },
                   ),
                 );

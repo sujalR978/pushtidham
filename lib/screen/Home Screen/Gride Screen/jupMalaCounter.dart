@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class JapMalaScreen extends StatefulWidget {
   const JapMalaScreen({super.key});
@@ -30,18 +31,20 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
   }
 
   void _resetCounter() {
+    final l10n = AppLocalizations.of(context)!;
+    
     showDialog(
       context: context,
       builder: (BuildContext context) {
         final theme = Theme.of(context);
         return AlertDialog(
           backgroundColor: theme.colorScheme.surface,
-          title: Text("રીસેટ કરો?", style: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.bold)),
-          content: Text("શું તમે જાપ કાઉન્ટર શૂન્ય કરવા માંગો છો?", style: TextStyle(color: theme.colorScheme.onSurface)),
+          title: Text(l10n.jap_reset_title, style: TextStyle(color: theme.colorScheme.onSurface, fontWeight: FontWeight.bold)),
+          content: Text(l10n.jap_reset_msg, style: TextStyle(color: theme.colorScheme.onSurface)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("ના (No)", style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.6))),
+              child: Text(l10n.btn_no, style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.6))),
             ),
             TextButton(
               onPressed: () {
@@ -51,7 +54,7 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
                 });
                 Navigator.pop(context);
               },
-              child: Text("હા (Yes)", style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
+              child: Text(l10n.btn_yes, style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
             ),
           ],
         );
@@ -60,9 +63,11 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
   }
 
   void _showMalaCompletionDialog() {
+    final l10n = AppLocalizations.of(context)!;
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text("જય શ્રી કૃષ્ણ! ૧ માળા પૂર્ણ થઈ. 🙏"),
+        content: Text(l10n.jap_completed_msg),
         backgroundColor: Theme.of(context).colorScheme.primary,
         duration: const Duration(seconds: 3),
       ),
@@ -72,12 +77,13 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final progressPercentage = _beadCount / _maxBeads;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("જપ માળા કાઉન્ટર", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.grid_jap_mala, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -93,7 +99,7 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Top Section: Mantra Placeholder Display
+            // Top Section: Mantra Display
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Container(
@@ -106,12 +112,12 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
                 child: Column(
                   children: [
                     Text(
-                      "મંત્ર (Active Mantra)",
+                      l10n.jap_active_mantra,
                       style: TextStyle(fontSize: 12, color: theme.colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      "શ્રી કૃષ્ણઃ શરણં મમ",
+                      l10n.jap_default_mantra,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: theme.colorScheme.primary, letterSpacing: 0.5),
                     ),
@@ -149,7 +155,7 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "મણકો (Beads)",
+                      l10n.jap_bead_count,
                       style: TextStyle(fontSize: 14, color: theme.colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w500),
                     ),
                     Text(
@@ -190,7 +196,7 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("કુલ માળા (Total Mala)", style: TextStyle(fontSize: 12, color: theme.colorScheme.onSurface.withOpacity(0.6))),
+                            Text(l10n.jap_total_mala, style: TextStyle(fontSize: 12, color: theme.colorScheme.onSurface.withOpacity(0.6))),
                             Text("$_malaCount", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
                           ],
                         ),
@@ -226,7 +232,7 @@ class _JapMalaScreenState extends State<JapMalaScreen> {
                       const Icon(Icons.touch_app, size: 40, color: Colors.white),
                       const SizedBox(height: 8),
                       Text(
-                        "જાપ કરો\n(TAP HERE)",
+                        l10n.jap_tap_here,
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14, height: 1.2),
                       ),

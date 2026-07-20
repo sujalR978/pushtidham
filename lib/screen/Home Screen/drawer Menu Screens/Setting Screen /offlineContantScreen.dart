@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class OfflineItem {
   final String id;
@@ -26,7 +27,6 @@ class OfflineContentPage extends StatefulWidget {
 class _OfflineContentPageState extends State<OfflineContentPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  // Curated mock downloaded dataset
   final List<OfflineItem> _offlineList = [
     OfflineItem(id: '1', title: 'શ્રી યમુનાષ્ટકમ (Yamunashtakam)', subTitle: 'Daily Stotra Reading', type: 'pdf', fileSize: '1.2 MB'),
     OfflineItem(id: '2', title: 'ષોડશ ગ્રંથ (Shodash Granth)', subTitle: 'Complete text package', type: 'pdf', fileSize: '4.8 MB'),
@@ -47,26 +47,27 @@ class _OfflineContentPageState extends State<OfflineContentPage> with SingleTick
   }
 
   void _removeDownloadedItem(String id) {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _offlineList.removeWhere((item) => item.id == id);
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("કન્ટેન્ટ સ્ટોરેજમાંથી કાઢી નાખવામાં આવ્યું છે (Deleted from device storage)")),
+      SnackBar(content: Text(l10n.btn_delete)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
-    // Filter items dynamically into sub-tabs
     final pdfItems = _offlineList.where((item) => item.type == 'pdf').toList();
     final audioItems = _offlineList.where((item) => item.type == 'audio').toList();
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("ઓફલાઇન કન્ટેન્ટ", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.nav_offline, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -76,9 +77,9 @@ class _OfflineContentPageState extends State<OfflineContentPage> with SingleTick
           labelColor: theme.colorScheme.onPrimary,
           unselectedLabelColor: theme.colorScheme.onPrimary.withOpacity(0.6),
           labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          tabs: const [
-            Tab(icon: Icon(Icons.menu_book), text: "સાહિત્ય (Docs)"),
-            Tab(icon: Icon(Icons.audiotrack), text: "ઑડિયો (Audio)"),
+          tabs: [
+            Tab(icon: const Icon(Icons.menu_book), text: l10n.grid_pathavali),
+            Tab(icon: const Icon(Icons.audiotrack), text: l10n.grid_kirtan),
           ],
         ),
       ),
@@ -93,6 +94,8 @@ class _OfflineContentPageState extends State<OfflineContentPage> with SingleTick
   }
 
   Widget _buildContentList(List<OfflineItem> items, ThemeData theme, {required bool isAudio}) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (items.isEmpty) {
       return Center(
         child: Column(
@@ -105,7 +108,7 @@ class _OfflineContentPageState extends State<OfflineContentPage> with SingleTick
             ),
             const SizedBox(height: 16),
             Text(
-              "કોઈ ઓફલાઇન ફાઈલ નથી\n(No offline downloads here)",
+              l10n.nav_offline,
               textAlign: TextAlign.center,
               style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4), fontSize: 14),
             ),
@@ -167,7 +170,7 @@ class _OfflineContentPageState extends State<OfflineContentPage> with SingleTick
                     children: [
                       Icon(isAudio ? Icons.play_arrow : Icons.chrome_reader_mode, size: 18, color: theme.colorScheme.onSurface),
                       const SizedBox(width: 8),
-                      Text(isAudio ? "ચલાવો (Play)" : "વાંચો (Read)"),
+                      Text(isAudio ? l10n.btn_play : l10n.btn_read),
                     ],
                   ),
                 ),
@@ -177,14 +180,14 @@ class _OfflineContentPageState extends State<OfflineContentPage> with SingleTick
                     children: [
                       Icon(Icons.delete, size: 18, color: theme.colorScheme.error),
                       const SizedBox(width: 8),
-                      Text("કાઢી નાખો (Delete)", style: TextStyle(color: theme.colorScheme.error)),
+                      Text(l10n.btn_delete, style: TextStyle(color: theme.colorScheme.error)),
                     ],
                   ),
                 ),
               ],
             ),
             onTap: () {
-              // Trigger reading viewer or custom audio stream interface instantly
+              // Trigger reading viewer or custom audio stream interface
             },
           ),
         );

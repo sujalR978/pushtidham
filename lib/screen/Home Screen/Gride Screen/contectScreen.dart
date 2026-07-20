@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -14,10 +15,12 @@ class _ContactPageState extends State<ContactPage> {
   final TextEditingController _messageController = TextEditingController();
 
   void _submitForm() {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("સંદેશો મોકલવામાં આવ્યો છે! 🙏"),
+          content: Text(l10n.btn_submit),
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
@@ -38,11 +41,12 @@ class _ContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("સંપર્ક (Contact Us)", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.grid_contact, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -65,7 +69,7 @@ class _ContactPageState extends State<ContactPage> {
                       _buildContactMethodTile(
                         context,
                         icon: Icons.phone_in_talk,
-                        title: "ફોન નંબર (Phone)",
+                        title: l10n.grid_contact,
                         subtitle: "+91 98765 43210",
                         onTap: () {
                           // Integrate url_launcher to dial phone numbers
@@ -75,7 +79,7 @@ class _ContactPageState extends State<ContactPage> {
                       _buildContactMethodTile(
                         context,
                         icon: Icons.email_outlined,
-                        title: "ઇમેઇલ (Email)",
+                        title: l10n.grid_contact,
                         subtitle: "info@pushtidham.org",
                         onTap: () {
                           // Integrate url_launcher to open email client
@@ -85,7 +89,7 @@ class _ContactPageState extends State<ContactPage> {
                       _buildContactMethodTile(
                         context,
                         icon: Icons.location_on_outlined,
-                        title: "સરનામું (Address)",
+                        title: l10n.grid_contact,
                         subtitle: "શ્રી હરિરાયજી મહાપ્રભુજી ગાદી, ગુજરાત, ભારત",
                         onTap: () {
                           // Open address inside maps app
@@ -99,7 +103,7 @@ class _ContactPageState extends State<ContactPage> {
 
               // 2. INTERACTIVE CONTACT FORM
               Text(
-                "સંદેશ મોકલો (Send a Message)",
+                l10n.grid_contact,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface),
               ),
               const SizedBox(height: 12),
@@ -110,18 +114,18 @@ class _ContactPageState extends State<ContactPage> {
                     TextFormField(
                       controller: _nameController,
                       style: TextStyle(color: theme.colorScheme.onSurface),
-                      decoration: _buildInputDecoration(theme, "તમારું નામ (Your Name)", Icons.person_outline),
-                      validator: (value) => value!.isEmpty ? 'નામ લખવું જરૂરી છે' : null,
+                      decoration: _buildInputDecoration(theme, l10n.grid_contact, Icons.person_outline),
+                      validator: (value) => value!.isEmpty ? l10n.grid_contact : null,
                     ),
                     const SizedBox(height: 14),
                     TextFormField(
                       controller: _emailController,
                       style: TextStyle(color: theme.colorScheme.onSurface),
                       keyboardType: TextInputType.emailAddress,
-                      decoration: _buildInputDecoration(theme, "ઇમેઇલ સરનામું (Email Address)", Icons.mail_outline),
+                      decoration: _buildInputDecoration(theme, l10n.grid_contact, Icons.mail_outline),
                       validator: (value) {
-                        if (value!.isEmpty) return 'ઇમેઇલ લખવું જરૂરી છે';
-                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'સાચો ઇમેઇલ લખો';
+                        if (value!.isEmpty) return l10n.grid_contact;
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return l10n.grid_contact;
                         return null;
                       },
                     ),
@@ -130,8 +134,8 @@ class _ContactPageState extends State<ContactPage> {
                       controller: _messageController,
                       style: TextStyle(color: theme.colorScheme.onSurface),
                       maxLines: 4,
-                      decoration: _buildInputDecoration(theme, "સંદેશો (Message)", Icons.chat_bubble_outline),
-                      validator: (value) => value!.isEmpty ? 'સંદેશો લખવો જરૂરી છે' : null,
+                      decoration: _buildInputDecoration(theme, l10n.grid_contact, Icons.chat_bubble_outline),
+                      validator: (value) => value!.isEmpty ? l10n.grid_contact : null,
                     ),
                     const SizedBox(height: 24),
                     SizedBox(
@@ -145,7 +149,7 @@ class _ContactPageState extends State<ContactPage> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                           elevation: 2,
                         ),
-                        child: const Text("સંદેશ મોકલો (Submit)", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        child: Text(l10n.btn_submit, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ],

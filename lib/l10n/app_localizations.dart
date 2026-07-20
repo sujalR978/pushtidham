@@ -363,6 +363,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Undo'**
   String get btn_undo;
+
+  /// No description provided for @mahaprabhuji_bio_p1.
+  ///
+  /// In en, this message translates to:
+  /// **'Shri Vallabhacharyaji Mahaprabhuji is the founder of Pushtimarg, the Path of Divine Grace. According to Pushtimarg tradition, He incarnated on Earth by the divine command of Bhagwan Shri Krishna to guide souls toward loving devotion, selfless seva, and complete surrender. His philosophy of Shuddhadvaita Brahmavad emphasizes that Bhagwan\'s grace is the highest means of attaining spiritual bliss.'**
+  String get mahaprabhuji_bio_p1;
+
+  /// No description provided for @mahaprabhuji_bio_p2.
+  ///
+  /// In en, this message translates to:
+  /// **'Born on Chaitra Vad Ekadashi, Vikram Samvat 1535 (1479 CE) in Champaranya, Shri Mahaprabhuji was the son of Shri Lakshman Bhatt and Shrimati Illammagaru. Even as a child, He displayed extraordinary wisdom and mastered the Vedas, Upanishads, Puranas, and various philosophical traditions by the age of eleven. His remarkable knowledge and devotion earned Him great respect throughout India.'**
+  String get mahaprabhuji_bio_p2;
+
+  /// No description provided for @mahaprabhuji_bio_p3.
+  ///
+  /// In en, this message translates to:
+  /// **'Throughout His life, Shri Mahaprabhuji travelled across India three times on foot, spreading the message of Pushtimarg and establishing the philosophy of Shuddhadvaita. He guided countless devotees through the sacred initiation of Brahmasambandh, teaching that true devotion begins with complete surrender of one\'s body, mind, wealth, and soul to Shri Krishna. His teachings continue to inspire devotees to perform seva with love, humility, and unwavering faith.'**
+  String get mahaprabhuji_bio_p3;
+
+  /// No description provided for @mahaprabhuji_bio_p4.
+  ///
+  /// In en, this message translates to:
+  /// **'Shri Mahaprabhuji also composed many sacred scriptures, including the Shodash Granth, Shri Yamunashtakam, Siddhanta Rahasya, and Subodhiniji, which remain the foundation of Pushtimarg philosophy. Despite being honoured by kings and scholars, He lived a life of simplicity, dedicating every moment to Bhagwan and the spiritual upliftment of devotees.'**
+  String get mahaprabhuji_bio_p4;
+
+  /// No description provided for @mahaprabhuji_bio_p5.
+  ///
+  /// In en, this message translates to:
+  /// **'After completing His divine mission, Shri Mahaprabhuji accepted the path of renunciation and spent His final days in Kashi. On Rath Yatra of Vikram Samvat 1587, at the age of 52, He entered the sacred River Ganga. According to Pushtimarg tradition, His divine form merged into a radiant light, signifying His return to the eternal abode of Bhagwan Shri Krishna. His life remains a timeless source of devotion, wisdom, and divine grace for followers of Pushtimarg around the world.'**
+  String get mahaprabhuji_bio_p5;
 }
 
 class _AppLocalizationsDelegate

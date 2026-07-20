@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pushtidham/Provider/theme_manager.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -11,10 +12,10 @@ class SettingsPage extends StatelessWidget {
       case 'en':
         return "English";
       case 'hi':
-        return "हिन्दी (Hindi)";
+        return "हिन्दी";
       case 'gu':
       default:
-        return "ગુજરાતી (Gujarati)";
+        return "ગુજરાતી";
     }
   }
 
@@ -22,6 +23,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final themeManager = Provider.of<ThemeManager>(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // Current language display string based on Provider's active locale
     final currentLanguageText = _getLanguageLabel(
@@ -31,17 +33,15 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text(
-          "સેટિંગ્સ (Settings)",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          l10n.nav_settings,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
         leading: IconButton(
-          onPressed: () => Navigator.of(
-            context,
-          ).pop(), // Pop to go back cleanly without rebuilding HomePage
+          onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
         ),
       ),
@@ -52,13 +52,13 @@ class SettingsPage extends StatelessWidget {
           _buildSectionHeader(
             context,
             Icons.palette_outlined,
-            "થીમ પસંદ કરો / Select Theme",
+            l10n.theme_settings,
           ),
           const SizedBox(height: 12),
 
           _buildThemeCard(
             context: context,
-            title: "સિસ્ટમ પ્રમાણે (Follow System)",
+            title: l10n.theme_system,
             subtitle: "Switches with phone settings",
             value: AppThemeMode.FollowSystem,
             groupValue: themeManager.CurrentTheme,
@@ -66,7 +66,7 @@ class SettingsPage extends StatelessWidget {
           ),
           _buildThemeCard(
             context: context,
-            title: "સૂર્યોદય સિંહાસન (Saffron Dawn)",
+            title: l10n.theme_day,
             subtitle: "Bright, traditional daytime look",
             value: AppThemeMode.day,
             groupValue: themeManager.CurrentTheme,
@@ -74,7 +74,7 @@ class SettingsPage extends StatelessWidget {
           ),
           _buildThemeCard(
             context: context,
-            title: "અર્ધરાત્રિ ધ્યાન (Midnight Dhyaan)",
+            title: l10n.theme_night,
             subtitle: "Calm, eye-friendly dark look",
             value: AppThemeMode.night,
             groupValue: themeManager.CurrentTheme,
@@ -82,7 +82,7 @@ class SettingsPage extends StatelessWidget {
           ),
           _buildThemeCard(
             context: context,
-            title: "પાવન મંદિર થીમ (Sandstone Mandir)",
+            title: l10n.theme_mandir,
             subtitle: "Premium traditional heritage aesthetic",
             value: AppThemeMode.mandir,
             groupValue: themeManager.CurrentTheme,
@@ -97,7 +97,7 @@ class SettingsPage extends StatelessWidget {
           _buildSectionHeader(
             context,
             Icons.language_outlined,
-            "ભાષા બદલો / Language Settings",
+            l10n.select_language,
           ),
           const SizedBox(height: 12),
 
@@ -114,9 +114,9 @@ class SettingsPage extends StatelessWidget {
                 backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
                 child: Icon(Icons.translate, color: theme.colorScheme.primary),
               ),
-              title: const Text(
-                "એપ્લિકેશનની ભાષા (App Language)",
-                style: TextStyle(fontWeight: FontWeight.w600),
+              title: Text(
+                l10n.select_language,
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               subtitle: Text(
                 currentLanguageText,
@@ -228,12 +228,13 @@ class SettingsPage extends StatelessWidget {
   // Language selection slide-up bottom sheet linked to Provider
   void _showLanguagePicker(BuildContext context, ThemeManager themeManager) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // Mapped languages matching indices [0: 'gu', 1: 'en', 2: 'hi']
     final languages = [
-      {"label": "ગુજરાતી (Gujarati)", "index": 0, "code": "gu"},
+      {"label": "ગુજરાતી", "index": 0, "code": "gu"},
       {"label": "English", "index": 1, "code": "en"},
-      {"label": "हिन्दी (Hindi)", "index": 2, "code": "hi"},
+      {"label": "हिन्दी", "index": 2, "code": "hi"},
     ];
 
     showModalBottomSheet(
@@ -251,7 +252,7 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "ભાષા પસંદ કરો (Choose Language)",
+                  l10n.select_language,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -285,7 +286,6 @@ class SettingsPage extends StatelessWidget {
                           )
                         : null,
                     onTap: () {
-                      // Call ThemeManager to update live app locale & write to SharedPreferences
                       themeManager.changeLanguage(index);
                       Navigator.pop(context);
                     },

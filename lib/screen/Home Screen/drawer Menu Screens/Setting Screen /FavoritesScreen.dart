@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class FavoriteItem {
   final String id;
   final String title;
-  final String category; // 'કિર્તન', 'વાર્તા', 'ગ્રંથ'
+  final String category;
   final IconData icon;
 
   FavoriteItem({
@@ -22,7 +23,6 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  // Mock dataset of saved items matching categories from your home layout
   final List<FavoriteItem> _favoriteItems = [
     FavoriteItem(id: '1', title: 'શ્રી યમુનાષ્ટક સ્તોત્ર પાઠ', category: 'ગ્રંથ', icon: Icons.menu_book),
     FavoriteItem(id: '2', title: 'દૃઢ ઇન ચરનન કેરો ભરોસો', category: 'કિર્તન', icon: Icons.queue_music),
@@ -30,6 +30,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   ];
 
   void _removeFavorite(int index) {
+    final l10n = AppLocalizations.of(context)!;
     final removedItem = _favoriteItems[index];
     setState(() {
       _favoriteItems.removeAt(index);
@@ -37,9 +38,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
     
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("${removedItem.title} મનપસંદમાંથી દૂર કર્યું."),
+        content: Text("${removedItem.title} - ${l10n.btn_delete}"),
         action: SnackBarAction(
-          label: "Undo",
+          label: l10n.btn_undo,
           textColor: Theme.of(context).colorScheme.secondary,
           onPressed: () {
             setState(() {
@@ -54,11 +55,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("મારા મનપસંદ (Favorites)", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.nav_favorites, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -72,7 +74,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     Icon(Icons.favorite_border, size: 64, color: theme.colorScheme.onSurface.withOpacity(0.2)),
                     const SizedBox(height: 16),
                     Text(
-                      "હજી સુધી કોઈ મનપસંદ આઇટમ ઉમેરી નથી\n(No favorites added yet)",
+                      l10n.nav_favorites,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4), fontSize: 14),
                     ),
@@ -124,7 +126,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 color: theme.colorScheme.primary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              
                               child: Text(
                                 item.category,
                                 style: TextStyle(

@@ -16,28 +16,73 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final TextEditingController searchController = TextEditingController();
 
-    // Grid Items Configuration
+    // Dynamically localized Grid Items List
     final List<Map<String, dynamic>> gridItems = [
-      {"title": "શ્રી મહાપ્રભુજી વિશે", "icon": Icons.person, "screen": const AboutMahaprabhujiPage()},
-      {"title": "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી", "icon": Icons.grid_view, "screen": const JapMalaScreen()},
-      {"title": "કિર્તન", "icon": Icons.queue_music, "screen": const JapMalaScreen()},
-      {"title": "પાઠાવલી (ષોડશ ગ્રંથ)", "icon": Icons.menu_book, "screen": const JapMalaScreen()},
-      {"title": "ટિપ્પણી (Calendar)", "icon": Icons.calendar_month, "screen": const JapMalaScreen()},
-      {"title": "જપ માળા (Counter)", "icon": Icons.ads_click, "screen": const JapMalaScreen()},
-      {"title": "૮૪ વૈષ્ણવની વાર્તા", "icon": Icons.rate_review, "screen": const JapMalaScreen()},
-      {"title": "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)", "icon": Icons.chrome_reader_mode, "screen": const JapMalaScreen()},
-      {"title": "૨૫૨ વૈષ્ણવની વાર્તા", "icon": Icons.menu_book_outlined, "screen": const JapMalaScreen()},
-      {"title": "અભિપ્રાય (Review)", "icon": Icons.comment, "screen": const ReviewPage()},
-      {"title": "સંપર્ક (Contant)", "icon": Icons.contact_phone, "screen": const ContactPage()},
+      {
+        "title": l10n.grid_about_mahaprabhuji,
+        "icon": Icons.person,
+        "screen": const AboutMahaprabhujiPage(),
+      },
+      {
+        "title": l10n.grid_bethakji_list,
+        "icon": Icons.grid_view,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_kirtan,
+        "icon": Icons.queue_music,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_pathavali,
+        "icon": Icons.menu_book,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_calendar,
+        "icon": Icons.calendar_month,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_jap_mala,
+        "icon": Icons.ads_click,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_84_vaishnav,
+        "icon": Icons.rate_review,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_84_vaishnav_vraj,
+        "icon": Icons.chrome_reader_mode,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_252_vaishnav,
+        "icon": Icons.menu_book_outlined,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_review,
+        "icon": Icons.comment,
+        "screen": const ReviewPage(),
+      },
+      {
+        "title": l10n.grid_contact,
+        "icon": Icons.contact_phone,
+        "screen": const ContactPage(),
+      },
     ];
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.app_title,
+          l10n.app_title,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.primary,
@@ -67,7 +112,9 @@ class HomePage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: theme.colorScheme.onPrimary.withOpacity(0.2),
+                    backgroundColor: theme.colorScheme.onPrimary.withOpacity(
+                      0.2,
+                    ),
                     child: Text(
                       "ૐ",
                       style: TextStyle(
@@ -79,7 +126,7 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "પુષ્ટિધામ",
+                    l10n.app_title,
                     style: TextStyle(
                       color: theme.colorScheme.onPrimary,
                       fontSize: 20,
@@ -92,7 +139,7 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.home, color: theme.colorScheme.primary),
               title: Text(
-                "હોમ (Home)",
+                l10n.nav_home,
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () => Navigator.pop(context),
@@ -100,20 +147,22 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.favorite, color: theme.colorScheme.primary),
               title: Text(
-                "મારા મનપસંદ (Favorites)",
+                l10n.nav_favorites,
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const FavoritesPage()),
+                  MaterialPageRoute(
+                    builder: (context) => const FavoritesPage(),
+                  ),
                 );
               },
             ),
             ListTile(
               leading: Icon(Icons.note_alt, color: theme.colorScheme.primary),
               title: Text(
-                "વ્યક્તિગત નોંધો (Personal Notes)",
+                l10n.nav_notes,
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
@@ -129,7 +178,7 @@ class HomePage extends StatelessWidget {
                 color: theme.colorScheme.primary,
               ),
               title: Text(
-                "મીડિયા ગેલેરી (Gallery)",
+                l10n.nav_gallery,
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
@@ -145,13 +194,15 @@ class HomePage extends StatelessWidget {
                 color: theme.colorScheme.primary,
               ),
               title: Text(
-                "ઓફલાઇન કન્ટેન્ટ (Offline contant)",
+                l10n.nav_offline,
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const OfflineContentPage()),
+                  MaterialPageRoute(
+                    builder: (context) => const OfflineContentPage(),
+                  ),
                 );
               },
             ),
@@ -162,7 +213,7 @@ class HomePage extends StatelessWidget {
                 color: theme.colorScheme.onSurface.withOpacity(0.6),
               ),
               title: Text(
-                "સેટીંગ્સ (Setting)",
+                l10n.nav_settings,
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
@@ -184,7 +235,7 @@ class HomePage extends StatelessWidget {
             child: TextField(
               controller: searchController,
               decoration: InputDecoration(
-                hintText: "શોધો (Search content...)",
+                hintText: l10n.search_placeholder,
                 hintStyle: TextStyle(
                   color: theme.colorScheme.onPrimary.withOpacity(0.6),
                 ),
@@ -216,17 +267,19 @@ class HomePage extends StatelessWidget {
                 _buildQuickActionButton(
                   context,
                   Icons.collections,
-                  "ગેલેરી (Gallery)",
+                  l10n.nav_gallery,
                   () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const GalleryPage()),
+                      MaterialPageRoute(
+                        builder: (context) => const GalleryPage(),
+                      ),
                     );
                   },
                 ),
                 _buildQuickActionButton(
                   context,
                   Icons.cloud_download,
-                  "ઓફલાઇન (Offline)",
+                  l10n.nav_offline,
                   () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -238,10 +291,12 @@ class HomePage extends StatelessWidget {
                 _buildQuickActionButton(
                   context,
                   Icons.edit_note,
-                  "નોંધો (Notes)",
+                  l10n.nav_notes,
                   () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const NotesPage()),
+                      MaterialPageRoute(
+                        builder: (context) => const NotesPage(),
+                      ),
                     );
                   },
                 ),

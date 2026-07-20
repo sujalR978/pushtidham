@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/l10n/app_localizations.dart';
 
 class ReviewPage extends StatefulWidget {
   const ReviewPage({super.key});
@@ -10,8 +11,7 @@ class ReviewPage extends StatefulWidget {
 class _ReviewPageState extends State<ReviewPage> {
   int _selectedRating = 0;
   final TextEditingController _reviewController = TextEditingController();
-  
-  // Quick pre-defined feedback chips in Gujarati and English
+
   final List<String> _quickFeedbackTags = [
     "જય શ્રી કૃષ્ણ 🙏",
     "ખૂબ સુંદર એપ",
@@ -20,29 +20,29 @@ class _ReviewPageState extends State<ReviewPage> {
     "Peaceful App",
     "Very Useful",
   ];
-  
+
   String? _selectedTag;
 
   void _submitReview() {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_selectedRating == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("કૃપા કરીને રેટિંગ પસંદ કરો (Please select a rating)"),
+          content: Text(l10n.grid_review),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
       return;
     }
 
-    // Success response handling
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text("તમારો અભિપ્રાય સબમિટ કરવા બદલ આભાર! 🙏"),
+        content: Text(l10n.btn_submit),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
 
-    // Resetting inputs after submit
     setState(() {
       _selectedRating = 0;
       _reviewController.clear();
@@ -59,11 +59,15 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("અભિપ્રાય (Review)", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          l10n.grid_review,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
@@ -84,7 +88,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   child: Column(
                     children: [
                       Text(
-                        "તમારો અનુભવ કેવો રહ્યો?",
+                        l10n.grid_review,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -93,14 +97,14 @@ class _ReviewPageState extends State<ReviewPage> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        "How is your experience with Pustidham?",
+                        l10n.welcome_tagline,
                         style: TextStyle(
                           fontSize: 13,
                           color: theme.colorScheme.onSurface.withOpacity(0.6),
                         ),
                       ),
                       const SizedBox(height: 20),
-                      
+
                       // Interactive Star Picker
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,11 +112,13 @@ class _ReviewPageState extends State<ReviewPage> {
                           int starValue = index + 1;
                           return IconButton(
                             icon: Icon(
-                              starValue <= _selectedRating ? Icons.star : Icons.star_border,
+                              starValue <= _selectedRating
+                                  ? Icons.star
+                                  : Icons.star_border,
                               size: 40,
                             ),
-                            color: starValue <= _selectedRating 
-                                ? const Color(0xFFF1C40F) // Vibrant Golden Star Color
+                            color: starValue <= _selectedRating
+                                ? const Color(0xFFF1C40F)
                                 : theme.colorScheme.onSurface.withOpacity(0.3),
                             onPressed: () {
                               setState(() {
@@ -132,8 +138,12 @@ class _ReviewPageState extends State<ReviewPage> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "ઝડપી પ્રતિસાદ (Quick Tags)",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface),
+                  l10n.grid_review,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -148,11 +158,17 @@ class _ReviewPageState extends State<ReviewPage> {
                     selectedColor: theme.colorScheme.primary.withOpacity(0.2),
                     backgroundColor: theme.cardTheme.color,
                     labelStyle: TextStyle(
-                      color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.onSurface,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                     ),
                     side: BorderSide(
-                      color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.15),
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.onSurface.withOpacity(0.15),
                     ),
                     onSelected: (selected) {
                       setState(() {
@@ -174,8 +190,12 @@ class _ReviewPageState extends State<ReviewPage> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "તમારો વિગતવાર સંદેશ લખો (Detailed Review)",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface),
+                  l10n.grid_review,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -184,17 +204,24 @@ class _ReviewPageState extends State<ReviewPage> {
                 maxLines: 5,
                 style: TextStyle(color: theme.colorScheme.onSurface),
                 decoration: InputDecoration(
-                  hintText: "અહીં તમારો કિંમતી અભિપ્રાય લખો (Type your feedback here...)",
-                  hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
+                  hintText: l10n.search_placeholder,
+                  hintStyle: TextStyle(
+                    color: theme.colorScheme.onSurface.withOpacity(0.4),
+                  ),
                   filled: true,
                   fillColor: theme.cardTheme.color,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: theme.colorScheme.primary, width: 2),
+                    borderSide: BorderSide(
+                      color: theme.colorScheme.primary,
+                      width: 2,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: theme.colorScheme.onSurface.withOpacity(0.15)),
+                    borderSide: BorderSide(
+                      color: theme.colorScheme.onSurface.withOpacity(0.15),
+                    ),
                   ),
                 ),
               ),
@@ -214,14 +241,17 @@ class _ReviewPageState extends State<ReviewPage> {
                     ),
                     elevation: 3,
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.send_rounded, size: 20),
-                      SizedBox(width: 10),
+                      const Icon(Icons.send_rounded, size: 20),
+                      const SizedBox(width: 10),
                       Text(
-                        "સબમિટ કરો (Submit Feedback)",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        l10n.btn_submit,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
