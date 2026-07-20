@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/screen/Home%20Screen/homeScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/language%20Screen/app_lan.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Spleshscreen extends StatefulWidget {
   const Spleshscreen({super.key});
@@ -12,13 +14,21 @@ class _SpleshscreenState extends State<Spleshscreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  bool lange = false;
 
   void Navigate() async {
     await Future.delayed(Duration(seconds: 3));
 
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (context) => LanguageSelectionPage()));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => lange ? LanguageSelectionPage() : HomePage(),
+      ),
+    );
+  }
+
+  void lang() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    lange = sp.getBool('language_select') ?? false;
   }
 
   @override

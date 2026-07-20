@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pushtidham/Provider/theme_manager.dart';
 import 'package:pushtidham/screen/Home%20Screen/homeScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,14 +12,13 @@ class LanguageSelectionPage extends StatefulWidget {
 }
 
 class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
-  // Available language choices mapped to text representations
   final List<Map<String, String>> _languages = [
     {"name": "ગુજરાતી", "sub": "Gujarati"},
     {"name": "English", "sub": "English"},
     {"name": "हिन्दी", "sub": "Hindi"},
   ];
 
-  int _selectedLanguageIndex = 0; // Default selection: Gujarati
+  int _selectedLanguageIndex = 0; // Default selection: Gujarati (index 0)
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
             children: [
               const SizedBox(height: 30),
 
-              // Top Divine Symbol Banner
+              // Top Divine Symbol
               CircleAvatar(
                 radius: 40,
                 backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
@@ -48,7 +49,6 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
               ),
               const SizedBox(height: 24),
 
-              // Headers
               Text(
                 "ભાષા પસંદ કરો",
                 style: TextStyle(
@@ -67,7 +67,7 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
               ),
               const SizedBox(height: 32),
 
-              // Language List Builder
+              // Language Cards
               Expanded(
                 child: ListView.builder(
                   itemCount: _languages.length,
@@ -146,17 +146,23 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
                 ),
               ),
 
-              // Bottom Action Trigger
+              // Action Button
               SizedBox(
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
                   onPressed: () async {
+                    // Update language live and save index to SharedPreferences
+                    Provider.of<ThemeManager>(
+                      context,
+                      listen: false,
+                    ).changeLanguage(_selectedLanguageIndex);
+
                     SharedPreferences sp =
                         await SharedPreferences.getInstance();
-                      await sp.setInt('lan_any', _selectedLanguageIndex);
+                    sp.setBool('language_select', true);
 
-                    // Navigate to home and replace the stack so the user cannot back into this screen
+                    // Navigate to Home Page
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const HomePage()),

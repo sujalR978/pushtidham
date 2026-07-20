@@ -10,37 +10,28 @@ import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/offlineContantScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final TextEditingController _searchController = TextEditingController();
-
-  // Grid Data matching your image items
-  final List<Map<String, dynamic>> gridItems = [
-    {"title": "શ્રી મહાપ્રભુજી વિશે", "icon": Icons.person},
-    {"title": "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી", "icon": Icons.grid_view},
-    {"title": "કિર્તન", "icon": Icons.queue_music},
-    {"title": "પાઠાવલી (ષોડશ ગ્રંથ)", "icon": Icons.menu_book},
-    {"title": "ટિપ્પણી (Calendar)", "icon": Icons.calendar_month},
-    {"title": "જપ માળા (Counter)", "icon": Icons.ads_click},
-    {"title": "૮૪ વૈષ્ણવની વાર્તા", "icon": Icons.rate_review},
-    {
-      "title": "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)",
-      "icon": Icons.chrome_reader_mode,
-    },
-    {"title": "૨૫૨ વૈષ્ણવની વાર્તા", "icon": Icons.menu_book_outlined},
-    {"title": "અભિપ્રાય (Review)", "icon": Icons.comment},
-    {"title": "સંપર્ક (Contant)", "icon": Icons.contact_phone},
-  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final TextEditingController searchController = TextEditingController();
+
+    // Grid Items Configuration
+    final List<Map<String, dynamic>> gridItems = [
+      {"title": "શ્રી મહાપ્રભુજી વિશે", "icon": Icons.person, "screen": const AboutMahaprabhujiPage()},
+      {"title": "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી", "icon": Icons.grid_view, "screen": const JapMalaScreen()},
+      {"title": "કિર્તન", "icon": Icons.queue_music, "screen": const JapMalaScreen()},
+      {"title": "પાઠાવલી (ષોડશ ગ્રંથ)", "icon": Icons.menu_book, "screen": const JapMalaScreen()},
+      {"title": "ટિપ્પણી (Calendar)", "icon": Icons.calendar_month, "screen": const JapMalaScreen()},
+      {"title": "જપ માળા (Counter)", "icon": Icons.ads_click, "screen": const JapMalaScreen()},
+      {"title": "૮૪ વૈષ્ણવની વાર્તા", "icon": Icons.rate_review, "screen": const JapMalaScreen()},
+      {"title": "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)", "icon": Icons.chrome_reader_mode, "screen": const JapMalaScreen()},
+      {"title": "૨૫૨ વૈષ્ણવની વાર્તા", "icon": Icons.menu_book_outlined, "screen": const JapMalaScreen()},
+      {"title": "અભિપ્રાય (Review)", "icon": Icons.comment, "screen": const ReviewPage()},
+      {"title": "સંપર્ક (Contant)", "icon": Icons.contact_phone, "screen": const ContactPage()},
+    ];
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -56,14 +47,14 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.bookmark_border),
             onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (context) => FavoritesPage()));
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const FavoritesPage()),
+              );
             },
           ),
         ],
       ),
-      // 1. DRAWER MENU STRUCTURE (Matching your reference image structure)
+      // Drawer Menu
       drawer: Drawer(
         backgroundColor: theme.colorScheme.surface,
         child: ListView(
@@ -76,11 +67,9 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: theme.colorScheme.onPrimary.withOpacity(
-                      0.2,
-                    ),
+                    backgroundColor: theme.colorScheme.onPrimary.withOpacity(0.2),
                     child: Text(
-                      "ૐ", // You can use "ॐ" for Hindi/Devanagari style or "ૐ" for Gujarati style
+                      "ૐ",
                       style: TextStyle(
                         fontSize: 60,
                         fontWeight: FontWeight.bold,
@@ -115,8 +104,9 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => FavoritesPage()),
+                  MaterialPageRoute(builder: (context) => const FavoritesPage()),
                 );
               },
             ),
@@ -127,9 +117,10 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (context) => NotesPage()));
+                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const NotesPage()),
+                );
               },
             ),
             ListTile(
@@ -142,9 +133,10 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (context) => GalleryPage()));
+                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const GalleryPage()),
+                );
               },
             ),
             ListTile(
@@ -157,8 +149,9 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OfflineContentPage()),
+                  MaterialPageRoute(builder: (context) => const OfflineContentPage()),
                 );
               },
             ),
@@ -173,8 +166,9 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: theme.colorScheme.onSurface),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
                 );
               },
             ),
@@ -183,12 +177,12 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          // 2. GLOBAL SEARCH BAR IMPLEMENTATION
+          // Search Bar
           Container(
             padding: const EdgeInsets.all(12.0),
             color: theme.colorScheme.primary,
             child: TextField(
-              controller: _searchController,
+              controller: searchController,
               decoration: InputDecoration(
                 hintText: "શોધો (Search content...)",
                 hintStyle: TextStyle(
@@ -207,13 +201,10 @@ class _HomePageState extends State<HomePage> {
                 contentPadding: const EdgeInsets.symmetric(vertical: 0),
               ),
               style: TextStyle(color: theme.colorScheme.onPrimary),
-              onChanged: (value) {
-                // Implement search logic filtering grid items here
-              },
             ),
           ),
 
-          // Quick Access Mini-Bar for Personalization Features
+          // Quick Access Chips Bar
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
@@ -228,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                   "ગેલેરી (Gallery)",
                   () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => GalleryPage()),
+                      MaterialPageRoute(builder: (context) => const GalleryPage()),
                     );
                   },
                 ),
@@ -239,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                   () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => OfflineContentPage(),
+                        builder: (context) => const OfflineContentPage(),
                       ),
                     );
                   },
@@ -250,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                   "નોંધો (Notes)",
                   () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => NotesPage()),
+                      MaterialPageRoute(builder: (context) => const NotesPage()),
                     );
                   },
                 ),
@@ -258,7 +249,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // 3. GRID CONTENT AREA (Matching layout structure of the reference image)
+          // Grid View Content Area
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(12),
@@ -278,78 +269,10 @@ class _HomePageState extends State<HomePage> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
-                      if (item["title"] == "શ્રી મહાપ્રભુજી વિશે") {
+                      if (item["screen"] != null) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => AboutMahaprabhujiPage(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "કિર્તન") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "પાઠાવલી (ષોડશ ગ્રંથ)") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "ટિપ્પણી (Calendar)") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "જપ માળા (Counter)") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "૨૫૨ વૈષ્ણવની વાર્તા") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => JapMalaScreen(),
-                          ),
-                        );
-                      }
-                      if (item["title"] == "અભિપ્રાય (Review)") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ReviewPage()),
-                        );
-                      }
-                      if (item["title"] == "સંપર્ક (Contant)") {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ContactPage(),
+                            builder: (context) => item["screen"],
                           ),
                         );
                       }
@@ -395,7 +318,7 @@ class _HomePageState extends State<HomePage> {
     BuildContext context,
     IconData icon,
     String label,
-    VoidCallback onpressed,
+    VoidCallback onPressed,
   ) {
     final theme = Theme.of(context);
     return ActionChip(
@@ -406,7 +329,7 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: theme.colorScheme.primary.withOpacity(0.08),
       side: BorderSide(color: theme.colorScheme.primary.withOpacity(0.2)),
-      onPressed: onpressed,
+      onPressed: onPressed,
     );
   }
 }
