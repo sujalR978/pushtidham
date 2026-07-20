@@ -4,6 +4,7 @@ import 'package:pushtidham/Provider/theme_manager.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/screen/Splesh%20Screen/spleshScreen.dart';
 import 'package:pushtidham/theme/app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(
@@ -22,6 +23,15 @@ class MyApp extends StatelessWidget {
     ThemeData lightTarget;
     ThemeData darkTarget;
     ThemeMode activeSystemMode;
+    final List<String> lan = ['gu', 'en', 'hi'];
+    int language = 0; // default to English index
+
+    void getdata() async {
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      language = sp.getInt('lan_any') ?? 0;
+    }
+
+  
 
     // Direct all configurations to populate target light/dark themes and the mode
     switch (themeManager.CurrentTheme) {
@@ -53,7 +63,7 @@ class MyApp extends StatelessWidget {
       theme: lightTarget, // Applies when phone is in light mode
       darkTheme: darkTarget, // Applies when phone is in dark mode
       themeMode: activeSystemMode, // Controls system tracking behavior
-      locale: Locale('en'),
+      locale: Locale(lan[language]),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const Spleshscreen(),

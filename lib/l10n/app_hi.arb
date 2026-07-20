@@ -1,3 +1,51 @@
 {
-    "language" : "hindi"
+  "app_title": "पुष्टिधाम",
+  "welcome_tagline": "जय श्री कृष्ण",
+  "connecting": "दिव्यता से जुड़ रहे हैं...",
+  "select_language": "भाषा चुनें",
+  "continue_btn": "आगे बढ़ें",
+  "search_placeholder": "खोजें...",
+  
+  "nav_home": "होम",
+  "nav_favorites": "मेरे पसंदीदा",
+  "nav_notes": "व्यक्तिगत नोट्स",
+  "nav_gallery": "मीडिया गैलरी",
+  "nav_offline": "ऑफ़लाइन सामग्री",
+  "nav_settings": "सेटिंग्स",
+  
+  "grid_about_mahaprabhuji": "श्री महाप्रभुजी के बारे में",
+  "grid_bethakji_list": "श्री महाप्रभुजी बैठकजी सूची",
+  "grid_kirtan": "कीर्तन",
+  "grid_pathavali": "पाठावली (षोडश ग्रंथ)",
+  "grid_jap_mala": "जप माला काउंटर",
+  "grid_calendar": "टिप्पणी (कैलेंडर)",
+  "grid_84_vaishnav": "८४ वैष्णवन की वार्ता",
+  "grid_84_vaishnav_vraj": "८४ वैष्णवन की वार्ता (व्रज भाषा)",
+  "grid_252_vaishnav": "२५२ वैष्णवन की वार्ता",
+  "grid_review": "समीक्षा",
+  "grid_contact": "संपर्क करें",
+
+  "theme_settings": "थीम सेटिंग्स",
+  "theme_system": "सिस्टम डिफ़ॉल्ट",
+  "theme_day": "सूर्योदय सिंहासन (दिन)",
+  "theme_night": "अर्धरात्रि ध्यान (रात)",
+  "theme_mandir": "पावन मंदिर थीम (पारंपरिक)",
+
+  "jap_active_mantra": "मंत्र",
+  "jap_default_mantra": "श्री कृष्णः शरणं मम",
+  "jap_bead_count": "मनका",
+  "jap_total_mala": "कुल माला",
+  "jap_tap_here": "जप करें",
+  "jap_reset_title": "रीसेट करें?",
+  "jap_reset_msg": "क्या आप जप काउंटर शून्य करना चाहते हैं?",
+  "jap_completed_msg": "जय श्री कृष्ण! १ माला पूर्ण हुई। 🙏",
+
+  "btn_submit": "सबमिट करें",
+  "btn_open": "खोलें",
+  "btn_delete": "हटाएं",
+  "btn_read": "पढ़ें",
+  "btn_play": "चलाएं",
+  "btn_yes": "हाँ",
+  "btn_no": "नहीं",
+  "btn_undo": "पूर्ववत करें"
 }

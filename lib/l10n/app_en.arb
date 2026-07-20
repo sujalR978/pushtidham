@@ -1,3 +1,51 @@
 {
-    "language" : "English"
+  "app_title": "Pustidham",
+  "welcome_tagline": "Jai Shree Krishna",
+  "connecting": "Connecting to Divinity...",
+  "select_language": "Select Language",
+  "continue_btn": "Continue",
+  "search_placeholder": "Search content...",
+  
+  "nav_home": "Home",
+  "nav_favorites": "Favorites",
+  "nav_notes": "Personal Notes",
+  "nav_gallery": "Media Gallery",
+  "nav_offline": "Offline Content",
+  "nav_settings": "Settings",
+  
+  "grid_about_mahaprabhuji": "About Shri Mahaprabhuji",
+  "grid_bethakji_list": "Shri Mahaprabhuji Bethakji List",
+  "grid_kirtan": "Kirtan",
+  "grid_pathavali": "Pathavali (Shodash Granth)",
+  "grid_jap_mala": "Jap Mala Counter",
+  "grid_calendar": "Calendar (Tippani)",
+  "grid_84_vaishnav": "84 Vaishnav Varta",
+  "grid_84_vaishnav_vraj": "84 Vaishnav Varta (Vraj Bhasha)",
+  "grid_252_vaishnav": "252 Vaishnav Varta",
+  "grid_review": "Review",
+  "grid_contact": "Contact",
+
+  "theme_settings": "Theme Settings",
+  "theme_system": "System Default",
+  "theme_day": "Saffron Dawn (Day)",
+  "theme_night": "Midnight Dhyaan (Night)",
+  "theme_mandir": "Sandstone Mandir (Traditional)",
+
+  "jap_active_mantra": "Active Mantra",
+  "jap_default_mantra": "Shri Krishna Sharanam Mamah",
+  "jap_bead_count": "Beads",
+  "jap_total_mala": "Total Mala",
+  "jap_tap_here": "TAP HERE",
+  "jap_reset_title": "Reset Counter?",
+  "jap_reset_msg": "Are you sure you want to reset the counter to zero?",
+  "jap_completed_msg": "Jai Shree Krishna! 1 Mala completed. 🙏",
+
+  "btn_submit": "Submit",
+  "btn_open": "Open",
+  "btn_delete": "Delete",
+  "btn_read": "Read",
+  "btn_play": "Play",
+  "btn_yes": "Yes",
+  "btn_no": "No",
+  "btn_undo": "Undo"
 }

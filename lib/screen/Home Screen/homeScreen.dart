@@ -45,7 +45,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.language,
+        title: Text(
+          AppLocalizations.of(context)!.app_title,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.primary,

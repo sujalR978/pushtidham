@@ -1,3 +1,51 @@
 {
-    "language" : "gujarati"
+  "app_title": "પુષ્ટિધામ",
+  "welcome_tagline": "જય શ્રી કૃષ્ણ",
+  "connecting": "દિવ્યતા સાથે જોડાઈ રહ્યું છે...",
+  "select_language": "ભાષા પસંદ કરો",
+  "continue_btn": "આગળ વધો",
+  "search_placeholder": "શોધો...",
+  
+  "nav_home": "હોમ",
+  "nav_favorites": "મારા મનપસંદ",
+  "nav_notes": "વ્યક્તિગત નોંધો",
+  "nav_gallery": "મીડિયા ગેલેરી",
+  "nav_offline": "ઓફલાઇન કન્ટેન્ટ",
+  "nav_settings": "સેટીંગ્સ",
+  
+  "grid_about_mahaprabhuji": "શ્રી મહાપ્રભુજી વિશે",
+  "grid_bethakji_list": "શ્રી મહાપ્રભુજીના બેઠકજી ની યાદી",
+  "grid_kirtan": "કિર્તન",
+  "grid_pathavali": "પાઠાવલી (ષોડશ ગ્રંથ)",
+  "grid_jap_mala": "જપ માળા કાઉન્ટર",
+  "grid_calendar": "ટિપ્પણી (Calendar)",
+  "grid_84_vaishnav": "૮૪ વૈષ્ણવની વાર્તા",
+  "grid_84_vaishnav_vraj": "૮૪ વૈષ્ણવની વાર્તા (વ્રજ ભાષા)",
+  "grid_252_vaishnav": "૨૫૨ વૈષ્ણવની વાર્તા",
+  "grid_review": "અભિપ્રાય",
+  "grid_contact": "સંપર્ક",
+
+  "theme_settings": "થીમ સેટિંગ્સ",
+  "theme_system": "સિસ્ટમ પ્રમાણે",
+  "theme_day": "સૂર્યોદય સિંહાસન (દિવસ)",
+  "theme_night": "અર્ધરાત્રિ ધ્યાન (રાત્રિ)",
+  "theme_mandir": "પાવન મંદિર થીમ (પરંપરાગત)",
+
+  "jap_active_mantra": "મંત્ર",
+  "jap_default_mantra": "શ્રી કૃષ્ણઃ શરણં મમ",
+  "jap_bead_count": "મણકો",
+  "jap_total_mala": "કુલ માળા",
+  "jap_tap_here": "જાપ કરો",
+  "jap_reset_title": "રીસેટ કરો?",
+  "jap_reset_msg": "શું તમે જાપ કાઉન્ટર શૂન્ય કરવા માંગો છો?",
+  "jap_completed_msg": "જય શ્રી કૃષ્ણ! ૧ માળા પૂર્ણ થઈ. 🙏",
+
+  "btn_submit": "સબમિટ કરો",
+  "btn_open": "ખોલો",
+  "btn_delete": "કાઢી નાખો",
+  "btn_read": "વાંચો",
+  "btn_play": "ચલાવો",
+  "btn_yes": "હા",
+  "btn_no": "ના",
+  "btn_undo": "પૂર્વવત્ કરો"
 }

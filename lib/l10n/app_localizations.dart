@@ -100,11 +100,269 @@ abstract class AppLocalizations {
     Locale('hi'),
   ];
 
-  /// No description provided for @language.
+  /// No description provided for @app_title.
   ///
   /// In en, this message translates to:
-  /// **'English'**
-  String get language;
+  /// **'Pustidham'**
+  String get app_title;
+
+  /// No description provided for @welcome_tagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Jai Shree Krishna'**
+  String get welcome_tagline;
+
+  /// No description provided for @connecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to Divinity...'**
+  String get connecting;
+
+  /// No description provided for @select_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get select_language;
+
+  /// No description provided for @continue_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continue_btn;
+
+  /// No description provided for @search_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search content...'**
+  String get search_placeholder;
+
+  /// No description provided for @nav_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get nav_home;
+
+  /// No description provided for @nav_favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get nav_favorites;
+
+  /// No description provided for @nav_notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Notes'**
+  String get nav_notes;
+
+  /// No description provided for @nav_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Media Gallery'**
+  String get nav_gallery;
+
+  /// No description provided for @nav_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Content'**
+  String get nav_offline;
+
+  /// No description provided for @nav_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get nav_settings;
+
+  /// No description provided for @grid_about_mahaprabhuji.
+  ///
+  /// In en, this message translates to:
+  /// **'About Shri Mahaprabhuji'**
+  String get grid_about_mahaprabhuji;
+
+  /// No description provided for @grid_bethakji_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Shri Mahaprabhuji Bethakji List'**
+  String get grid_bethakji_list;
+
+  /// No description provided for @grid_kirtan.
+  ///
+  /// In en, this message translates to:
+  /// **'Kirtan'**
+  String get grid_kirtan;
+
+  /// No description provided for @grid_pathavali.
+  ///
+  /// In en, this message translates to:
+  /// **'Pathavali (Shodash Granth)'**
+  String get grid_pathavali;
+
+  /// No description provided for @grid_jap_mala.
+  ///
+  /// In en, this message translates to:
+  /// **'Jap Mala Counter'**
+  String get grid_jap_mala;
+
+  /// No description provided for @grid_calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar (Tippani)'**
+  String get grid_calendar;
+
+  /// No description provided for @grid_84_vaishnav.
+  ///
+  /// In en, this message translates to:
+  /// **'84 Vaishnav Varta'**
+  String get grid_84_vaishnav;
+
+  /// No description provided for @grid_84_vaishnav_vraj.
+  ///
+  /// In en, this message translates to:
+  /// **'84 Vaishnav Varta (Vraj Bhasha)'**
+  String get grid_84_vaishnav_vraj;
+
+  /// No description provided for @grid_252_vaishnav.
+  ///
+  /// In en, this message translates to:
+  /// **'252 Vaishnav Varta'**
+  String get grid_252_vaishnav;
+
+  /// No description provided for @grid_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get grid_review;
+
+  /// No description provided for @grid_contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get grid_contact;
+
+  /// No description provided for @theme_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Settings'**
+  String get theme_settings;
+
+  /// No description provided for @theme_system.
+  ///
+  /// In en, this message translates to:
+  /// **'System Default'**
+  String get theme_system;
+
+  /// No description provided for @theme_day.
+  ///
+  /// In en, this message translates to:
+  /// **'Saffron Dawn (Day)'**
+  String get theme_day;
+
+  /// No description provided for @theme_night.
+  ///
+  /// In en, this message translates to:
+  /// **'Midnight Dhyaan (Night)'**
+  String get theme_night;
+
+  /// No description provided for @theme_mandir.
+  ///
+  /// In en, this message translates to:
+  /// **'Sandstone Mandir (Traditional)'**
+  String get theme_mandir;
+
+  /// No description provided for @jap_active_mantra.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Mantra'**
+  String get jap_active_mantra;
+
+  /// No description provided for @jap_default_mantra.
+  ///
+  /// In en, this message translates to:
+  /// **'Shri Krishna Sharanam Mamah'**
+  String get jap_default_mantra;
+
+  /// No description provided for @jap_bead_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Beads'**
+  String get jap_bead_count;
+
+  /// No description provided for @jap_total_mala.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Mala'**
+  String get jap_total_mala;
+
+  /// No description provided for @jap_tap_here.
+  ///
+  /// In en, this message translates to:
+  /// **'TAP HERE'**
+  String get jap_tap_here;
+
+  /// No description provided for @jap_reset_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Counter?'**
+  String get jap_reset_title;
+
+  /// No description provided for @jap_reset_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reset the counter to zero?'**
+  String get jap_reset_msg;
+
+  /// No description provided for @jap_completed_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Jai Shree Krishna! 1 Mala completed. 🙏'**
+  String get jap_completed_msg;
+
+  /// No description provided for @btn_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get btn_submit;
+
+  /// No description provided for @btn_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get btn_open;
+
+  /// No description provided for @btn_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get btn_delete;
+
+  /// No description provided for @btn_read.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get btn_read;
+
+  /// No description provided for @btn_play.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get btn_play;
+
+  /// No description provided for @btn_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get btn_yes;
+
+  /// No description provided for @btn_no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get btn_no;
+
+  /// No description provided for @btn_undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get btn_undo;
 }
 
 class _AppLocalizationsDelegate

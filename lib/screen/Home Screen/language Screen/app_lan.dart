@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/screen/Home%20Screen/homeScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageSelectionPage extends StatefulWidget {
   const LanguageSelectionPage({super.key});
@@ -12,7 +13,6 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
   // Available language choices mapped to text representations
   final List<Map<String, String>> _languages = [
     {"name": "ગુજરાતી", "sub": "Gujarati"},
-    {"name": "ગુજરાતી (વ્રજ ભાષા)", "sub": "Vraj Bhasha"},
     {"name": "English", "sub": "English"},
     {"name": "हिन्दी", "sub": "Hindi"},
   ];
@@ -32,7 +32,7 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 30),
-              
+
               // Top Divine Symbol Banner
               CircleAvatar(
                 radius: 40,
@@ -82,15 +82,22 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
                           });
                         },
                         style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                          backgroundColor: isSelected 
-                              ? theme.colorScheme.primary.withOpacity(0.06) 
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          backgroundColor: isSelected
+                              ? theme.colorScheme.primary.withOpacity(0.06)
                               : theme.cardTheme.color,
                           side: BorderSide(
-                            color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.12),
+                            color: isSelected
+                                ? theme.colorScheme.primary
+                                : theme.colorScheme.onSurface.withOpacity(0.12),
                             width: isSelected ? 2.0 : 1.0,
                           ),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,15 +118,26 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
                                   _languages[index]["sub"]!,
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: theme.colorScheme.onSurface.withOpacity(0.5),
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.5),
                                   ),
                                 ),
                               ],
                             ),
                             if (isSelected)
-                              Icon(Icons.check_circle, color: theme.colorScheme.primary, size: 24)
+                              Icon(
+                                Icons.check_circle,
+                                color: theme.colorScheme.primary,
+                                size: 24,
+                              )
                             else
-                              Icon(Icons.circle_outlined, color: theme.colorScheme.onSurface.withOpacity(0.2), size: 24),
+                              Icon(
+                                Icons.circle_outlined,
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.2,
+                                ),
+                                size: 24,
+                              ),
                           ],
                         ),
                       ),
@@ -133,7 +151,11 @@ class _LanguageSelectionPageState extends State<LanguageSelectionPage> {
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    SharedPreferences sp =
+                        await SharedPreferences.getInstance();
+                      await sp.setInt('lan_any', _selectedLanguageIndex);
+
                     // Navigate to home and replace the stack so the user cannot back into this screen
                     Navigator.pushReplacement(
                       context,
