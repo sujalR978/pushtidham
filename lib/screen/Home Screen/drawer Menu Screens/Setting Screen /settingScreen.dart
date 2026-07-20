@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pushtidham/Provider/theme_manager.dart';
-import 'package:pushtidham/screen/Home%20Screen/homeScreen.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  // Temporary variable to show language selection logic
-  String _currentLanguage = "ગુજરાતી (Gujarati)";
+  // Helper to map Locale code to human-readable string
+  String _getLanguageLabel(String languageCode) {
+    switch (languageCode) {
+      case 'en':
+        return "English";
+      case 'hi':
+        return "हिन्दी (Hindi)";
+      case 'gu':
+      default:
+        return "ગુજરાતી (Gujarati)";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final themeManager = Provider.of<ThemeManager>(context);
+
+    // Current language display string based on Provider's active locale
+    final currentLanguageText = _getLanguageLabel(
+      themeManager.appLocale.languageCode,
+    );
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -30,9 +39,9 @@ class _SettingsPageState extends State<SettingsPage> {
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomePage()),
-          ), // Fixed navigation stack buildup
+          onPressed: () => Navigator.of(
+            context,
+          ).pop(), // Pop to go back cleanly without rebuilding HomePage
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
         ),
       ),
@@ -110,14 +119,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               subtitle: Text(
-                _currentLanguage,
+                currentLanguageText,
                 style: TextStyle(
                   color: theme.colorScheme.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () => _showLanguagePicker(context),
+              onTap: () => _showLanguagePicker(context, themeManager),
             ),
           ),
         ],
@@ -148,7 +157,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Visual Custom Card design for Theme choices
+  // Custom Card design for Theme choices
   Widget _buildThemeCard({
     required BuildContext context,
     required String title,
@@ -216,10 +225,16 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Elegant Language selection slideup bottom sheet
-  void _showLanguagePicker(BuildContext context) {
+  // Language selection slide-up bottom sheet linked to Provider
+  void _showLanguagePicker(BuildContext context, ThemeManager themeManager) {
     final theme = Theme.of(context);
-    final languages = ["ગુજરાતી (Gujarati)", "English", "हिन्दी (Hindi)"];
+
+    // Mapped languages matching indices [0: 'gu', 1: 'en', 2: 'hi']
+    final languages = [
+      {"label": "ગુજરાતી (Gujarati)", "index": 0, "code": "gu"},
+      {"label": "English", "index": 1, "code": "en"},
+      {"label": "हिन्दी (Hindi)", "index": 2, "code": "hi"},
+    ];
 
     showModalBottomSheet(
       context: context,
@@ -245,11 +260,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const SizedBox(height: 12),
                 const Divider(),
-                ...languages.map((lang) {
-                  final isCurrent = lang == _currentLanguage;
+                ...languages.map((langMap) {
+                  final int index = langMap["index"] as int;
+                  final String code = langMap["code"] as String;
+                  final String label = langMap["label"] as String;
+                  final isCurrent = themeManager.appLocale.languageCode == code;
+
                   return ListTile(
                     title: Text(
-                      lang,
+                      label,
                       style: TextStyle(
                         fontWeight: isCurrent
                             ? FontWeight.bold
@@ -266,9 +285,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           )
                         : null,
                     onTap: () {
-                      setState(() {
-                        _currentLanguage = lang;
-                      });
+                      // Call ThemeManager to update live app locale & write to SharedPreferences
+                      themeManager.changeLanguage(index);
                       Navigator.pop(context);
                     },
                   );

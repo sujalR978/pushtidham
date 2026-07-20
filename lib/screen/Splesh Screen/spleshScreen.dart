@@ -21,7 +21,7 @@ class _SpleshscreenState extends State<Spleshscreen>
 
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => lange ? LanguageSelectionPage() : HomePage(),
+        builder: (context) => lange ? HomePage() : LanguageSelectionPage(),
       ),
     );
   }
@@ -34,6 +34,7 @@ class _SpleshscreenState extends State<Spleshscreen>
   @override
   void initState() {
     super.initState();
+    lang();
 
     // Set up a smooth 2-second fade-in animation for the logo and text
     _animationController = AnimationController(
