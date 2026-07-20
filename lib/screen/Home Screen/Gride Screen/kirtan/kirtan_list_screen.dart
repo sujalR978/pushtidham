@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/kirtan_model.dart';
 import 'package:pushtidham/screen/Home Screen/Gride Screen/kirtan/kirtan_detail_screen.dart';
+
 class KirtanListPage extends StatefulWidget {
   const KirtanListPage({super.key});
 
@@ -107,9 +108,11 @@ class _KirtanListPageState extends State<KirtanListPage> {
         _filteredKirtans = _allKirtans;
       } else {
         _filteredKirtans = _allKirtans
-            .where((item) =>
-                item.title.toLowerCase().contains(query.toLowerCase()) ||
-                item.number.contains(query))
+            .where(
+              (item) =>
+                  item.title.toLowerCase().contains(query.toLowerCase()) ||
+                  item.number.contains(query),
+            )
             .toList();
       }
     });
@@ -160,7 +163,10 @@ class _KirtanListPageState extends State<KirtanListPage> {
                   ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: theme.colorScheme.onPrimary),
+                          icon: Icon(
+                            Icons.clear,
+                            color: theme.colorScheme.onPrimary,
+                          ),
                           onPressed: () {
                             _searchController.clear();
                             _filterKirtan('');
@@ -194,7 +200,9 @@ class _KirtanListPageState extends State<KirtanListPage> {
                           Text(
                             l10n.search_placeholder,
                             style: TextStyle(
-                              color: theme.colorScheme.onSurface.withOpacity(0.4),
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.4,
+                              ),
                             ),
                           ),
                         ],
@@ -202,10 +210,8 @@ class _KirtanListPageState extends State<KirtanListPage> {
                     )
                   : ListView.separated(
                       itemCount: _filteredKirtans.length,
-                      separatorBuilder: (context, index) => const Divider(
-                        height: 1,
-                        thickness: 0.8,
-                      ),
+                      separatorBuilder: (context, index) =>
+                          const Divider(height: 1, thickness: 0.8),
                       itemBuilder: (context, index) {
                         final kirtan = _filteredKirtans[index];
                         return ListTile(
