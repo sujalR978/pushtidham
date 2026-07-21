@@ -3,7 +3,7 @@ import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_list_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/jupMalaCounter.dart';
-import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/kirtan/kirtan_detail_screen.dart';
+
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/kirtan/kirtan_list_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
