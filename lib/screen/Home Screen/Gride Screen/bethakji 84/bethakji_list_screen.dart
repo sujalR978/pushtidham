@@ -68,36 +68,7 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
       directions: 'ગોકુળ સ્થિત ઠકુરાણી ઘાટ પાસે.',
       rules: ['ઝારીજી ભરવા માટે યોગ્ય નિયમોનું પાલન કરવું.'],
     ),
-    BethakjiModel(
-      id: '3',
-      number: '૦૩',
-      name: 'શ્રીમદ ગોકુળ ત્રીજી બેઠક - શ્રી મહાપ્રભુજી બેઠકજી',
-      address: 'ગોકુળ, મથુરા',
-      contacts: [],
-      mahatmy: 'શ્રીમદ ગોકુળ ત્રીજી બેઠક મહાત્મ્ય',
-      directions: 'ગોકુળ, મથુરા',
-      rules: [],
-    ),
-    BethakjiModel(
-      id: '4',
-      number: '૦૪',
-      name: 'બંસીબટ (વૃંદાવન) - શ્રી મહાપ્રભુજી બેઠકજી',
-      address: 'બંસીબટ, વૃંદાવન',
-      contacts: [],
-      mahatmy: 'બંસીબટ કથા અને મહાત્મ્ય',
-      directions: 'વૃંદાવન',
-      rules: [],
-    ),
-    BethakjiModel(
-      id: '5',
-      number: '૦૫',
-      name: 'વિશ્રામઘાટ - શ્રી મહાપ્રભુજી બેઠકજી',
-      address: 'વિશ્રામઘાટ, મથુરા',
-      contacts: [],
-      mahatmy: 'મથુરા વિશ્રામઘાટ સ્થાન',
-      directions: 'મથુરા',
-      rules: [],
-    ),
+   
   ];
 
   List<BethakjiModel> _filteredList = [];

@@ -73,15 +73,19 @@ class BethakjiDetailPage extends StatelessWidget {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(Icons.phone,
-                                    color: theme.colorScheme.primary),
+                                icon: Icon(
+                                  Icons.phone,
+                                  color: theme.colorScheme.primary,
+                                ),
                                 onPressed: () {
                                   // Call logic
                                 },
                               ),
                               IconButton(
-                                icon: Icon(Icons.chat_bubble_outline,
-                                    color: theme.colorScheme.primary),
+                                icon: Icon(
+                                  Icons.chat_bubble_outline,
+                                  color: theme.colorScheme.primary,
+                                ),
                                 onPressed: () {
                                   // Message logic
                                 },
