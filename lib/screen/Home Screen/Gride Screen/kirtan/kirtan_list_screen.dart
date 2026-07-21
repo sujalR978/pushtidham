@@ -237,7 +237,7 @@ class _KirtanListPageState extends State<KirtanListPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    KirtanDetailPage(kirtan: kirtan),
+                                    KirtanDetailPage(kirtanList: _filteredKirtans, initialIndex: index),
                               ),
                             );
                           },
