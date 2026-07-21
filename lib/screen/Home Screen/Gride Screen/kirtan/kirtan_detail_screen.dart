@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pushtidham/l10n/app_localizations.dart';
+
 import 'package:pushtidham/model/kirtan_model.dart';
 
 class KirtanDetailPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _KirtanDetailPageState extends State<KirtanDetailPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+   
     final currentKirtan = widget.kirtanList[_currentIndex];
 
     return Scaffold(
