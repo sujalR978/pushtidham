@@ -7,11 +7,14 @@ import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/kirtan/kirtan_det
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/kirtan/kirtan_list_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/calander/calendar_page.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/galleryScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/notesScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/offlineContantScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_list.dart';
+import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -42,12 +45,12 @@ class HomePage extends StatelessWidget {
       {
         "title": l10n.grid_pathavali,
         "icon": Icons.menu_book,
-        "screen": const JapMalaScreen(),
+        "screen": const PathavaliListPage(),
       },
       {
         "title": l10n.grid_calendar,
         "icon": Icons.calendar_month,
-        "screen": const JapMalaScreen(),
+        "screen": const TippaniCalendarPage(),
       },
       {
         "title": l10n.grid_jap_mala,
@@ -57,17 +60,17 @@ class HomePage extends StatelessWidget {
       {
         "title": l10n.grid_84_vaishnav,
         "icon": Icons.rate_review,
-        "screen": const JapMalaScreen(),
+        "screen": const ChorasiVartaListPage(),
       },
       {
         "title": l10n.grid_84_vaishnav_vraj,
         "icon": Icons.chrome_reader_mode,
-        "screen": const JapMalaScreen(),
+        "screen": const ChorasiVartaListPage(),
       },
       {
         "title": l10n.grid_252_vaishnav,
         "icon": Icons.menu_book_outlined,
-        "screen": const JapMalaScreen(),
+        "screen": const ChorasiVartaListPage(),
       },
       {
         "title": l10n.grid_review,
