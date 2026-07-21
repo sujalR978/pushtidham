@@ -20,78 +20,7 @@ class _KirtanListPageState extends State<KirtanListPage> {
       title: 'યમુનાષ્ટક',
       imageAsset: 'assets/images/spleshScreen_image.png',
     ),
-    KirtanModel(
-      id: '2',
-      number: '૦૨',
-      title: 'નવલ બધાયો હૈ',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '3',
-      number: '૦૩',
-      title: 'નવ વિલાસ - ૧',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '4',
-      number: '૦૪',
-      title: 'નવ વિલાસ - ૨',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '5',
-      number: '૦૫',
-      title: 'નવ વિલાસ - ૩',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '6',
-      number: '૦૬',
-      title: 'નવ વિલાસ - ૪',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '7',
-      number: '૦૭',
-      title: 'નવ વિલાસ - ૫',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '8',
-      number: '૦૮',
-      title: 'નવ વિલાસ - ૬',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '9',
-      number: '૦૯',
-      title: 'નવ વિલાસ - ૭',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '10',
-      number: '૧૦',
-      title: 'નવ વિલાસ - ૮',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '11',
-      number: '૧૧',
-      title: 'નવ વિલાસ - ૯',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '12',
-      number: '૧૨',
-      title: 'આશ્રય એક જ શ્રી વલ્લભનો',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
-    KirtanModel(
-      id: '13',
-      number: '૧૩',
-      title: 'શ્રી મહાપ્રભુજી વધાઈ',
-      imageAsset: 'assets/images/spleshScreen_image.png',
-    ),
+    
   ];
 
   List<KirtanModel> _filteredKirtans = [];
