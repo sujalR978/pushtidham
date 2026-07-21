@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pushtidham/l10n/app_localizations.dart';
+
 
 // Model to represent Tithi details for each date
 class CalendarDayData {
@@ -98,7 +98,7 @@ class _TippaniCalendarPageState extends State<TippaniCalendarPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context)!;
+
 
     final daysInMonth = DateUtils.getDaysInMonth(
       _focusedMonth.year,
