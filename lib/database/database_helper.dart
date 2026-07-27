@@ -7,60 +7,87 @@ class DatabaseHelper {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-
     _database = await initDatabase();
     return _database!;
   }
 
   Future<Database> initDatabase() async {
-    String path = join(await getDatabasesPath(), 'bethakji_yadi');
+    String path = join(await getDatabasesPath(), 'bethakji_yadi.db');
 
-    // SQL for creating a simple table; adjust columns as needed
     const String sql = '''
-    CREATE TABLE bethakji(
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  bethak_no INTEGER NOT NULL,
-  title TEXT NOT NULL,
-  is_favorite INTEGER DEFAULT 0
-)
+    CREATE TABLE bethakji (
+      id TEXT PRIMARY KEY,
+      number TEXT,
+      name TEXT NOT NULL,
+      address TEXT,
+      contacts TEXT,
+      mahatmy TEXT,
+      directions TEXT,
+      rules TEXT
+    )
     ''';
 
     return await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
+        // 1. Create the table
         await db.execute(sql);
 
-        await db.insert('bethakji', {
-          'bethak_no': 1,
-          'title': 'શ્રીમદ ગોકુલ પહેલી બેઠક - શ્રી મહાપ્રભુજી બેઠકજી',
-          'is_favorite': 0,
-        });
+        // 2. Define Sample Data 1
+        BethakjiModel sample1 = BethakjiModel(
+          id: '1',
+          number: '1',
+          name: 'શ્રીમદ ગોકુલ પહેલી બેઠક - શ્રી મહાપ્રભુજી',
+          address: 'ગોકુલ, મથુરા, ઉત્તર પ્રદેશ',
+          contacts: [
+            {'label': 'મુખ્યાજી', 'phone': '+91 9876543210'},
+            {'label': 'મંદિર ઓફિસ', 'phone': '+91 9123456789'},
+          ],
+          mahatmy:
+              'આ શ્રી મહાપ્રભુજીની પ્રથમ બેઠકજી છે જ્યા શ્રીમદ ભાગવત પરાયણ કરેલ.',
+          directions: 'ગોવિંદ ઘાટ પાસે, ગોકુલ',
+          rules: ['મંદિરમાં શાંતિ જાળવવી', 'પરંપરાગત વસ્ત્રો પહેરવા'],
+        );
 
-        await db.insert('bethakji', {
-          'bethak_no': 2,
-          'title': 'શ્રીમદ ગોકુલ બીજી બેઠક - શ્રી મહાપ્રભુજી બેઠકજી',
-          'is_favorite': 0,
-        });
+        // 3. Define Sample Data 2
+        BethakjiModel sample2 = BethakjiModel(
+          id: '2',
+          number: '2',
+          name: 'શ્રીમદ ગોકુલ બીજી બેઠક - બડી ભીતર',
+          address: 'ગોકુલ, ઉત્તર પ્રદેશ',
+          contacts: [
+            {'label': 'ટ્રસ્ટ ઓફિસ', 'phone': '+91 9998887770'},
+          ],
+          mahatmy: 'આ શ્રી મહાપ્રભુજીની બીજી બેઠકજી છે.',
+          directions: 'બડી ભીતર વિસ્તારમાં સ્થિત',
+          rules: ['કેમેરા અને મોબાઈલ ઉપયોગ નિષેધ છે'],
+        );
 
-      
+        // 4. Insert sample data into database using .toMap()
+        await db.insert('bethakji', sample1.toMap());
+        await db.insert('bethakji', sample2.toMap());
       },
     );
   }
 
-  Future<int> insertBethakji(Bethakji bethakji) async {
+  // Fetch all records
+  Future<List<BethakjiModel>> getAllBethakji() async {
     final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('bethakji');
 
-    return await db.insert(
-      'bethakji',
-      bethakji.tomap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    return List.generate(maps.length, (i) {
+      return BethakjiModel.fromMap(maps[i]);
+    });
   }
 
-  Future<List<Map<String, dynamic>>> getAllBethakji() async {
+  // Insert or update individual item
+  Future<int> insertBethakji(BethakjiModel bethakji) async {
     final db = await database;
-
-    return await db.query('bethakji');
+    return await db.insert(
+      'bethakji',
+      bethakji.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 }
