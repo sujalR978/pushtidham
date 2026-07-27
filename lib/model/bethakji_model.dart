@@ -51,7 +51,7 @@ class BethakjiModel {
       'name': name,
       'address': address,
       // Encode lists/maps as JSON strings for SQLite
-      'contacts': jsonEncode(contacts),
+      'contacts': contacts,
       'mahatmy': mahatmy,
       'directions': directions,
       'rules': jsonEncode(rules),
