@@ -1,28 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_detail_screen.dart';
-
-class BethakjiModel {
-  final String id;
-  final String number;
-  final String name;
-  final String address;
-  final List<Map<String, String>> contacts;
-  final String mahatmy;
-  final String directions;
-  final List<String> rules;
-
-  BethakjiModel({
-    required this.id,
-    required this.number,
-    required this.name,
-    required this.address,
-    required this.contacts,
-    required this.mahatmy,
-    required this.directions,
-    required this.rules,
-  });
-}
 
 class BethakjiListPage extends StatefulWidget {
   const BethakjiListPage({super.key});
@@ -33,38 +13,33 @@ class BethakjiListPage extends StatefulWidget {
 
 class _BethakjiListPageState extends State<BethakjiListPage> {
   final TextEditingController _searchController = TextEditingController();
+  final DatabaseHelper _dbHelper = DatabaseHelper();
 
-  // Dataset of Bethakji matching reference screenshot content
-  final List<BethakjiModel> _allBethakjiList = [
-    BethakjiModel(
-      id: '1',
-      number: '૦૧',
-      name: 'શ્રીમદ ગોકુળ પહેલી બેઠક - શ્રી મહાપ્રભુજી બેઠકજી',
-      address:
-          'શ્રી મહાપ્રભુજી બેઠકજી, શ્રીમદ ગોકુળ ગોવિંદઘાટ, (બ્રહ્મસંબંધ બેઠકજી), ગોકુળ, જીલ્લો મથુરા (ઉ. પ્ર.)',
-      contacts: [
-        {'name': 'શ્રી પવનકુમાર', 'phone': '9897330142'},
-        {'name': 'શ્રી છેલ બિહારી મુખ્યાજી', 'phone': '9045305051'},
-      ],
-      mahatmy:
-          'યમુનાજીએ સાક્ષાત દર્શન આપી મહાપ્રભુજી, દામોદરદાસજીને ગોવિંદઘાટ અને ઠકુરાણીઘાટ વિશે શંકાનું નિવારણ કર્યું.\n\nવિશેષ મહાત્મ્ય: પુષ્ટિમાર્ગ પ્રાગટ્યદિને અર્થાત શ્રાવણ સુદી ૧૧ - પવિત્રા ૧૧ - મહાપ્રભુજીને શ્રી ઠાકોરજીએ સાક્ષાત દર્શન આપી દૈવીજીવોનાં ઉદ્ધારની ચિંતાનું નિવારણ કરી બ્રહ્મસંબંધ આપવાની આજ્ઞા કરી. શ્રી મહાપ્રભુજીએ પવિત્રું શ્રીજીને ધરાવી મીશ્રીભોગ ધરીને શ્રાવણ સુદ-૧૨ના રોજ શ્રી મહાપ્રભુજીએ દમોદરદાસને પ્રથમ બ્રહ્મસંબંધ આપી પુષ્ટિમાર્ગ પ્રગટ કર્યો.',
-      directions:
-          'મથુરાથી ૧૨ કિ.મી. દૂર ગોકુળમાં બિરાજે છે. યમુનાજી પર ગોવિંદઘાટ પર છોકર વૃક્ષ નીચે બિરાજમાન છે. અહિ શ્રી ગુસાઈજી, શ્રી હરિલક્ષ્મીજી તેમજ દામોદરદાસજીનાં બેઠકજી ઠકુરાણી ઘાટ પર આવેલા છે.\n\nNearby Railway Station:\nMathura (From Mathura to Gokul 12 Km.)',
-      rules: [
-        'વૈષ્ણવો અપરસ કરતા પહેલા કાર્યાલયમાં ઝારીજી ભરવાની ભેટની પહોંચ મેળવી લેવી.',
-        'ઠાકોરજીને સન્મુખ ભેટ અને મુખ્યાજી ને સવેકી અલગ આપવી.',
-        'ઝારીજી ભરવા માટે તે દિવસે ઉપવાસ કરવો જરૂરી છે.',
-      ],
-    ),
-    
-  ];
-
+  List<BethakjiModel> _allBethakjiList = [];
   List<BethakjiModel> _filteredList = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _filteredList = _allBethakjiList;
+    _fetchBethakjiData();
+  }
+
+  // Fetch data from SQLite database
+  Future<void> _fetchBethakjiData() async {
+    try {
+      final List<BethakjiModel> data = await _dbHelper.getAllBethakji();
+      setState(() {
+        _allBethakjiList = data;
+        _filteredList = data;
+        _isLoading = false;
+      });
+    } catch (e) {
+      debugPrint("Error fetching Bethakji data: $e");
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _filterBethakji(String query) {
@@ -73,10 +48,12 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
         _filteredList = _allBethakjiList;
       } else {
         _filteredList = _allBethakjiList
-            .where((item) =>
-                item.name.toLowerCase().contains(query.toLowerCase()) ||
-                item.number.contains(query) ||
-                item.address.toLowerCase().contains(query.toLowerCase()))
+            .where(
+              (item) =>
+                  item.name.toLowerCase().contains(query.toLowerCase()) ||
+                  item.number.contains(query) ||
+                  item.address.toLowerCase().contains(query.toLowerCase()),
+            )
             .toList();
       }
     });
@@ -92,7 +69,6 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -128,7 +104,10 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
                   ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: theme.colorScheme.onPrimary),
+                          icon: Icon(
+                            Icons.clear,
+                            color: theme.colorScheme.onPrimary,
+                          ),
                           onPressed: () {
                             _searchController.clear();
                             _filterBethakji('');
@@ -146,64 +125,77 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
               ),
             ),
 
-            // BETHAKJI LIST VIEW
+            // BETHAKJI LIST VIEW OR LOADING INDICATOR
             Expanded(
-              child: _filteredList.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.search_off_outlined,
-                            size: 60,
-                            color: theme.colorScheme.onSurface.withOpacity(0.2),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            l10n.search_placeholder,
-                            style: TextStyle(
-                              color: theme.colorScheme.onSurface.withOpacity(0.4),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemCount: _filteredList.length,
-                      separatorBuilder: (context, index) => const Divider(
-                        height: 1,
-                        thickness: 0.8,
-                        indent: 16,
-                        endIndent: 16,
-                      ),
-                      itemBuilder: (context, index) {
-                        final bethak = _filteredList[index];
-                        return ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 4,
-                          ),
-                          title: Text(
-                            "(${bethak.number}) ${bethak.name.replaceFirst('(${bethak.number}) ', '')}",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: theme.colorScheme.onSurface,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    BethakjiDetailPage(bethak: bethak),
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _filteredList.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search_off_outlined,
+                                size: 60,
+                                color: theme.colorScheme.onSurface.withOpacity(0.2),
                               ),
+                              const SizedBox(height: 12),
+                              Text(
+                                l10n.search_placeholder,
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurface.withOpacity(0.4),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ListView.separated(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          itemCount: _filteredList.length,
+                          separatorBuilder: (context, index) => const Divider(
+                            height: 1,
+                            thickness: 0.8,
+                            indent: 16,
+                            endIndent: 16,
+                          ),
+                          itemBuilder: (context, index) {
+                            final bethak = _filteredList[index];
+                            return ListTile(
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 4,
+                              ),
+                              title: Text(
+                                "(${bethak.number}) ${bethak.name.replaceFirst('(${bethak.number}) ', '')}",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: theme.colorScheme.onSurface,
+                                ),
+                              ),
+                              subtitle: bethak.address.isNotEmpty
+                                  ? Text(
+                                      bethak.address,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: theme.colorScheme.onSurface.withOpacity(0.6),
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    )
+                                  : null,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        BethakjiDetailPage(bethak: bethak),
+                                  ),
+                                );
+                              },
                             );
                           },
-                        );
-                      },
-                    ),
+                        ),
             ),
           ],
         ),
