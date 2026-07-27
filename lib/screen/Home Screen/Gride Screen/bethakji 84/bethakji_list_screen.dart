@@ -56,19 +56,7 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
         'ઝારીજી ભરવા માટે તે દિવસે ઉપવાસ કરવો જરૂરી છે.',
       ],
     ),
-    BethakjiModel(
-      id: '2',
-      number: '૦૨',
-      name: 'શ્રીમદ ગોકુળ બીજી બેઠક - શ્રી મહાપ્રભુજી બેઠકજી',
-      address: 'શ્રી મહાપ્રભુજી બેઠકજી, ઠકુરાણી ઘાટ, ગોકુળ, જીલ્લો મથુરા (ઉ. પ્ર.)',
-      contacts: [
-        {'name': 'મંદિર કાર્યાલય', 'phone': '9897000000'},
-      ],
-      mahatmy: 'ઠકુરાણી ઘાટ ઉપર આવેલી પવિત્ર બેઠકજીનો મહિમા.',
-      directions: 'ગોકુળ સ્થિત ઠકુરાણી ઘાટ પાસે.',
-      rules: ['ઝારીજી ભરવા માટે યોગ્ય નિયમોનું પાલન કરવું.'],
-    ),
-   
+    
   ];
 
   List<BethakjiModel> _filteredList = [];
@@ -104,6 +92,7 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
