@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_list_screen.dart';
 
 class BethakjiDetailPage extends StatelessWidget {
