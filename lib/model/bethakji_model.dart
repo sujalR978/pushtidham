@@ -5,7 +5,7 @@ class BethakjiModel {
   final String number;
   final String name;
   final String address;
-  final List<Map<String, String>> contacts;
+  final List<String> contacts; // or List<Map<String, String>>
   final String mahatmy;
   final String directions;
   final List<String> rules;
@@ -21,40 +21,32 @@ class BethakjiModel {
     required this.rules,
   });
 
-  factory BethakjiModel.fromMap(Map<String, dynamic> map) {
-    return BethakjiModel(
-      id: map['id'].toString(),
-      number: map['number'] ?? '',
-      name: map['name'] ?? '',
-      address: map['address'] ?? '',
-      // Decode JSON string back to List<Map<String, String>>
-      contacts: map['contacts'] != null
-          ? List<Map<String, String>>.from(
-              (jsonDecode(map['contacts']) as List).map(
-                (item) => Map<String, String>.from(item),
-              ),
-            )
-          : [],
-      mahatmy: map['mahatmy'] ?? '',
-      directions: map['directions'] ?? '',
-      // Decode JSON string back to List<String>
-      rules: map['rules'] != null
-          ? List<String>.from(jsonDecode(map['rules']))
-          : [],
-    );
-  }
-
+  // Convert BethakjiModel to Map for SQLite
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'number': number,
       'name': name,
       'address': address,
-      // Encode lists/maps as JSON strings for SQLite
-      'contacts': contacts,
+      // Serialize lists/maps to String JSON format
+      'contacts': jsonEncode(contacts),
       'mahatmy': mahatmy,
       'directions': directions,
       'rules': jsonEncode(rules),
     };
+  }
+
+  // Read Map from SQLite back to BethakjiModel
+  factory BethakjiModel.fromMap(Map<String, dynamic> map) {
+    return BethakjiModel(
+      id: map['id'] ?? '',
+      number: map['number'] ?? '',
+      name: map['name'] ?? '',
+      address: map['address'] ?? '',
+      contacts: List<String>.from(jsonDecode(map['contacts'] ?? '[]')),
+      mahatmy: map['mahatmy'] ?? '',
+      directions: map['directions'] ?? '',
+      rules: List<String>.from(jsonDecode(map['rules'] ?? '[]')),
+    );
   }
 }
