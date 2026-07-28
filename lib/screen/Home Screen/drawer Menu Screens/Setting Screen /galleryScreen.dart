@@ -82,7 +82,8 @@ class GalleryPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Image.network(
+                      // FIXED: Changed Image.network -> Image.asset
+                      child: Image.asset(
                         galleryImages[index],
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
@@ -132,7 +133,8 @@ class GalleryPage extends StatelessWidget {
                   panEnabled: true,
                   minScale: 0.5,
                   maxScale: 3.0,
-                  child: Image.network(
+                  // FIXED: Changed Image.network -> Image.asset
+                  child: Image.asset(
                     galleryImages[index],
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
