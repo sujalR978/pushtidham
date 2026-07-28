@@ -58,14 +58,20 @@ class BethakjiDetailPage extends StatelessWidget {
                   child: Column(
                     children: bethak.contacts.asMap().entries.map((entry) {
                       final idx = entry.key;
-                      final contact = entry.value;
+                      final dynamic contact = entry.value;
+                      final name = contact is Map
+                          ? contact['name']
+                          : contact[0];
+                      final phone = contact is Map
+                          ? contact['phone']
+                          : contact[1];
                       return Column(
                         children: [
                           Row(
                             children: [
                               Expanded(
                                 child: Text(
-                                  "${contact['name']}  ${contact['phone']}",
+                                  "$name  $phone",
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
