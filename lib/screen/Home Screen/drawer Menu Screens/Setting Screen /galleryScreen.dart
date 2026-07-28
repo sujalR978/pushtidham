@@ -5,12 +5,16 @@ class GalleryPage extends StatelessWidget {
   const GalleryPage({super.key});
 
   final List<String> galleryImages = const [
-    'https://upload.wikimedia.org/wikipedia/commons/4/4b/Vallabhacharya.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/512px-Om_symbol.svg.png',
-    'https://upload.wikimedia.org/wikipedia/commons/4/4b/Vallabhacharya.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/512px-Om_symbol.svg.png',
-    'https://upload.wikimedia.org/wikipedia/commons/4/4b/Vallabhacharya.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Om_symbol.svg/512px-Om_symbol.svg.png',
+    'assets/images/img1.png',
+    'assets/images/img2.png',
+    'assets/images/img3.png',
+    'assets/images/img4.png',
+    'assets/images/img5.png',
+    'assets/images/img6.png',
+    'assets/images/img7.png',
+    'assets/images/img8.png',
+    'assets/images/img9.png',
+    'assets/images/img10.png',
   ];
 
   @override
