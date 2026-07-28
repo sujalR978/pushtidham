@@ -1,12 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AboutMahaprabhujiPage extends StatelessWidget {
+class AboutMahaprabhujiPage extends StatefulWidget {
   const AboutMahaprabhujiPage({super.key});
 
+  @override
+  State<AboutMahaprabhujiPage> createState() => _AboutMahaprabhujiPageState();
+}
+
+class _AboutMahaprabhujiPageState extends State<AboutMahaprabhujiPage> {
   final List<String> galleryImages = const [
     'assets/images/spleshScreen_image.png',
   ];
+
+  Future<void> _openPdf() async {
+    const String pdfUrl = 'https://www.scribd.com/document/29720575/ShriMahaPrabhuji-Tavasmi';
+    final Uri uri = Uri.parse(pdfUrl);
+
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(
+          uri,
+          mode:
+              LaunchMode.externalApplication, // Opens in default browser/viewer
+        );
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not open PDF link.')),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +154,9 @@ class AboutMahaprabhujiPage extends StatelessWidget {
                         vertical: 8,
                       ),
                       leading: CircleAvatar(
-                        backgroundColor:
-                            theme.colorScheme.primary.withOpacity(0.15),
+                        backgroundColor: theme.colorScheme.primary.withOpacity(
+                          0.15,
+                        ),
                         child: Icon(
                           Icons.picture_as_pdf,
                           color: theme.colorScheme.primary,
@@ -142,9 +176,7 @@ class AboutMahaprabhujiPage extends StatelessWidget {
                         ),
                       ),
                       trailing: ElevatedButton.icon(
-                        onPressed: () {
-                          // PDF opening or download logic
-                        },
+                        onPressed: _openPdf,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: theme.colorScheme.primary,
                           foregroundColor: theme.colorScheme.onPrimary,
