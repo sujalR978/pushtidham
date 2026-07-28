@@ -49,6 +49,7 @@ class BethakjiDetailPage extends StatelessWidget {
               ),
 
               // 2. Contacts Section
+              // 2. Contacts Section
               if (bethak.contacts.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 _buildSectionHeader(theme, "સંપર્ક (ફોન / મોબાઇલ)"),
@@ -58,19 +59,19 @@ class BethakjiDetailPage extends StatelessWidget {
                     children: bethak.contacts.asMap().entries.map((entry) {
                       final idx = entry.key;
                       final dynamic contact = entry.value;
-                      final name = contact is Map
-                          ? contact['name']
-                          : contact[0];
-                      final phone = contact is Map
-                          ? contact['phone']
-                          : contact[1];
+
+                      // Safely extract full phone number
+                      final String phoneNumber = contact is Map
+                          ? (contact['phone'] ?? contact['number'] ?? '')
+                          : contact.toString();
+
                       return Column(
                         children: [
                           Row(
                             children: [
                               Expanded(
                                 child: Text(
-                                  "$name  $phone",
+                                  phoneNumber, // Displays the full 10-digit number!
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -106,7 +107,6 @@ class BethakjiDetailPage extends StatelessWidget {
                   ),
                 ),
               ],
-
               // 3. Mahatmy Section
               if (bethak.mahatmy.isNotEmpty) ...[
                 const SizedBox(height: 12),
