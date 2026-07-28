@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/database/notes_database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 
 class NoteItem {
@@ -7,6 +8,24 @@ class NoteItem {
   final DateTime timestamp;
 
   NoteItem({required this.id, required this.content, required this.timestamp});
+
+  // Convert a NoteItem into a Map for SQLite
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'content': content,
+      'timestamp': timestamp.toIso8601String(),
+    };
+  }
+
+  // Convert a Map from SQLite into a NoteItem
+  factory NoteItem.fromMap(Map<String, dynamic> map) {
+    return NoteItem(
+      id: map['id'],
+      content: map['content'],
+      timestamp: DateTime.parse(map['timestamp']),
+    );
+  }
 }
 
 class NotesPage extends StatefulWidget {
@@ -17,61 +36,82 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  final List<NoteItem> _notes = [
-    NoteItem(
-      id: '1',
-      content:
-          'શ્રી મહાપ્રભુજીના ઉત્સવ સંબંધી વિશેષ નિયમો અને પાઠ વિધિ વાંચવી.',
-      timestamp: DateTime.now().subtract(const Duration(days: 2)),
-    ),
-    NoteItem(
-      id: '2',
-      content: 'નિયમિત સવારે જપ માળા પૂરી કર્યા બાદ જ ષોડશ ગ્રંથનું મનન કરવું.',
-      timestamp: DateTime.now().subtract(const Duration(hours: 5)),
-    ),
-  ];
-
+  List<NoteItem> _notes = [];
+  bool _isLoading = true; // Added loading state
   final TextEditingController _noteController = TextEditingController();
 
-  void _addNote() {
+  @override
+  void initState() {
+    super.initState();
+    _loadNotes(); // Fetch data when screen opens
+  }
+
+  // Fetch notes from Database
+  Future<void> _loadNotes() async {
+    setState(() => _isLoading = true);
+    
+    final dbNotes = await NotesDatabaseHelper.instance.getAllNotes();
+    
+    setState(() {
+      _notes = dbNotes.map((json) => NoteItem.fromMap(json)).toList();
+      _isLoading = false;
+    });
+  }
+
+  // Add note to Database and UI
+  Future<void> _addNote() async {
     if (_noteController.text.trim().isEmpty) return;
 
     final l10n = AppLocalizations.of(context)!;
+    
+    final newNote = NoteItem(
+      id: DateTime.now().toString(),
+      content: _noteController.text.trim(),
+      timestamp: DateTime.now(),
+    );
 
+    // Save to DB
+    await NotesDatabaseHelper.instance.insertNote(newNote.toMap());
+
+    // Update UI
     setState(() {
-      _notes.insert(
-        0,
-        NoteItem(
-          id: DateTime.now().toString(),
-          content: _noteController.text.trim(),
-          timestamp: DateTime.now(),
-        ),
-      );
+      _notes.insert(0, newNote);
     });
+    
     _noteController.clear();
     FocusScope.of(context).unfocus(); // Close the virtual keyboard
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.btn_submit),
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.btn_submit),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
-  void _deleteNote(int index) {
+  // Delete note from Database and UI
+  Future<void> _deleteNote(int index) async {
     final l10n = AppLocalizations.of(context)!;
+    final noteId = _notes[index].id;
 
+    // Remove from DB
+    await NotesDatabaseHelper.instance.deleteNote(noteId);
+
+    // Update UI
     setState(() {
       _notes.removeAt(index);
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.btn_delete),
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.btn_delete),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   String _formatDate(DateTime dt) {
@@ -113,7 +153,7 @@ class _NotesPageState extends State<NotesPage> {
                     child: TextField(
                       controller: _noteController,
                       style: TextStyle(color: theme.colorScheme.onSurface),
-                      maxLines: null, // Dynamic expanding box heights
+                      maxLines: null,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
                         hintText: l10n.nav_notes,
@@ -160,7 +200,13 @@ class _NotesPageState extends State<NotesPage> {
 
             // 2. ACTIVE NOTES LIST VIEW
             Expanded(
-              child: _notes.isEmpty
+              child: _isLoading 
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: theme.colorScheme.primary,
+                    ),
+                  ) 
+                : _notes.isEmpty
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
