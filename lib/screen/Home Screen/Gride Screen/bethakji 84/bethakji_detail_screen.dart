@@ -1,11 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/bethakji_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BethakjiDetailPage extends StatelessWidget {
   final BethakjiModel bethak;
 
   const BethakjiDetailPage({super.key, required this.bethak});
+
+  Future<void> makePhoneCall(dynamic rawContact) async {
+    // Extract the phone number properly whether it's a Map or String
+    String phoneNumber = '';
+
+    if (rawContact is Map) {
+      phoneNumber = (rawContact['phone'] ?? rawContact['number'] ?? '')
+          .toString();
+    } else {
+      phoneNumber = rawContact.toString();
+    }
+
+    // Remove spaces, dashes, or formatting chars, leaving only digits and +
+    final String cleanNumber = phoneNumber.replaceAll(RegExp(r'[^\d+]'), '');
+
+    if (cleanNumber.isEmpty) return;
+
+    final Uri launchUri = Uri(scheme: 'tel', path: cleanNumber);
+
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      debugPrint('Could not launch phone dialer for $cleanNumber');
+    }
+  }
+
+  Future<void> sendSms(dynamic rawContact, {String? body}) async {
+    // Extract the phone number properly whether it's a Map or String
+    String phoneNumber = '';
+
+    if (rawContact is Map) {
+      phoneNumber = (rawContact['phone'] ?? rawContact['number'] ?? '')
+          .toString();
+    } else {
+      phoneNumber = rawContact.toString();
+    }
+
+    // Remove spaces, dashes, or formatting chars, leaving only digits and +
+    final String cleanNumber = phoneNumber.replaceAll(RegExp(r'[^\d+]'), '');
+
+    if (cleanNumber.isEmpty) return;
+
+    final Uri launchUri = Uri(
+      scheme: 'sms',
+      path: cleanNumber,
+      queryParameters: body != null ? <String, String>{'body': body} : null,
+    );
+
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      debugPrint('Could not launch SMS app for $cleanNumber');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +140,7 @@ class BethakjiDetailPage extends StatelessWidget {
                                   color: theme.colorScheme.primary,
                                 ),
                                 onPressed: () {
-                                  // Call logic
+                                  makePhoneCall(contact);
                                 },
                               ),
                               IconButton(
@@ -94,7 +149,7 @@ class BethakjiDetailPage extends StatelessWidget {
                                   color: theme.colorScheme.primary,
                                 ),
                                 onPressed: () {
-                                  // Message logic
+                                  sendSms(contact, body: bethak.name);
                                 },
                               ),
                             ],
