@@ -5,7 +5,6 @@ import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_detail_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
 
-
 class BethakjiListPage extends StatefulWidget {
   const BethakjiListPage({super.key});
 
@@ -32,9 +31,10 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
       final List<BethakjiModel> data = await _dbHelper.getAllBethakji();
       setState(() {
         _allBethakjiList = data;
-        _filteredList = data;
         _isLoading = false;
       });
+      // Re-apply search filter in case user had typed something
+      _filterBethakji(_searchController.text);
     } catch (e) {
       debugPrint("Error fetching Bethakji data: $e");
       setState(() {
@@ -45,37 +45,36 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
 
   Future<void> _toggleFavorite(BethakjiModel item) async {
     final int newFavoriteStatus = item.isFavorite == 1 ? 0 : 1;
-    
-    // Update SQLite DB
+
+    // 1. Update SQLite DB
     await _dbHelper.updateFavoriteStatus(item.id, newFavoriteStatus);
 
-    // Update Local State
+    // 2. Update Master List State
     setState(() {
-      final index = _allBethakjiList.indexWhere((element) => element.id == item.id);
+      final index = _allBethakjiList.indexWhere(
+        (element) => element.id == item.id,
+      );
       if (index != -1) {
         _allBethakjiList[index] = item.copyWith(isFavorite: newFavoriteStatus);
       }
-      
-      final filteredIndex = _filteredList.indexWhere((element) => element.id == item.id);
-      if (filteredIndex != -1) {
-        _filteredList[filteredIndex] = item.copyWith(isFavorite: newFavoriteStatus);
-      }
     });
+
+    // 3. Re-filter to keep search results in sync
+    _filterBethakji(_searchController.text);
   }
 
   void _filterBethakji(String query) {
+    final cleanQuery = query.trim().toLowerCase();
     setState(() {
-      if (query.trim().isEmpty) {
-        _filteredList = _allBethakjiList;
+      if (cleanQuery.isEmpty) {
+        _filteredList = List.from(_allBethakjiList);
       } else {
-        _filteredList = _allBethakjiList
-            .where(
-              (item) =>
-                  item.name.toLowerCase().contains(query.toLowerCase()) ||
-                  item.number.contains(query) ||
-                  item.address.toLowerCase().contains(query.toLowerCase()),
-            )
-            .toList();
+        _filteredList = _allBethakjiList.where((item) {
+          final nameMatch = item.name.toLowerCase().contains(cleanQuery);
+          final numberMatch = item.number.toLowerCase().contains(cleanQuery);
+          final addressMatch = item.address.toLowerCase().contains(cleanQuery);
+          return nameMatch || numberMatch || addressMatch;
+        }).toList();
       }
     });
   }
@@ -107,9 +106,7 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
             onPressed: () async {
               await Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const FavoritesPage(),
-                ),
+                MaterialPageRoute(builder: (context) => const FavoritesPage()),
               );
               // Refresh when coming back from favorites screen
               _fetchBethakjiData();
@@ -166,76 +163,90 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _filteredList.isEmpty
-                      ? Center(
-                          child: Text(
-                            l10n.search_placeholder,
+                  ? Center(
+                      child: Text(
+                        l10n.search_placeholder,
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withOpacity(0.4),
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      itemCount: _filteredList.length,
+                      separatorBuilder: (context, index) => const Divider(
+                        height: 1,
+                        thickness: 0.8,
+                        indent: 16,
+                        endIndent: 16,
+                      ),
+                      itemBuilder: (context, index) {
+                        final bethak = _filteredList[index];
+                        final bool isFav = bethak.isFavorite == 1;
+
+                        // Safely display title without crashing string replace
+                        final String displayTitle = itemTitle(bethak);
+
+                        return ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 4,
+                          ),
+                          title: Text(
+                            displayTitle,
                             style: TextStyle(
-                              color: theme.colorScheme.onSurface.withOpacity(0.4),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: theme.colorScheme.onSurface,
                             ),
                           ),
-                        )
-                      : ListView.separated(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          itemCount: _filteredList.length,
-                          separatorBuilder: (context, index) => const Divider(
-                            height: 1,
-                            thickness: 0.8,
-                            indent: 16,
-                            endIndent: 16,
-                          ),
-                          itemBuilder: (context, index) {
-                            final bethak = _filteredList[index];
-                            final bool isFav = bethak.isFavorite == 1;
-
-                            return ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 4,
-                              ),
-                              title: Text(
-                                "(${bethak.number}) ${bethak.name.replaceFirst('(${bethak.number}) ', '')}",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: theme.colorScheme.onSurface,
-                                ),
-                              ),
-                              subtitle: bethak.address.isNotEmpty
-                                  ? Text(
-                                      bethak.address,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: theme.colorScheme.onSurface.withOpacity(0.6),
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                  : null,
-                              trailing: IconButton(
-                                icon: Icon(
-                                  isFav ? Icons.favorite : Icons.favorite_border,
-                                  color: isFav
-                                      ? Colors.red
-                                      : theme.colorScheme.onSurface.withOpacity(0.4),
-                                ),
-                                onPressed: () => _toggleFavorite(bethak),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        BethakjiDetailPage(bethak: bethak),
+                          subtitle: bethak.address.isNotEmpty
+                              ? Text(
+                                  bethak.address,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.6),
                                   ),
-                                );
-                              },
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              : null,
+                          trailing: IconButton(
+                            icon: Icon(
+                              isFav ? Icons.favorite : Icons.favorite_border,
+                              color: isFav
+                                  ? Colors.red
+                                  : theme.colorScheme.onSurface.withOpacity(
+                                      0.4,
+                                    ),
+                            ),
+                            onPressed: () => _toggleFavorite(bethak),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    BethakjiDetailPage(bethak: bethak),
+                              ),
                             );
                           },
-                        ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  // Safe helper method for title formatting
+  String itemTitle(BethakjiModel item) {
+    if (item.name.startsWith("(${item.number})")) {
+      return item.name;
+    }
+    return "(${item.number}) ${item.name}";
   }
 }
