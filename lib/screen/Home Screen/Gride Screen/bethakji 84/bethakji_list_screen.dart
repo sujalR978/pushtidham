@@ -3,6 +3,8 @@ import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_detail_screen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
+
 
 class BethakjiListPage extends StatefulWidget {
   const BethakjiListPage({super.key});
@@ -25,7 +27,6 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
     _fetchBethakjiData();
   }
 
-  // Fetch data from SQLite database
   Future<void> _fetchBethakjiData() async {
     try {
       final List<BethakjiModel> data = await _dbHelper.getAllBethakji();
@@ -40,6 +41,26 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
         _isLoading = false;
       });
     }
+  }
+
+  Future<void> _toggleFavorite(BethakjiModel item) async {
+    final int newFavoriteStatus = item.isFavorite == 1 ? 0 : 1;
+    
+    // Update SQLite DB
+    await _dbHelper.updateFavoriteStatus(item.id, newFavoriteStatus);
+
+    // Update Local State
+    setState(() {
+      final index = _allBethakjiList.indexWhere((element) => element.id == item.id);
+      if (index != -1) {
+        _allBethakjiList[index] = item.copyWith(isFavorite: newFavoriteStatus);
+      }
+      
+      final filteredIndex = _filteredList.indexWhere((element) => element.id == item.id);
+      if (filteredIndex != -1) {
+        _filteredList[filteredIndex] = item.copyWith(isFavorite: newFavoriteStatus);
+      }
+    });
   }
 
   void _filterBethakji(String query) {
@@ -80,11 +101,26 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoritesPage(),
+                ),
+              );
+              // Refresh when coming back from favorites screen
+              _fetchBethakjiData();
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // SEARCH BAR CONTAINER
+            // Search Bar Container
             Container(
               padding: const EdgeInsets.all(12.0),
               color: theme.colorScheme.primary,
@@ -125,28 +161,17 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
               ),
             ),
 
-            // BETHAKJI LIST VIEW OR LOADING INDICATOR
+            // List View
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _filteredList.isEmpty
                       ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.search_off_outlined,
-                                size: 60,
-                                color: theme.colorScheme.onSurface.withOpacity(0.2),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                l10n.search_placeholder,
-                                style: TextStyle(
-                                  color: theme.colorScheme.onSurface.withOpacity(0.4),
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            l10n.search_placeholder,
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface.withOpacity(0.4),
+                            ),
                           ),
                         )
                       : ListView.separated(
@@ -160,6 +185,8 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
                           ),
                           itemBuilder: (context, index) {
                             final bethak = _filteredList[index];
+                            final bool isFav = bethak.isFavorite == 1;
+
                             return ListTile(
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16,
@@ -184,6 +211,15 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
                                       overflow: TextOverflow.ellipsis,
                                     )
                                   : null,
+                              trailing: IconButton(
+                                icon: Icon(
+                                  isFav ? Icons.favorite : Icons.favorite_border,
+                                  color: isFav
+                                      ? Colors.red
+                                      : theme.colorScheme.onSurface.withOpacity(0.4),
+                                ),
+                                onPressed: () => _toggleFavorite(bethak),
+                              ),
                               onTap: () {
                                 Navigator.push(
                                   context,
