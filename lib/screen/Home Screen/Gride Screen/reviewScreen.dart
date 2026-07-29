@@ -24,10 +24,14 @@ class _ReviewPageState extends State<ReviewPage> {
 
   String? _selectedTag;
 
-  void _submitReview() {
+  // Change this to your target email address where you want to receive feedback
+  final String _destinationEmail = 'srashiya955@rku.ac.in';
+
+  Future<void> _submitReview() async {
     final l10n = AppLocalizations.of(context)!;
 
-    if (_selectedRating == 0) {
+    // Check if user has provided at least a rating or text feedback
+    if (_selectedRating == 0 && _reviewController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(l10n.grid_review),
@@ -37,6 +41,15 @@ class _ReviewPageState extends State<ReviewPage> {
       return;
     }
 
+    // Launch email client with current user entries
+    await _sendViaMailApp(
+      rating: _selectedRating,
+      selectedTag: _selectedTag,
+      message: _reviewController.text.trim(),
+    );
+
+    if (!mounted) return;
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(l10n.btn_submit),
@@ -44,36 +57,60 @@ class _ReviewPageState extends State<ReviewPage> {
       ),
     );
 
+    // Reset UI state after launching
     setState(() {
-      _sendViaMailApp(
-        'sujal',
-        'srashiya955@rku.ac.in',
-        'how are you i am fine here',
-      );
       _selectedRating = 0;
       _reviewController.clear();
       _selectedTag = null;
     });
   }
 
-  Future<void> _sendViaMailApp(
-    String name,
-    String userEmail,
-    String message,
-  ) async {
+  Future<void> _sendViaMailApp({
+    required int rating,
+    required String? selectedTag,
+    required String message,
+  }) async {
+    final String starRatingText = rating > 0
+        ? '$rating / 5 Stars ⭐'
+        : 'Not Rated';
+    final String tagText = selectedTag != null
+        ? 'Tag: $selectedTag'
+        : 'No Tag Selected';
+
+    final String subject = 'Pushtidham App Review ($starRatingText)';
+    final String body =
+        '''
+App Review & Feedback:
+---------------------------------
+Rating: $starRatingText
+$tagText
+
+User Message:
+${message.isNotEmpty ? message : 'No additional text provided.'}
+---------------------------------
+''';
+
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'your-email@example.com', // YOUR target email address
-      queryParameters: {
-        'subject': 'App Feedback from $name',
-        'body': 'User Email: $userEmail\n\nFeedback:\n$message',
-      },
+      path: _destinationEmail,
+      query:
+          'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}',
     );
 
-    if (await canLaunchUrl(emailLaunchUri)) {
-      await launchUrl(emailLaunchUri);
-    } else {
-      // Handle error
+    try {
+      if (await canLaunchUrl(emailLaunchUri)) {
+        await launchUrl(emailLaunchUri, mode: LaunchMode.externalApplication);
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not open Mail application.')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error launching email client: $e')),
+      );
     }
   }
 
@@ -125,6 +162,7 @@ class _ReviewPageState extends State<ReviewPage> {
                       const SizedBox(height: 6),
                       Text(
                         l10n.welcome_tagline,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 13,
                           color: theme.colorScheme.onSurface.withOpacity(0.6),
@@ -254,7 +292,7 @@ class _ReviewPageState extends State<ReviewPage> {
               ),
               const SizedBox(height: 32),
 
-              // Submit Action Button Stack
+              // Submit Action Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
