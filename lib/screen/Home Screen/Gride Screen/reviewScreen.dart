@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReviewPage extends StatefulWidget {
   const ReviewPage({super.key});
@@ -44,10 +45,36 @@ class _ReviewPageState extends State<ReviewPage> {
     );
 
     setState(() {
+      _sendViaMailApp(
+        'sujal',
+        'srashiya955@rku.ac.in',
+        'how are you i am fine here',
+      );
       _selectedRating = 0;
       _reviewController.clear();
       _selectedTag = null;
     });
+  }
+
+  Future<void> _sendViaMailApp(
+    String name,
+    String userEmail,
+    String message,
+  ) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'your-email@example.com', // YOUR target email address
+      queryParameters: {
+        'subject': 'App Feedback from $name',
+        'body': 'User Email: $userEmail\n\nFeedback:\n$message',
+      },
+    );
+
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    } else {
+      // Handle error
+    }
   }
 
   @override
