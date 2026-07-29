@@ -973,4 +973,26 @@ class DatabaseHelper {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  // 1. Toggle or update favorite status in SQLite
+  Future<int> updateFavoriteStatus(String id, int isFavorite) async {
+    final db = await database; // Your getter for Database instance
+    return await db.update(
+      'bethakji_table', // Your table name
+      {'isFavorite': isFavorite},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // 2. Fetch only favorite Bethakji items (isFavorite = 1)
+  Future<List<BethakjiModel>> getFavoriteBethakji() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'bethakji_table',
+      where: 'isFavorite = ?',
+      whereArgs: [1],
+    );
+    return List.generate(maps.length, (i) => BethakjiModel.fromMap(maps[i]));
+  }
 }
