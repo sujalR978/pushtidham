@@ -37,22 +37,11 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
 
       setState(() {
         _allBethakjiList = data;
-
-        // Immediately initialize _filteredList with database data
-        final query = _searchController.text.trim().toLowerCase();
-        if (query.isEmpty) {
-          _filteredList = List.from(data);
-        } else {
-          _filteredList = data.where((item) {
-            final nameMatch = item.name.toLowerCase().contains(query);
-            final numberMatch = item.number.toLowerCase().contains(query);
-            final addressMatch = item.address.toLowerCase().contains(query);
-            return nameMatch || numberMatch || addressMatch;
-          }).toList();
-        }
-
         _isLoading = false;
       });
+
+      // Filter list based on initial/current search text
+      _filterBethakji(_searchController.text);
     } catch (e) {
       debugPrint("Error fetching Bethakji data: $e");
       if (!mounted) return;
@@ -63,30 +52,31 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
   }
 
   Future<void> _toggleFavorite(BethakjiModel item) async {
+    // 1. Calculate new status
     final int newFavoriteStatus = item.isFavorite == 1 ? 0 : 1;
 
-    // 1. Update SQLite DB
+    // 2. Update SQLite DB
+    // Make sure 'item.id' is passed as String or int depending on your DB query signature
     await _dbHelper.updateFavoriteStatus(item.id, newFavoriteStatus);
 
-    // 2. Update both master list and filtered list in ONE setState call
     if (!mounted) return;
+
+    // 3. Update master list item state
     setState(() {
       final index = _allBethakjiList.indexWhere((e) => e.id == item.id);
       if (index != -1) {
         _allBethakjiList[index] = item.copyWith(isFavorite: newFavoriteStatus);
       }
-
-      final filteredIndex = _filteredList.indexWhere((e) => e.id == item.id);
-      if (filteredIndex != -1) {
-        _filteredList[filteredIndex] = item.copyWith(
-          isFavorite: newFavoriteStatus,
-        );
-      }
     });
+
+    // 4. Re-run search filter so both lists stay synchronized
+    _filterBethakji(_searchController.text);
   }
 
   void _filterBethakji(String query) {
     final cleanQuery = query.trim().toLowerCase();
+    if (!mounted) return;
+
     setState(() {
       if (cleanQuery.isEmpty) {
         _filteredList = List.from(_allBethakjiList);
@@ -130,7 +120,7 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
                 context,
                 MaterialPageRoute(builder: (context) => const FavoritesPage()),
               );
-              // Refresh when coming back from favorites screen
+              // Refresh state when coming back from Favorites Screen
               _fetchBethakjiData();
             },
           ),
@@ -206,10 +196,11 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
                         final bethak = _filteredList[index];
                         final bool isFav = bethak.isFavorite == 1;
 
-                        // Safely display title without crashing string replace
+                        // Safely display formatted title
                         final String displayTitle = itemTitle(bethak);
 
                         return ListTile(
+                          key: ValueKey(bethak.id),
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 4,

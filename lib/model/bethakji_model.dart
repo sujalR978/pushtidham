@@ -66,16 +66,32 @@ class BethakjiModel {
   // Read Map from SQLite back to BethakjiModel
   factory BethakjiModel.fromMap(Map<String, dynamic> map) {
     return BethakjiModel(
-      id: map['id'] ?? '',
-      number: map['number'] ?? '',
+      id: map['id']?.toString() ?? '', // Safe conversion from int or String
+      number: map['number']?.toString() ?? '',
       name: map['name'] ?? '',
       address: map['address'] ?? '',
-      contacts: List<String>.from(jsonDecode(map['contacts'] ?? '[]')),
+      contacts: _parseList(map['contacts']),
       mahatmy: map['mahatmy'] ?? '',
       directions: map['directions'] ?? '',
-      rules: List<String>.from(jsonDecode(map['rules'] ?? '[]')),
-
-isFavorite: map['isFavorite'] ?? 0,
+      rules: _parseList(map['rules']),
+      isFavorite: map['isFavorite'] is int ? map['isFavorite'] : 0,
     );
+  }
+
+  // Helper method to safely parse List<String> from JSON string or raw List
+  static List<String> _parseList(dynamic rawData) {
+    if (rawData == null) return [];
+    if (rawData is List) return rawData.map((e) => e.toString()).toList();
+    if (rawData is String) {
+      try {
+        final decoded = jsonDecode(rawData);
+        if (decoded is List) {
+          return decoded.map((e) => e.toString()).toList();
+        }
+      } catch (_) {
+        return [];
+      }
+    }
+    return [];
   }
 }
