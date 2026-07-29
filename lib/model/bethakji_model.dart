@@ -74,7 +74,8 @@ class BethakjiModel {
       mahatmy: map['mahatmy'] ?? '',
       directions: map['directions'] ?? '',
       rules: List<String>.from(jsonDecode(map['rules'] ?? '[]')),
-      isFavorite: map['isFavorite'] ?? 0,
+
+isFavorite: map['isFavorite'] ?? 0,
     );
   }
 }

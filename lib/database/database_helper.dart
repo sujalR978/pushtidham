@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -925,27 +926,37 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'bethakji_yadi.db');
 
     const String sql = '''
-    CREATE TABLE bethakji (
-      id TEXT PRIMARY KEY,
-      number TEXT,
-      name TEXT NOT NULL,
-      address TEXT,
-      contacts TEXT,
-      mahatmy TEXT,
-      directions TEXT,
-      rules TEXT
-    )
-    ''';
+  CREATE TABLE bethakji (
+    id INTEGER PRIMARY KEY,
+    number TEXT,
+    name TEXT NOT NULL,
+    address TEXT,
+    contacts TEXT,
+    mahatmy TEXT,
+    directions TEXT,
+    rules TEXT,
+    isFavorite INTEGER DEFAULT 0
+  )
+  ''';
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2, // <--- BUMP VERSION TO 2 TO FORCE RE-CREATION
       onCreate: (db, version) async {
         await db.execute(sql);
 
-        // Batch insert all 84 Bethakjis efficiently
         Batch batch = db.batch();
-        // Inside DatabaseHelper -> initDatabase or pre-populating logic
+        for (var bethakji in bethakji84List) {
+          batch.insert('bethakji', bethakji.toMap());
+        }
+        await batch.commit(noResult: true);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        // Drop old broken table and recreate with fixed schema
+        await db.execute('DROP TABLE IF EXISTS bethakji');
+        await db.execute(sql);
+
+        Batch batch = db.batch();
         for (var bethakji in bethakji84List) {
           batch.insert('bethakji', bethakji.toMap());
         }
@@ -955,10 +966,21 @@ class DatabaseHelper {
   }
 
   // Fetch all records
+  // Inside DatabaseHelper.dart
   Future<List<BethakjiModel>> getAllBethakji() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('bethakji');
 
+    // 1. Fetch raw maps directly from SQLite
+    final List<Map<String, dynamic>> maps = await db.query(
+      'bethakji_table_name',
+    ); // verify your table name!
+
+    debugPrint("RAW DB MAPS COUNT: ${maps.length}");
+    if (maps.isNotEmpty) {
+      debugPrint("FIRST ROW SAMPLE: ${maps.first}");
+    }
+
+    // 2. Safely parse maps
     return List.generate(maps.length, (i) {
       return BethakjiModel.fromMap(maps[i]);
     });

@@ -29,14 +29,33 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
   Future<void> _fetchBethakjiData() async {
     try {
       final List<BethakjiModel> data = await _dbHelper.getAllBethakji();
+
+      // Debug log to confirm data is returning from SQLite
+      debugPrint("Fetched ${data.length} items from Database");
+
+      if (!mounted) return;
+
       setState(() {
         _allBethakjiList = data;
+
+        // Immediately initialize _filteredList with database data
+        final query = _searchController.text.trim().toLowerCase();
+        if (query.isEmpty) {
+          _filteredList = List.from(data);
+        } else {
+          _filteredList = data.where((item) {
+            final nameMatch = item.name.toLowerCase().contains(query);
+            final numberMatch = item.number.toLowerCase().contains(query);
+            final addressMatch = item.address.toLowerCase().contains(query);
+            return nameMatch || numberMatch || addressMatch;
+          }).toList();
+        }
+
         _isLoading = false;
       });
-      // Re-apply search filter in case user had typed something
-      _filterBethakji(_searchController.text);
     } catch (e) {
       debugPrint("Error fetching Bethakji data: $e");
+      if (!mounted) return;
       setState(() {
         _isLoading = false;
       });
@@ -49,18 +68,21 @@ class _BethakjiListPageState extends State<BethakjiListPage> {
     // 1. Update SQLite DB
     await _dbHelper.updateFavoriteStatus(item.id, newFavoriteStatus);
 
-    // 2. Update Master List State
+    // 2. Update both master list and filtered list in ONE setState call
+    if (!mounted) return;
     setState(() {
-      final index = _allBethakjiList.indexWhere(
-        (element) => element.id == item.id,
-      );
+      final index = _allBethakjiList.indexWhere((e) => e.id == item.id);
       if (index != -1) {
         _allBethakjiList[index] = item.copyWith(isFavorite: newFavoriteStatus);
       }
-    });
 
-    // 3. Re-filter to keep search results in sync
-    _filterBethakji(_searchController.text);
+      final filteredIndex = _filteredList.indexWhere((e) => e.id == item.id);
+      if (filteredIndex != -1) {
+        _filteredList[filteredIndex] = item.copyWith(
+          isFavorite: newFavoriteStatus,
+        );
+      }
+    });
   }
 
   void _filterBethakji(String query) {
