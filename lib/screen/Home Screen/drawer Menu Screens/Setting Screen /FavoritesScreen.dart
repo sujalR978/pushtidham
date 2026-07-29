@@ -52,23 +52,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
     if (!mounted) return;
 
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("${removedItem.name} - ${l10n.btn_delete}"),
-        action: SnackBarAction(
-          label: l10n.btn_undo,
-          textColor: Theme.of(context).colorScheme.secondary,
-          onPressed: () async {
-            // Restore in SQLite database (isFavorite = 1)
-            await _dbHelper.updateFavoriteStatus(removedItem.id, 1);
-            setState(() {
-              _favoriteItems.insert(index, removedItem);
-            });
-          },
-        ),
-      ),
-    );
+   
+    
   }
 
   @override
