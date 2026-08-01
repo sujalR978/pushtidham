@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSectionTitle(context, theme, "મુખ્ય સ્મરણ | Sacred Highlights", Icons.stars_rounded),
+                    _buildSectionTitle(context, theme, l10n.section_sacred_highlights, Icons.stars_rounded),
                     const SizedBox(height: 8),
                     SizedBox(
                       height: 140,
@@ -146,25 +146,25 @@ class _HomePageState extends State<HomePage> {
                           _buildHeroFeatureCard(
                             context: context,
                             title: l10n.grid_about_mahaprabhuji,
-                            subtitle: "શ્રીમદ્ વલ્લભાચાર્ય મહારાજ ચરિત્ર",
+                            subtitle: l10n.sub_mahaprabhuji_charitra,
                             icon: Icons.auto_awesome_rounded,
-                            badge: "પાઠ",
+                            badge: l10n.badge_path,
                             onTap: () => _navigateTo(context, const AboutMahaprabhujiPage()),
                           ),
                           _buildHeroFeatureCard(
                             context: context,
                             title: l10n.grid_bethakji_list,
-                            subtitle: "84 પવિત્ર બેઠકજી દર્શન યાત્રા",
+                            subtitle: l10n.sub_bethakji_yatra,
                             icon: Icons.place_rounded,
-                            badge: "યાત્રા",
+                            badge: l10n.badge_yatra,
                             onTap: () => _navigateTo(context, const BethakjiListPage()),
                           ),
                           _buildHeroFeatureCard(
                             context: context,
                             title: l10n.grid_calendar,
-                            subtitle: "દૈનિક ટિપ્પણી, ઉત્સવ અને તિથિ",
+                            subtitle: l10n.sub_calendar_details,
                             icon: Icons.calendar_month_rounded,
-                            badge: "આજનું",
+                            badge: l10n.badge_today,
                             onTap: () => _navigateTo(context, const TippaniCalendarPage()),
                           ),
                         ],
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                   child: _buildSectionTitle(
                     context,
                     theme,
-                    "નિત્ય સેવા અને પાઠ | Daily Worship",
+                    l10n.section_daily_worship,
                     Icons.menu_book_rounded,
                   ),
                 ),
@@ -190,19 +190,19 @@ class _HomePageState extends State<HomePage> {
                 child: _buildHorizontalCategoryRow(context, theme, [
                   {
                     "title": l10n.grid_pathavali,
-                    "subtitle": "સ્તોત્ર અને નિત્ય પાઠ",
+                    "subtitle": l10n.sub_pathavali_stotra,
                     "icon": Icons.menu_book_outlined,
                     "screen": const PathavaliListPage(),
                   },
                   {
                     "title": l10n.grid_kirtan,
-                    "subtitle": "અષ્ટછાપ કીર્તન પદ",
+                    "subtitle": l10n.sub_kirtan_pad,
                     "icon": Icons.music_note_rounded,
                     "screen": const KirtanListPage(),
                   },
                   {
                     "title": l10n.grid_jap_mala,
-                    "subtitle": "નામ સ્મરણ ગણતરી",
+                    "subtitle": l10n.sub_jap_mala_count,
                     "icon": Icons.touch_app_rounded,
                     "screen": const JapMalaScreen(),
                   },
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                   child: _buildSectionTitle(
                     context,
                     theme,
-                    "પુષ્ટિ સાહિત્ય અને વાર્તાજી | Sacred Stories",
+                    l10n.section_sacred_stories,
                     Icons.auto_stories_rounded,
                   ),
                 ),
@@ -225,19 +225,19 @@ class _HomePageState extends State<HomePage> {
                 child: _buildVerticalListGroup(context, theme, [
                   {
                     "title": l10n.grid_84_vaishnav,
-                    "subtitle": "ચોરાસી વૈષ્ણવ ની વાર્તાજી",
+                    "subtitle": l10n.sub_84_varta,
                     "icon": Icons.groups_rounded,
                     "screen": const ChorasiVartaListPage(),
                   },
                   {
                     "title": l10n.grid_84_vaishnav_vraj,
-                    "subtitle": "વ્રજભક્ત ચરિત્ર અને પ્રસંગો",
+                    "subtitle": l10n.sub_vrajbhakt_charitra,
                     "icon": Icons.explore_rounded,
                     "screen": const ChorasiVartaListPage(),
                   },
                   {
                     "title": l10n.grid_252_vaishnav,
-                    "subtitle": "બસો બાવન વૈષ્ણવ ચરિત્ર",
+                    "subtitle": l10n.sub_252_varta,
                     "icon": Icons.collections_bookmark_rounded,
                     "screen": const ChorasiVartaListPage(),
                   },
@@ -251,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                   child: _buildSectionTitle(
                     context,
                     theme,
-                    "સેવા અને સંગ્રહ | Community & Seva",
+                    l10n.section_community_seva,
                     Icons.hub_rounded,
                   ),
                 ),
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "જય શ્રી કૃષ્ણ",
+                    l10n.quote_salutation,
                     style: TextStyle(
                       color: theme.colorScheme.onPrimary.withOpacity(0.9),
                       fontSize: 16,
@@ -368,7 +368,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    "શ્રી કૃષ્ણઃ શરણં મમ",
+                    l10n.quote_mantra,
                     style: TextStyle(
                       color: theme.colorScheme.onPrimary,
                       fontSize: 22,
@@ -405,7 +405,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    "સર્વ સમર્પણ ભાવથી જ શ્રીપ્રભુની કૃપા પ્રાપ્ત થાય છે.",
+                    l10n.quote_suvichar,
                     style: TextStyle(
                       color: theme.colorScheme.onPrimary,
                       fontSize: 13,
@@ -716,7 +716,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    "નામ સ્મરણ ગણતરી શરુ કરો",
+                    l10n.quick_jaap_start_sub,
                     style: TextStyle(
                       color: theme.colorScheme.onPrimary.withOpacity(0.8),
                       fontSize: 11,
@@ -735,9 +735,9 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               elevation: 0,
             ),
-            child: const Text(
-              "શરૂ કરો",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            child: Text(
+              l10n.quick_jaap_start_btn,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             ),
           ),
         ],
