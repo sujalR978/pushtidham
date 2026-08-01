@@ -58,14 +58,26 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.bookmark_border_rounded),
             tooltip: l10n.nav_favorites,
             onPressed: () {
-              _navigateTo(context, const FavoritesPage());
+              // Added Sound & Haptic
+              HapticFeedback.lightImpact();
+              SoundService().playClick(); // Play sound
+
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const FavoritesPage()),
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: l10n.nav_settings,
             onPressed: () {
-              _navigateTo(context, const SettingsPage());
+              // Added Sound & Haptic
+              HapticFeedback.lightImpact();
+              
+
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
             },
           ),
         ],
@@ -111,8 +123,6 @@ class _HomePageState extends State<HomePage> {
                           ? IconButton(
                               icon: const Icon(Icons.clear, size: 18),
                               onPressed: () {
-                                HapticFeedback.lightImpact();
-                                SoundService().playClick();
                                 _searchController.clear();
                                 setState(() {
                                   _searchQuery = "";
@@ -367,17 +377,11 @@ class _HomePageState extends State<HomePage> {
 
   // --- HELPER COMPONENTS ---
 
-  void _navigateTo(
-    BuildContext context,
-    Widget targetScreen, {
-    bool playSound = true,
-  }) {
+  void _navigateTo(BuildContext context, Widget targetScreen) {
     // Added Sound & Haptic natively inside the navigation helper
     // so it applies automatically to all tiles and cards!
-    if (playSound) {
-      HapticFeedback.lightImpact();
-      SoundService().playClick(); // Play sound
-    }
+    HapticFeedback.lightImpact();
+    SoundService().playClick(); // Play sound
 
     Navigator.of(
       context,
@@ -906,10 +910,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: theme.colorScheme.onSurface),
             ),
             onTap: () {
-              HapticFeedback.lightImpact();
-              SoundService().playClick();
               Navigator.pop(context);
-              _navigateTo(context, const FavoritesPage(), playSound: false);
+              _navigateTo(context, const FavoritesPage());
             },
           ),
           ListTile(
@@ -922,10 +924,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: theme.colorScheme.onSurface),
             ),
             onTap: () {
-              HapticFeedback.lightImpact();
-              SoundService().playClick();
               Navigator.pop(context);
-              _navigateTo(context, const NotesPage(), playSound: false);
+              _navigateTo(context, const NotesPage());
             },
           ),
           ListTile(
@@ -938,10 +938,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: theme.colorScheme.onSurface),
             ),
             onTap: () {
-              HapticFeedback.lightImpact();
-              SoundService().playClick();
               Navigator.pop(context);
-              _navigateTo(context, const GalleryPage(), playSound: false);
+              _navigateTo(context, const GalleryPage());
             },
           ),
           ListTile(
@@ -954,14 +952,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: theme.colorScheme.onSurface),
             ),
             onTap: () {
-              HapticFeedback.lightImpact();
-              SoundService().playClick();
               Navigator.pop(context);
-              _navigateTo(
-                context,
-                const OfflineContentPage(),
-                playSound: false,
-              );
+              _navigateTo(context, const OfflineContentPage());
             },
           ),
           const Divider(),
@@ -975,10 +967,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: theme.colorScheme.onSurface),
             ),
             onTap: () {
-              HapticFeedback.lightImpact();
-              SoundService().playClick();
               Navigator.pop(context);
-              _navigateTo(context, const SettingsPage(), playSound: false);
+              _navigateTo(context, const SettingsPage());
             },
           ),
         ],
