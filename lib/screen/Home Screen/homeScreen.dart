@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_list_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dart';
@@ -164,10 +165,13 @@ class _HomePageState extends State<HomePage> {
                             subtitle: l10n.sub_mahaprabhuji_charitra,
                             icon: Icons.auto_awesome_rounded,
                             badge: l10n.badge_path,
-                            onTap: () => _navigateTo(
-                              context,
-                              const AboutMahaprabhujiPage(),
-                            ),
+                            onTap: () {
+                              _navigateTo(
+                                context,
+                                const AboutMahaprabhujiPage(),
+                              );
+                              HapticFeedback.lightImpact();
+                            },
                           ),
                           _buildHeroFeatureCard(
                             context: context,
