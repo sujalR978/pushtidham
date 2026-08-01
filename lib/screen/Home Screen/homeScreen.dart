@@ -36,7 +36,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Row(
           children: [
-            const Text("ૐ ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            const Text(
+              "ૐ ",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
             Text(
               l10n.app_title,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -83,7 +86,10 @@ class _HomePageState extends State<HomePage> {
               // 2. Search Bar Integration
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
                   child: TextField(
                     controller: _searchController,
                     onChanged: (val) {
@@ -97,7 +103,10 @@ class _HomePageState extends State<HomePage> {
                         color: theme.colorScheme.onSurface.withOpacity(0.5),
                         fontSize: 14,
                       ),
-                      prefixIcon: Icon(Icons.search_rounded, color: theme.colorScheme.primary),
+                      prefixIcon: Icon(
+                        Icons.search_rounded,
+                        color: theme.colorScheme.primary,
+                      ),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
                               icon: const Icon(Icons.clear, size: 18),
@@ -110,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                             )
                           : null,
                       filled: true,
-                      fillColor: theme.cardTheme.color ?? theme.colorScheme.surface,
+                      fillColor:
+                          theme.cardTheme.color ?? theme.colorScheme.surface,
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -135,7 +145,12 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSectionTitle(context, theme, l10n.section_sacred_highlights, Icons.stars_rounded),
+                    _buildSectionTitle(
+                      context,
+                      theme,
+                      l10n.section_sacred_highlights,
+                      Icons.stars_rounded,
+                    ),
                     const SizedBox(height: 8),
                     SizedBox(
                       height: 140,
@@ -149,7 +164,10 @@ class _HomePageState extends State<HomePage> {
                             subtitle: l10n.sub_mahaprabhuji_charitra,
                             icon: Icons.auto_awesome_rounded,
                             badge: l10n.badge_path,
-                            onTap: () => _navigateTo(context, const AboutMahaprabhujiPage()),
+                            onTap: () => _navigateTo(
+                              context,
+                              const AboutMahaprabhujiPage(),
+                            ),
                           ),
                           _buildHeroFeatureCard(
                             context: context,
@@ -157,7 +175,8 @@ class _HomePageState extends State<HomePage> {
                             subtitle: l10n.sub_bethakji_yatra,
                             icon: Icons.place_rounded,
                             badge: l10n.badge_yatra,
-                            onTap: () => _navigateTo(context, const BethakjiListPage()),
+                            onTap: () =>
+                                _navigateTo(context, const BethakjiListPage()),
                           ),
                           _buildHeroFeatureCard(
                             context: context,
@@ -165,7 +184,10 @@ class _HomePageState extends State<HomePage> {
                             subtitle: l10n.sub_calendar_details,
                             icon: Icons.calendar_month_rounded,
                             badge: l10n.badge_today,
-                            onTap: () => _navigateTo(context, const TippaniCalendarPage()),
+                            onTap: () => _navigateTo(
+                              context,
+                              const TippaniCalendarPage(),
+                            ),
                           ),
                         ],
                       ),
@@ -258,7 +280,10 @@ class _HomePageState extends State<HomePage> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -267,7 +292,8 @@ class _HomePageState extends State<HomePage> {
                           theme: theme,
                           title: l10n.nav_gallery,
                           icon: Icons.photo_library_rounded,
-                          onTap: () => _navigateTo(context, const GalleryPage()),
+                          onTap: () =>
+                              _navigateTo(context, const GalleryPage()),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -286,7 +312,10 @@ class _HomePageState extends State<HomePage> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 4.0,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -305,7 +334,8 @@ class _HomePageState extends State<HomePage> {
                           theme: theme,
                           title: l10n.grid_contact,
                           icon: Icons.contact_support_rounded,
-                          onTap: () => _navigateTo(context, const ContactPage()),
+                          onTap: () =>
+                              _navigateTo(context, const ContactPage()),
                         ),
                       ),
                     ],
@@ -313,7 +343,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 100)), // Bottom padding for float bar
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 100),
+              ), // Bottom padding for float bar
             ],
           ),
 
@@ -332,13 +364,17 @@ class _HomePageState extends State<HomePage> {
   // --- HELPER COMPONENTS ---
 
   void _navigateTo(BuildContext context, Widget targetScreen) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => targetScreen),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => targetScreen));
   }
 
   // Daily Darshan Header Banner with Spiritual Suvichar
-  Widget _buildDailyDarshanHeader(BuildContext context, ThemeData theme, AppLocalizations l10n) {
+  Widget _buildDailyDarshanHeader(
+    BuildContext context,
+    ThemeData theme,
+    AppLocalizations l10n,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -401,7 +437,11 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Row(
               children: [
-                Icon(Icons.format_quote_rounded, color: theme.colorScheme.onPrimary, size: 20),
+                Icon(
+                  Icons.format_quote_rounded,
+                  color: theme.colorScheme.onPrimary,
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -422,7 +462,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Section Header with Accent Dot
-  Widget _buildSectionTitle(BuildContext context, ThemeData theme, String title, IconData icon) {
+  Widget _buildSectionTitle(
+    BuildContext context,
+    ThemeData theme,
+    String title,
+    IconData icon,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -458,7 +503,9 @@ class _HomePageState extends State<HomePage> {
       child: Card(
         color: theme.cardTheme.color,
         elevation: theme.cardTheme.elevation ?? 2,
-        shape: theme.cardTheme.shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape:
+            theme.cardTheme.shape ??
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: onTap,
@@ -472,12 +519,21 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircleAvatar(
-                      backgroundColor: theme.colorScheme.primary.withOpacity(0.12),
+                      backgroundColor: theme.colorScheme.primary.withOpacity(
+                        0.12,
+                      ),
                       radius: 20,
-                      child: Icon(icon, color: theme.colorScheme.primary, size: 22),
+                      child: Icon(
+                        icon,
+                        color: theme.colorScheme.primary,
+                        size: 22,
+                      ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: theme.colorScheme.secondary.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
@@ -549,7 +605,11 @@ class _HomePageState extends State<HomePage> {
             child: Card(
               color: theme.cardTheme.color,
               elevation: theme.cardTheme.elevation ?? 2,
-              shape: theme.cardTheme.shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              shape:
+                  theme.cardTheme.shape ??
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(14),
                 onTap: () => _navigateTo(context, item["screen"]),
@@ -559,7 +619,11 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(item["icon"], color: theme.colorScheme.primary, size: 26),
+                      Icon(
+                        item["icon"],
+                        color: theme.colorScheme.primary,
+                        size: 26,
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         item["title"],
@@ -606,11 +670,19 @@ class _HomePageState extends State<HomePage> {
             child: Card(
               color: theme.cardTheme.color,
               elevation: theme.cardTheme.elevation ?? 1,
-              shape: theme.cardTheme.shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape:
+                  theme.cardTheme.shape ??
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
-                  child: Icon(item["icon"], color: theme.colorScheme.primary, size: 20),
+                  child: Icon(
+                    item["icon"],
+                    color: theme.colorScheme.primary,
+                    size: 20,
+                  ),
                 ),
                 title: Text(
                   item["title"],
@@ -652,7 +724,9 @@ class _HomePageState extends State<HomePage> {
     return Card(
       color: theme.cardTheme.color,
       elevation: theme.cardTheme.elevation ?? 1,
-      shape: theme.cardTheme.shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape:
+          theme.cardTheme.shape ??
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: onTap,
@@ -682,7 +756,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Quick Action Sticky Bottom Bar for Jaap Mala
-  Widget _buildQuickJaapFloatingBar(BuildContext context, ThemeData theme, AppLocalizations l10n) {
+  Widget _buildQuickJaapFloatingBar(
+    BuildContext context,
+    ThemeData theme,
+    AppLocalizations l10n,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       decoration: BoxDecoration(
@@ -701,7 +779,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           Row(
             children: [
-              Icon(Icons.ads_click_rounded, color: theme.colorScheme.onPrimary, size: 24),
+              Icon(
+                Icons.ads_click_rounded,
+                color: theme.colorScheme.onPrimary,
+                size: 24,
+              ),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -731,7 +813,9 @@ class _HomePageState extends State<HomePage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.colorScheme.onPrimary,
               foregroundColor: theme.colorScheme.primary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               elevation: 0,
             ),
@@ -746,7 +830,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Custom Drawer Menu with Sacred Styling
-  Widget _buildSacredDrawer(BuildContext context, ThemeData theme, AppLocalizations l10n) {
+  Widget _buildSacredDrawer(
+    BuildContext context,
+    ThemeData theme,
+    AppLocalizations l10n,
+  ) {
     return Drawer(
       backgroundColor: theme.colorScheme.surface,
       child: ListView(
@@ -783,36 +871,63 @@ class _HomePageState extends State<HomePage> {
           ),
           ListTile(
             leading: Icon(Icons.home_rounded, color: theme.colorScheme.primary),
-            title: Text(l10n.nav_home, style: TextStyle(color: theme.colorScheme.onSurface)),
+            title: Text(
+              l10n.nav_home,
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
             onTap: () => Navigator.pop(context),
           ),
           ListTile(
-            leading: Icon(Icons.bookmark_rounded, color: theme.colorScheme.primary),
-            title: Text(l10n.nav_favorites, style: TextStyle(color: theme.colorScheme.onSurface)),
+            leading: Icon(
+              Icons.bookmark_rounded,
+              color: theme.colorScheme.primary,
+            ),
+            title: Text(
+              l10n.nav_favorites,
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
             onTap: () {
               Navigator.pop(context);
               _navigateTo(context, const FavoritesPage());
             },
           ),
           ListTile(
-            leading: Icon(Icons.note_alt_rounded, color: theme.colorScheme.primary),
-            title: Text(l10n.nav_notes, style: TextStyle(color: theme.colorScheme.onSurface)),
+            leading: Icon(
+              Icons.note_alt_rounded,
+              color: theme.colorScheme.primary,
+            ),
+            title: Text(
+              l10n.nav_notes,
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
             onTap: () {
               Navigator.pop(context);
               _navigateTo(context, const NotesPage());
             },
           ),
           ListTile(
-            leading: Icon(Icons.photo_library_rounded, color: theme.colorScheme.primary),
-            title: Text(l10n.nav_gallery, style: TextStyle(color: theme.colorScheme.onSurface)),
+            leading: Icon(
+              Icons.photo_library_rounded,
+              color: theme.colorScheme.primary,
+            ),
+            title: Text(
+              l10n.nav_gallery,
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
             onTap: () {
               Navigator.pop(context);
               _navigateTo(context, const GalleryPage());
             },
           ),
           ListTile(
-            leading: Icon(Icons.download_for_offline_rounded, color: theme.colorScheme.primary),
-            title: Text(l10n.nav_offline, style: TextStyle(color: theme.colorScheme.onSurface)),
+            leading: Icon(
+              Icons.download_for_offline_rounded,
+              color: theme.colorScheme.primary,
+            ),
+            title: Text(
+              l10n.nav_offline,
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
             onTap: () {
               Navigator.pop(context);
               _navigateTo(context, const OfflineContentPage());
@@ -820,8 +935,14 @@ class _HomePageState extends State<HomePage> {
           ),
           const Divider(),
           ListTile(
-            leading: Icon(Icons.settings_outlined, color: theme.colorScheme.onSurface.withOpacity(0.6)),
-            title: Text(l10n.nav_settings, style: TextStyle(color: theme.colorScheme.onSurface)),
+            leading: Icon(
+              Icons.settings_outlined,
+              color: theme.colorScheme.onSurface.withOpacity(0.6),
+            ),
+            title: Text(
+              l10n.nav_settings,
+              style: TextStyle(color: theme.colorScheme.onSurface),
+            ),
             onTap: () {
               Navigator.pop(context);
               _navigateTo(context, const SettingsPage());
