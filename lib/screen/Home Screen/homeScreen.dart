@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Required for HapticFeedback
-import 'package:pushtidham/Provider/sound_helper.dart';
+
 import 'package:pushtidham/l10n/app_localizations.dart';
-// import 'sound_service.dart'; // TODO: Make sure to import your SoundService file here!
 
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_list_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/contectScreen.dart';
@@ -60,7 +59,6 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               // Added Sound & Haptic
               HapticFeedback.lightImpact();
-              SoundService().playClick(); // Play sound
 
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const FavoritesPage()),
