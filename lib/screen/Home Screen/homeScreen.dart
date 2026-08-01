@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               // Added Sound & Haptic
               HapticFeedback.lightImpact();
-              
+              // SoundService().playClick(); // Play sound
 
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const SettingsPage()),
@@ -381,7 +381,7 @@ class _HomePageState extends State<HomePage> {
     // Added Sound & Haptic natively inside the navigation helper
     // so it applies automatically to all tiles and cards!
     HapticFeedback.lightImpact();
-    SoundService().playClick(); // Play sound
+    // SoundService().playClick(); // Play sound
 
     Navigator.of(
       context,
@@ -896,7 +896,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onTap: () {
               HapticFeedback.lightImpact();
-              SoundService().playClick(); // Play sound
+              // SoundService().playClick(); // Play sound
               Navigator.pop(context);
             },
           ),
