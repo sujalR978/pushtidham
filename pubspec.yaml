@@ -43,6 +43,7 @@ dependencies:
   path_provider: ^2.1.6
   url_launcher: ^6.3.2
   open_filex: ^4.7.0
+  audioplayers: ^6.7.1
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -77,6 +78,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/sounds/
 
 
   # To add assets to your application, add an assets section, like this:
