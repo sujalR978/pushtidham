@@ -78,6 +78,71 @@ class AppLocalizationsEn extends AppLocalizations {
   String get grid_contact => 'Contact';
 
   @override
+  String get section_sacred_highlights => 'Sacred Highlights';
+
+  @override
+  String get section_daily_worship => 'Daily Worship';
+
+  @override
+  String get section_sacred_stories => 'Sacred Stories';
+
+  @override
+  String get section_community_seva => 'Community & Seva';
+
+  @override
+  String get sub_mahaprabhuji_charitra =>
+      'Shrimad Vallabhacharya Maharaj Character';
+
+  @override
+  String get sub_bethakji_yatra => '84 Sacred Bethakji Darshan Yatra';
+
+  @override
+  String get sub_calendar_details => 'Daily Tippani, Festival & Tithi';
+
+  @override
+  String get sub_pathavali_stotra => 'Stotra and Daily Recitation';
+
+  @override
+  String get sub_kirtan_pad => 'Ashtachhap Kirtan Pad';
+
+  @override
+  String get sub_jap_mala_count => 'Name Chanting Counter';
+
+  @override
+  String get sub_84_varta => 'Chorasi Vaishnav Ni Varta';
+
+  @override
+  String get sub_vrajbhakt_charitra => 'Vrajbhakt Character & Stories';
+
+  @override
+  String get sub_252_varta => 'Baso Bavan Vaishnav Character';
+
+  @override
+  String get badge_path => 'Path';
+
+  @override
+  String get badge_yatra => 'Yatra';
+
+  @override
+  String get badge_today => 'Today';
+
+  @override
+  String get quote_salutation => 'Jai Shree Krishna';
+
+  @override
+  String get quote_mantra => 'Shri Krishna Sharanam Mamah';
+
+  @override
+  String get quote_suvichar =>
+      'Lord\'s grace is obtained through complete surrender.';
+
+  @override
+  String get quick_jaap_start_sub => 'Start Chanting Counter';
+
+  @override
+  String get quick_jaap_start_btn => 'Start Now';
+
+  @override
   String get theme_settings => 'Theme Settings';
 
   @override
