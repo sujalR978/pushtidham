@@ -56,36 +56,53 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
+          // 1. Follow System
           _buildThemeCard(
             context: context,
             title: l10n.theme_system,
-            subtitle: "Switches with phone settings",
-            value: AppThemeMode.FollowSystem,
-            groupValue: themeManager.CurrentTheme,
+            subtitle: "Switches automatically with phone settings",
+            value: AppThemeMode.followSystem,
+            groupValue: themeManager.currentTheme,
             onChanged: (val) => themeManager.setTheme(val!),
           ),
+
+          // 2. Temple Gold (NEW)
+          _buildThemeCard(
+            context: context,
+            title: "Temple Gold", // Add to AppLocalizations if needed: l10n.theme_temple
+            subtitle: "Traditional Pushtimarg gold & ivory aesthetic",
+            value: AppThemeMode.temple,
+            groupValue: themeManager.currentTheme,
+            onChanged: (val) => themeManager.setTheme(val!),
+          ),
+
+          // 3. Day Theme
           _buildThemeCard(
             context: context,
             title: l10n.theme_day,
             subtitle: "Bright, traditional daytime look",
             value: AppThemeMode.day,
-            groupValue: themeManager.CurrentTheme,
+            groupValue: themeManager.currentTheme,
             onChanged: (val) => themeManager.setTheme(val!),
           ),
+
+          // 4. Night Theme
           _buildThemeCard(
             context: context,
             title: l10n.theme_night,
             subtitle: "Calm, eye-friendly dark look",
             value: AppThemeMode.night,
-            groupValue: themeManager.CurrentTheme,
+            groupValue: themeManager.currentTheme,
             onChanged: (val) => themeManager.setTheme(val!),
           ),
+
+          // 5. Sandstone Mandir
           _buildThemeCard(
             context: context,
             title: l10n.theme_mandir,
-            subtitle: "Premium traditional heritage aesthetic",
+            subtitle: "Premium heritage sandstone & kumkum aesthetic",
             value: AppThemeMode.mandir,
-            groupValue: themeManager.CurrentTheme,
+            groupValue: themeManager.currentTheme,
             onChanged: (val) => themeManager.setTheme(val!),
           ),
 
@@ -111,7 +128,7 @@ class SettingsPage extends StatelessWidget {
                 vertical: 8,
               ),
               leading: CircleAvatar(
-                backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                backgroundColor: theme.colorScheme.primary.withOpacity(0.12),
                 child: Icon(Icons.translate, color: theme.colorScheme.primary),
               ),
               title: Text(
@@ -150,7 +167,7 @@ class SettingsPage extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: theme.colorScheme.onSurface.withOpacity(0.8),
+            color: theme.colorScheme.onSurface.withOpacity(0.85),
           ),
         ),
       ],
@@ -176,12 +193,12 @@ class SettingsPage extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           backgroundColor: isSelected
-              ? theme.colorScheme.primary.withOpacity(0.06)
+              ? theme.colorScheme.primary.withOpacity(0.08)
               : theme.cardTheme.color,
           side: BorderSide(
             color: isSelected
                 ? theme.colorScheme.primary
-                : theme.colorScheme.onSurface.withOpacity(0.12),
+                : theme.colorScheme.onSurface.withOpacity(0.15),
             width: isSelected ? 2.0 : 1.0,
           ),
           shape: RoundedRectangleBorder(
@@ -207,7 +224,7 @@ class SettingsPage extends StatelessWidget {
                     subtitle,
                     style: TextStyle(
                       fontSize: 12,
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withOpacity(0.65),
                     ),
                   ),
                 ],
