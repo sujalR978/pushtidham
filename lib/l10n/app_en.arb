@@ -5,14 +5,14 @@
   "select_language": "Select Language",
   "continue_btn": "Continue",
   "search_placeholder": "Search content...",
-  
+
   "nav_home": "Home",
   "nav_favorites": "Favorites",
   "nav_notes": "Personal Notes",
   "nav_gallery": "Media Gallery",
   "nav_offline": "Offline Content",
   "nav_settings": "Settings",
-  
+
   "grid_about_mahaprabhuji": "About Shri Mahaprabhuji",
   "grid_bethakji_list": "Shri Mahaprabhuji Bethakji List",
   "grid_kirtan": "Kirtan",
@@ -24,6 +24,32 @@
   "grid_252_vaishnav": "252 Vaishnav Varta",
   "grid_review": "Review",
   "grid_contact": "Contact",
+
+  "section_sacred_highlights": "Sacred Highlights",
+  "section_daily_worship": "Daily Worship",
+  "section_sacred_stories": "Sacred Stories",
+  "section_community_seva": "Community & Seva",
+
+  "sub_mahaprabhuji_charitra": "Shrimad Vallabhacharya Maharaj Character",
+  "sub_bethakji_yatra": "84 Sacred Bethakji Darshan Yatra",
+  "sub_calendar_details": "Daily Tippani, Festival & Tithi",
+  "sub_pathavali_stotra": "Stotra and Daily Recitation",
+  "sub_kirtan_pad": "Ashtachhap Kirtan Pad",
+  "sub_jap_mala_count": "Name Chanting Counter",
+  "sub_84_varta": "Chorasi Vaishnav Ni Varta",
+  "sub_vrajbhakt_charitra": "Vrajbhakt Character & Stories",
+  "sub_252_varta": "Baso Bavan Vaishnav Character",
+
+  "badge_path": "Path",
+  "badge_yatra": "Yatra",
+  "badge_today": "Today",
+
+  "quote_salutation": "Jai Shree Krishna",
+  "quote_mantra": "Shri Krishna Sharanam Mamah",
+  "quote_suvichar": "Lord's grace is obtained through complete surrender.",
+
+  "quick_jaap_start_sub": "Start Chanting Counter",
+  "quick_jaap_start_btn": "Start Now",
 
   "theme_settings": "Theme Settings",
   "theme_system": "System Default",
@@ -54,5 +80,4 @@
   "mahaprabhuji_bio_p3": "Throughout His life, Shri Mahaprabhuji travelled across India three times on foot, spreading the message of Pushtimarg and establishing the philosophy of Shuddhadvaita. He guided countless devotees through the sacred initiation of Brahmasambandh, teaching that true devotion begins with complete surrender of one's body, mind, wealth, and soul to Shri Krishna. His teachings continue to inspire devotees to perform seva with love, humility, and unwavering faith.",
   "mahaprabhuji_bio_p4": "Shri Mahaprabhuji also composed many sacred scriptures, including the Shodash Granth, Shri Yamunashtakam, Siddhanta Rahasya, and Subodhiniji, which remain the foundation of Pushtimarg philosophy. Despite being honoured by kings and scholars, He lived a life of simplicity, dedicating every moment to Bhagwan and the spiritual upliftment of devotees.",
   "mahaprabhuji_bio_p5": "After completing His divine mission, Shri Mahaprabhuji accepted the path of renunciation and spent His final days in Kashi. On Rath Yatra of Vikram Samvat 1587, at the age of 52, He entered the sacred River Ganga. According to Pushtimarg tradition, His divine form merged into a radiant light, signifying His return to the eternal abode of Bhagwan Shri Krishna. His life remains a timeless source of devotion, wisdom, and divine grace for followers of Pushtimarg around the world."
-
 }
