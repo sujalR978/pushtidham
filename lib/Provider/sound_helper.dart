@@ -14,7 +14,7 @@ class SoundService {
       // Use BytesSource or AssetSource based on package version
       // AssetSource automatically targets the 'assets/' folder
       await _clickPlayer.stop(); // Stops previous playback if clicked rapidly
-      await _clickPlayer.play(AssetSource('sounds/click1.wav'));
+      await _clickPlayer.play(AssetSource('sounds/click.wav'));
     } catch (e) {
       print("Error playing audio: $e");
     }
