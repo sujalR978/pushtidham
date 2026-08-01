@@ -1,7 +1,76 @@
 import 'package:flutter/material.dart';
 
 class AppThemes {
-  // 1. DAY THEME: Saffron Dawn (Bright, Energetic, Pure)
+  // ---------------------------------------------------------------------------
+  // 1. NEW THEME: Temple Gold (Traditional Pushtimarg Palette)
+  // ---------------------------------------------------------------------------
+  static ThemeData get templeTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+
+      // Core Color Scheme Mapping
+      colorScheme: const ColorScheme.light(
+        primary: Color(0xFFC89B3C), // Temple Gold
+        secondary: Color(0xFFE68A2E), // Saffron
+        surface: Color(0xFFFFFFFF), // White
+        error: Color(0xFFB53A3A), // Deep Red
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        onSurface: Color(0xFF4B3426), // Dark Brown
+        onError: Colors.white,
+        outline: Color(0xFFE8D6A8), // Light Gold (Divider)
+      ),
+
+      // Backgrounds
+      scaffoldBackgroundColor: const Color(0xFFFFF9F2), // Ivory
+      // App Bar Styling
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFFC89B3C), // Temple Gold
+        foregroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+      ),
+
+      // Card Theme (Cream background with subtle gold border)
+      cardTheme: CardThemeData(
+        color: const Color(0xFFF8F1E7), // Card Cream
+        elevation: 1,
+        shadowColor: const Color(0xFFC89B3C).withOpacity(0.15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(
+            color: Color(0xFFE8D6A8), // Light Gold Divider
+            width: 0.8,
+          ),
+        ),
+      ),
+
+      // Text Theme
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(color: Color(0xFF4B3426)), // Dark Brown Text
+        bodyMedium: TextStyle(color: Color(0xFF4B3426)),
+        titleMedium: TextStyle(
+          color: Color(0xFF4B3426),
+          fontWeight: FontWeight.bold,
+        ),
+        bodySmall: TextStyle(color: Color(0xFF8D7A6B)), // Subtitle Warm Grey
+      ),
+
+      // Divider & Progress Indicators
+      dividerTheme: const DividerThemeData(
+        color: Color(0xFFE8D6A8), // Light Gold
+        thickness: 1,
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: Color(0xFFC89B3C), // Temple Gold
+      ),
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. DAY THEME: Saffron Dawn (Bright, Energetic, Pure)
+  // ---------------------------------------------------------------------------
   static ThemeData get dayTheme {
     return ThemeData(
       useMaterial3: true,
@@ -29,7 +98,9 @@ class AppThemes {
     );
   }
 
-  // 2. NIGHT THEME: Midnight Dhyaan (Calm, Meditative, Deep)
+  // ---------------------------------------------------------------------------
+  // 3. NIGHT THEME: Midnight Dhyaan (Calm, Meditative, Deep)
+  // ---------------------------------------------------------------------------
   static ThemeData get nightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -57,7 +128,9 @@ class AppThemes {
     );
   }
 
-  // 3. EXTRA PREMIUM THEME: Sandstone Mandir (Traditional Heritage Textures)
+  // ---------------------------------------------------------------------------
+  // 4. EXTRA PREMIUM THEME: Sandstone Mandir (Traditional Heritage Textures)
+  // ---------------------------------------------------------------------------
   static ThemeData get mandirTheme {
     return ThemeData(
       useMaterial3: true,
