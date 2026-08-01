@@ -238,6 +238,132 @@ abstract class AppLocalizations {
   /// **'Contact'**
   String get grid_contact;
 
+  /// No description provided for @section_sacred_highlights.
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred Highlights'**
+  String get section_sacred_highlights;
+
+  /// No description provided for @section_daily_worship.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Worship'**
+  String get section_daily_worship;
+
+  /// No description provided for @section_sacred_stories.
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred Stories'**
+  String get section_sacred_stories;
+
+  /// No description provided for @section_community_seva.
+  ///
+  /// In en, this message translates to:
+  /// **'Community & Seva'**
+  String get section_community_seva;
+
+  /// No description provided for @sub_mahaprabhuji_charitra.
+  ///
+  /// In en, this message translates to:
+  /// **'Shrimad Vallabhacharya Maharaj Character'**
+  String get sub_mahaprabhuji_charitra;
+
+  /// No description provided for @sub_bethakji_yatra.
+  ///
+  /// In en, this message translates to:
+  /// **'84 Sacred Bethakji Darshan Yatra'**
+  String get sub_bethakji_yatra;
+
+  /// No description provided for @sub_calendar_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Tippani, Festival & Tithi'**
+  String get sub_calendar_details;
+
+  /// No description provided for @sub_pathavali_stotra.
+  ///
+  /// In en, this message translates to:
+  /// **'Stotra and Daily Recitation'**
+  String get sub_pathavali_stotra;
+
+  /// No description provided for @sub_kirtan_pad.
+  ///
+  /// In en, this message translates to:
+  /// **'Ashtachhap Kirtan Pad'**
+  String get sub_kirtan_pad;
+
+  /// No description provided for @sub_jap_mala_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Name Chanting Counter'**
+  String get sub_jap_mala_count;
+
+  /// No description provided for @sub_84_varta.
+  ///
+  /// In en, this message translates to:
+  /// **'Chorasi Vaishnav Ni Varta'**
+  String get sub_84_varta;
+
+  /// No description provided for @sub_vrajbhakt_charitra.
+  ///
+  /// In en, this message translates to:
+  /// **'Vrajbhakt Character & Stories'**
+  String get sub_vrajbhakt_charitra;
+
+  /// No description provided for @sub_252_varta.
+  ///
+  /// In en, this message translates to:
+  /// **'Baso Bavan Vaishnav Character'**
+  String get sub_252_varta;
+
+  /// No description provided for @badge_path.
+  ///
+  /// In en, this message translates to:
+  /// **'Path'**
+  String get badge_path;
+
+  /// No description provided for @badge_yatra.
+  ///
+  /// In en, this message translates to:
+  /// **'Yatra'**
+  String get badge_yatra;
+
+  /// No description provided for @badge_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get badge_today;
+
+  /// No description provided for @quote_salutation.
+  ///
+  /// In en, this message translates to:
+  /// **'Jai Shree Krishna'**
+  String get quote_salutation;
+
+  /// No description provided for @quote_mantra.
+  ///
+  /// In en, this message translates to:
+  /// **'Shri Krishna Sharanam Mamah'**
+  String get quote_mantra;
+
+  /// No description provided for @quote_suvichar.
+  ///
+  /// In en, this message translates to:
+  /// **'Lord\'s grace is obtained through complete surrender.'**
+  String get quote_suvichar;
+
+  /// No description provided for @quick_jaap_start_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Chanting Counter'**
+  String get quick_jaap_start_sub;
+
+  /// No description provided for @quick_jaap_start_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Now'**
+  String get quick_jaap_start_btn;
+
   /// No description provided for @theme_settings.
   ///
   /// In en, this message translates to:
