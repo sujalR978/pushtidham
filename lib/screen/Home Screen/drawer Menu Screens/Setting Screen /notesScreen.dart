@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/database/notes_database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class NoteItem {
   final String id;
@@ -49,9 +50,9 @@ class _NotesPageState extends State<NotesPage> {
   // Fetch notes from Database
   Future<void> _loadNotes() async {
     setState(() => _isLoading = true);
-    
+
     final dbNotes = await NotesDatabaseHelper.instance.getAllNotes();
-    
+
     setState(() {
       _notes = dbNotes.map((json) => NoteItem.fromMap(json)).toList();
       _isLoading = false;
@@ -62,8 +63,6 @@ class _NotesPageState extends State<NotesPage> {
   Future<void> _addNote() async {
     if (_noteController.text.trim().isEmpty) return;
 
-    final l10n = AppLocalizations.of(context)!;
-    
     final newNote = NoteItem(
       id: DateTime.now().toString(),
       content: _noteController.text.trim(),
@@ -77,15 +76,19 @@ class _NotesPageState extends State<NotesPage> {
     setState(() {
       _notes.insert(0, newNote);
     });
-    
+
     _noteController.clear();
     FocusScope.of(context).unfocus(); // Close the virtual keyboard
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l10n.btn_submit),
+          content: const Text("Note saved!"),
           duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       );
     }
@@ -93,29 +96,51 @@ class _NotesPageState extends State<NotesPage> {
 
   // Delete note from Database and UI
   Future<void> _deleteNote(int index) async {
+    if (!mounted) return;
     final l10n = AppLocalizations.of(context)!;
-    final noteId = _notes[index].id;
+    final noteToDelete = _notes[index];
 
-    // Remove from DB
-    await NotesDatabaseHelper.instance.deleteNote(noteId);
-
-    // Update UI
+    // Update UI first for responsiveness
     setState(() {
       _notes.removeAt(index);
     });
 
+    // Remove from DB
+    await NotesDatabaseHelper.instance.deleteNote(noteToDelete.id);
+
+    // Show confirmation with Undo
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l10n.btn_delete),
-          duration: const Duration(seconds: 2),
+          content: const Text("Note Deleted"),
+          duration: const Duration(seconds: 4),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          action: SnackBarAction(
+            label: l10n.btn_undo.toUpperCase(),
+            onPressed: () {
+              _undoDelete(index, noteToDelete);
+            },
+          ),
         ),
       );
     }
   }
 
+  // Handle the "Undo" action
+  Future<void> _undoDelete(int index, NoteItem note) async {
+    // Re-insert into DB
+    await NotesDatabaseHelper.instance.insertNote(note.toMap());
+    // Re-insert into UI at the original position
+    setState(() {
+      _notes.insert(index, note);
+    });
+  }
+
   String _formatDate(DateTime dt) {
-    return "${dt.day}/${dt.month}/${dt.year} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}";
+    return DateFormat.yMMMd().add_jm().format(dt); // e.g., Jul 28, 2024 5:30 PM
   }
 
   @override
@@ -200,31 +225,32 @@ class _NotesPageState extends State<NotesPage> {
 
             // 2. ACTIVE NOTES LIST VIEW
             Expanded(
-              child: _isLoading 
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: theme.colorScheme.primary,
-                    ),
-                  ) 
-                : _notes.isEmpty
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: theme.colorScheme.primary,
+                      ),
+                    )
+                  : _notes.isEmpty
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.note_alt_outlined,
-                            size: 60,
-                            color: theme.colorScheme.onSurface.withOpacity(0.2),
+                            Icons.auto_stories_outlined,
+                            size: 80,
+                            color: theme.colorScheme.primary.withOpacity(0.4),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 20),
                           Text(
-                            l10n.nav_notes,
+                            "Your thoughts are sacred.\nJot them down here.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: theme.colorScheme.onSurface.withOpacity(
-                                0.4,
+                                0.5,
                               ),
-                              fontSize: 14,
+                              fontSize: 16,
+                              height: 1.5,
                             ),
                           ),
                         ],
@@ -239,62 +265,90 @@ class _NotesPageState extends State<NotesPage> {
                       itemBuilder: (context, index) {
                         final note = _notes[index];
                         return Padding(
-                          key: Key(note.id),
-                          padding: const EdgeInsets.only(bottom: 10.0),
+                          padding: const EdgeInsets.only(bottom: 12.0),
                           child: Dismissible(
-                            key: Key(note.id),
+                            key: ValueKey(note.id),
                             direction: DismissDirection.endToStart,
                             background: Container(
                               alignment: Alignment.centerRight,
                               padding: const EdgeInsets.only(right: 20),
                               decoration: BoxDecoration(
-                                color: theme.colorScheme.error,
+                                gradient: LinearGradient(
+                                  colors: [
+                                    theme.colorScheme.error.withOpacity(0.75),
+                                    theme.colorScheme.error,
+                                  ],
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                ),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Icon(
-                                Icons.delete_sweep,
-                                color: Colors.white,
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Delete",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Icon(
+                                    Icons.delete_forever,
+                                    color: Colors.white,
+                                  ),
+                                ],
                               ),
                             ),
                             onDismissed: (direction) => _deleteNote(index),
-                            child: Card(
-                              color: theme.cardTheme.color,
-                              elevation: theme.cardTheme.elevation ?? 2,
-                              shape: theme.cardTheme.shape,
-                              margin: EdgeInsets.zero,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: theme.cardColor,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border(
+                                  left: BorderSide(
+                                    color: theme.colorScheme.primary,
+                                    width: 4,
+                                  ),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: theme.shadowColor.withOpacity(0.08),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
                               child: Padding(
-                                padding: const EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.fromLTRB(
+                                  16,
+                                  12,
+                                  16,
+                                  12,
+                                ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(
-                                          Icons.edit_note,
-                                          color: theme.colorScheme.primary
-                                              .withOpacity(0.7),
-                                          size: 20,
-                                        ),
-                                        Text(
-                                          _formatDate(note.timestamp),
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                            color: theme.colorScheme.onSurface
-                                                .withOpacity(0.4),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
                                     Text(
                                       note.content,
                                       style: TextStyle(
                                         fontSize: 15,
-                                        height: 1.4,
+                                        height: 1.5,
                                         color: theme.colorScheme.onSurface,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        _formatDate(note.timestamp),
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500,
+                                          color: theme.colorScheme.onSurface
+                                              .withOpacity(0.5),
+                                        ),
                                       ),
                                     ),
                                   ],
