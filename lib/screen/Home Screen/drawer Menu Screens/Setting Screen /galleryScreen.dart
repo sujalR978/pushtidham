@@ -1,9 +1,19 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 
-class GalleryPage extends StatelessWidget {
+// IMPORTANT: Uncomment if you want custom tap sounds
+// import 'package:pushtidham/services/sound_service.dart';
+
+class GalleryPage extends StatefulWidget {
   const GalleryPage({super.key});
 
+  @override
+  State<GalleryPage> createState() => _GalleryPageState();
+}
+
+class _GalleryPageState extends State<GalleryPage> {
   final List<String> galleryImages = const [
     'assets/images/img1.png',
     'assets/images/img2.png',
@@ -17,125 +27,372 @@ class GalleryPage extends StatelessWidget {
     'assets/images/img10.png',
   ];
 
+  // Dummy Video Data (You can replace this with your actual video links/assets)
+  final List<Map<String, String>> videoItems = const [
+    {
+      'title': 'Shri Mahaprabhuji Utsav Darshan',
+      'thumbnail': 'assets/images/img1.png', // Reusing image as a thumbnail
+      'duration': '4:30',
+    },
+    {
+      'title': 'Daily Shringar & Mangala Aarti',
+      'thumbnail': 'assets/images/img2.png',
+      'duration': '12:15',
+    },
+    {
+      'title': 'Pushtimarg Kirtan Sandhya',
+      'thumbnail': 'assets/images/img3.png',
+      'duration': '8:45',
+    },
+    {
+      'title': '84 Bethakji Yatra Glimpses',
+      'thumbnail': 'assets/images/img4.png',
+      'duration': '25:00',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text(
-          l10n.nav_gallery,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+    return DefaultTabController(
+      length: 2, // 2 Tabs: Images & Videos
+      child: Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          title: Text(
+            l10n.nav_gallery,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: theme.colorScheme.primary,
+          foregroundColor: theme.colorScheme.onPrimary,
+          elevation: 0,
+          centerTitle: true,
+          bottom: TabBar(
+            indicatorColor: theme.colorScheme.onPrimary,
+            indicatorWeight: 3,
+            labelColor: theme.colorScheme.onPrimary,
+            unselectedLabelColor: theme.colorScheme.onPrimary.withOpacity(0.6),
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+            onTap: (_) {
+              HapticFeedback.lightImpact();
+              // SoundService().playClick();
+            },
+            tabs: const [
+              Tab(text: "Images", icon: Icon(Icons.photo_library_rounded)),
+              Tab(text: "Videos", icon: Icon(Icons.play_circle_filled_rounded)),
+            ],
+          ),
         ),
-        backgroundColor: theme.colorScheme.primary,
-        foregroundColor: theme.colorScheme.onPrimary,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: TabBarView(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              child: Text(
-                l10n.grid_about_mahaprabhuji,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                l10n.nav_gallery,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 1.0,
-                ),
-                itemCount: galleryImages.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => _openFullScreenViewer(context, index),
-                    child: Card(
-                      elevation: 2,
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      // FIXED: Changed Image.network -> Image.asset
-                      child: Image.asset(
-                        galleryImages[index],
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: theme.colorScheme.primary.withOpacity(0.1),
-                            child: Icon(
-                              Icons.image,
-                              color: theme.colorScheme.primary,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            _buildImageGallery(theme, l10n),
+            _buildVideoGallery(theme),
           ],
         ),
       ),
     );
   }
 
-  void _openFullScreenViewer(BuildContext context, int initialIndex) {
-    final l10n = AppLocalizations.of(context)!;
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            title: Text(
-              l10n.nav_gallery,
-              style: const TextStyle(color: Colors.white),
+  // --- TAB 1: IMAGE GALLERY ---
+  Widget _buildImageGallery(ThemeData theme, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 4),
+          child: Text(
+            l10n.grid_about_mahaprabhuji,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.primary,
             ),
           ),
-          body: Center(
-            child: PageView.builder(
-              controller: PageController(initialPage: initialIndex),
-              itemCount: galleryImages.length,
-              itemBuilder: (context, index) {
-                return InteractiveViewer(
-                  panEnabled: true,
-                  minScale: 0.5,
-                  maxScale: 3.0,
-                  // FIXED: Changed Image.network -> Image.asset
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            "Divine moments and sacred darshan.",
+            style: TextStyle(
+              fontSize: 13,
+              color: theme.colorScheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1.0,
+            ),
+            itemCount: galleryImages.length,
+            itemBuilder: (context, index) {
+              final imagePath = galleryImages[index];
+              return GestureDetector(
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  // SoundService().playClick();
+                  _openFullScreenViewer(context, index);
+                },
+                child: Hero(
+                  tag: imagePath, // Hero animation tag
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: theme.colorScheme.primaryContainer,
+                            child: Icon(
+                              Icons.image_rounded,
+                              color: theme.colorScheme.primary,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  // --- TAB 2: VIDEO GALLERY ---
+  Widget _buildVideoGallery(ThemeData theme) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: videoItems.length,
+      itemBuilder: (context, index) {
+        final video = videoItems[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              // SoundService().playClick();
+
+              // TODO: Navigate to Video Player Screen
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Video Player coming soon!"),
+                  backgroundColor: theme.colorScheme.primary,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            },
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.15),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+                image: DecorationImage(
+                  image: AssetImage(video['thumbnail']!),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Stack(
+                children: [
+                  // Dark gradient overlay for text readability
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.8),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Center Play Button
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withOpacity(0.9),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.colorScheme.primary.withOpacity(0.5),
+                            blurRadius: 15,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.play_arrow_rounded,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
+                  ),
+                  // Bottom Text (Title & Duration)
+                  Positioned(
+                    bottom: 16,
+                    left: 16,
+                    right: 16,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            video['title']!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(color: Colors.black87, blurRadius: 4),
+                              ],
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            video['duration']!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // --- FULLSCREEN IMAGE VIEWER ---
+  void _openFullScreenViewer(BuildContext context, int initialIndex) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        opaque: false, // Allows background to peek through during transition
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FullScreenImageViewer(
+            images: galleryImages,
+            initialIndex: initialIndex,
+          );
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+      ),
+    );
+  }
+}
+
+// Extracted into a StatefulWidget to handle the page counter updates
+class FullScreenImageViewer extends StatefulWidget {
+  final List<String> images;
+  final int initialIndex;
+
+  const FullScreenImageViewer({
+    super.key,
+    required this.images,
+    required this.initialIndex,
+  });
+
+  @override
+  State<FullScreenImageViewer> createState() => _FullScreenImageViewerState();
+}
+
+class _FullScreenImageViewerState extends State<FullScreenImageViewer> {
+  late PageController _pageController;
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          // 1. The Interactive Image Viewer
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+              HapticFeedback.selectionClick();
+            },
+            itemCount: widget.images.length,
+            itemBuilder: (context, index) {
+              final imagePath = widget.images[index];
+              return InteractiveViewer(
+                panEnabled: true,
+                minScale: 0.5,
+                maxScale: 4.0,
+                child: Hero(
+                  tag:
+                      imagePath, // Matches the grid item tag for smooth expansion
                   child: Image.asset(
-                    galleryImages[index],
+                    imagePath,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
@@ -145,11 +402,61 @@ class GalleryPage extends StatelessWidget {
                       );
                     },
                   ),
-                );
-              },
+                ),
+              );
+            },
+          ),
+
+          // 2. Beautiful Floating Close Button (Top Left)
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 16,
+            left: 16,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: IconButton(
+                    icon: const Icon(Icons.close_rounded, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+
+          // 3. Floating Image Counter (Bottom Center)
+          Positioned(
+            bottom: MediaQuery.of(context).padding.bottom + 24,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    color: Colors.black.withOpacity(0.4),
+                    child: Text(
+                      "${_currentIndex + 1} / ${widget.images.length}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
