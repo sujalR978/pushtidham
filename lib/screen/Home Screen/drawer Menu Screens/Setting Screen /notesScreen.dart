@@ -46,11 +46,11 @@ class _NotesPageState extends State<NotesPage> {
 
   // New: Pastel colors for beautiful sticky-note vibes
   final List<Color> _cardColors = [
-    const Color(0xFFFDE68A).withOpacity(0.3), // Soft Yellow
-    const Color(0xFFA7F3D0).withOpacity(0.3), // Soft Green
-    const Color(0xFFBFDBFE).withOpacity(0.3), // Soft Blue
-    const Color(0xFFFBCFE8).withOpacity(0.3), // Soft Pink
-    const Color(0xFFE9D5FF).withOpacity(0.3), // Soft Purple
+    const Color(0xFFFFF5E1), // Creamy Yellow
+    const Color(0xFFE6F4F1), // Minty Blue
+    const Color(0xFFFFEBEB), // Soft Pink
+    const Color(0xFFF0E6F7), // Light Lavender
+    const Color(0xFFE6F7E9), // Pale Green
   ];
 
   @override
@@ -401,11 +401,6 @@ class _NotesPageState extends State<NotesPage> {
                         color: theme.colorScheme.primary,
                       ),
                     ),
-                    Icon(
-                      Icons.push_pin_outlined,
-                      size: 16,
-                      color: theme.colorScheme.onSurface.withOpacity(0.3),
-                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -428,20 +423,6 @@ class _NotesPageState extends State<NotesPage> {
                       onPressed: () => _copyToClipboard(note.content),
                       icon: Icon(
                         Icons.copy_rounded,
-                        size: 18,
-                        color: theme.colorScheme.onSurface.withOpacity(0.5),
-                      ),
-                      constraints: const BoxConstraints(),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                    ),
-                    // Optional: Share Button (Will just copy if you don't use share_plus package)
-                    IconButton(
-                      onPressed: () => _copyToClipboard(note.content),
-                      icon: Icon(
-                        Icons.share_rounded,
                         size: 18,
                         color: theme.colorScheme.onSurface.withOpacity(0.5),
                       ),
