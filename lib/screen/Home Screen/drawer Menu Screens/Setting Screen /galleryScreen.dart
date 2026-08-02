@@ -2,9 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
-
-// IMPORTANT: Uncomment if you want custom tap sounds
-// import 'package:pushtidham/services/sound_service.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/video_player.dart';
 
 class GalleryPage extends StatefulWidget {
   const GalleryPage({super.key});
@@ -27,27 +25,15 @@ class _GalleryPageState extends State<GalleryPage> {
     'assets/images/img10.png',
   ];
 
-  // Dummy Video Data (You can replace this with your actual video links/assets)
-  final List<Map<String, String>> videoItems = const [
+  // Upgraded Video Data: Mix of Internet URLs and Downloaded Local Assets
+  final List<Map<String, dynamic>> videoItems = const [
     {
       'title': 'Shri Mahaprabhuji Utsav Darshan',
-      'thumbnail': 'assets/images/img1.png', // Reusing image as a thumbnail
-      'duration': '4:30',
-    },
-    {
-      'title': 'Daily Shringar & Mangala Aarti',
-      'thumbnail': 'assets/images/img2.png',
-      'duration': '12:15',
-    },
-    {
-      'title': 'Pushtimarg Kirtan Sandhya',
-      'thumbnail': 'assets/images/img3.png',
-      'duration': '8:45',
-    },
-    {
-      'title': '84 Bethakji Yatra Glimpses',
-      'thumbnail': 'assets/images/img4.png',
-      'duration': '25:00',
+      'thumbnail': 'assets/images/img1.png',
+      'duration': '12:19',
+      // Example of an INTERNET URL (Streaming)
+      'url': 'assets/videos/video.mp4',
+      'isAsset': true, // False means it loads from the internet
     },
   ];
 
@@ -144,7 +130,7 @@ class _GalleryPageState extends State<GalleryPage> {
                   _openFullScreenViewer(context, index);
                 },
                 child: Hero(
-                  tag: imagePath, // Hero animation tag
+                  tag: imagePath,
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
@@ -196,12 +182,15 @@ class _GalleryPageState extends State<GalleryPage> {
               HapticFeedback.lightImpact();
               // SoundService().playClick();
 
-              // TODO: Navigate to Video Player Screen
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("Video Player coming soon!"),
-                  backgroundColor: theme.colorScheme.primary,
-                  behavior: SnackBarBehavior.floating,
+              // NAVIGATE TO THE VIDEO PLAYER SCREEN
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VideoPlayerScreen(
+                    title: video['title'],
+                    videoUrl: video['url'],
+                    isAsset: video['isAsset'] ?? false,
+                  ),
                 ),
               );
             },
@@ -223,7 +212,6 @@ class _GalleryPageState extends State<GalleryPage> {
               ),
               child: Stack(
                 children: [
-                  // Dark gradient overlay for text readability
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -237,7 +225,6 @@ class _GalleryPageState extends State<GalleryPage> {
                       ),
                     ),
                   ),
-                  // Center Play Button
                   Center(
                     child: Container(
                       padding: const EdgeInsets.all(12),
@@ -259,7 +246,6 @@ class _GalleryPageState extends State<GalleryPage> {
                       ),
                     ),
                   ),
-                  // Bottom Text (Title & Duration)
                   Positioned(
                     bottom: 16,
                     left: 16,
@@ -319,7 +305,7 @@ class _GalleryPageState extends State<GalleryPage> {
     Navigator.push(
       context,
       PageRouteBuilder(
-        opaque: false, // Allows background to peek through during transition
+        opaque: false,
         pageBuilder: (context, animation, secondaryAnimation) {
           return FullScreenImageViewer(
             images: galleryImages,
@@ -334,7 +320,7 @@ class _GalleryPageState extends State<GalleryPage> {
   }
 }
 
-// Extracted into a StatefulWidget to handle the page counter updates
+// FullScreenImageViewer code remains the same...
 class FullScreenImageViewer extends StatefulWidget {
   final List<String> images;
   final int initialIndex;
@@ -372,7 +358,6 @@ class _FullScreenImageViewerState extends State<FullScreenImageViewer> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. The Interactive Image Viewer
           PageView.builder(
             controller: _pageController,
             onPageChanged: (index) {
@@ -389,8 +374,7 @@ class _FullScreenImageViewerState extends State<FullScreenImageViewer> {
                 minScale: 0.5,
                 maxScale: 4.0,
                 child: Hero(
-                  tag:
-                      imagePath, // Matches the grid item tag for smooth expansion
+                  tag: imagePath,
                   child: Image.asset(
                     imagePath,
                     fit: BoxFit.contain,
@@ -406,8 +390,6 @@ class _FullScreenImageViewerState extends State<FullScreenImageViewer> {
               );
             },
           ),
-
-          // 2. Beautiful Floating Close Button (Top Left)
           Positioned(
             top: MediaQuery.of(context).padding.top + 16,
             left: 16,
@@ -425,8 +407,6 @@ class _FullScreenImageViewerState extends State<FullScreenImageViewer> {
               ),
             ),
           ),
-
-          // 3. Floating Image Counter (Bottom Center)
           Positioned(
             bottom: MediaQuery.of(context).padding.bottom + 24,
             left: 0,
