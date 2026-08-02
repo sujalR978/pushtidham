@@ -6,9 +6,9 @@ import 'package:pushtidham/model/bethakji_model.dart'; // Ensure correct import 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
 
-    final List<BethakjiModel> bethakji84List = [
+  final List<BethakjiModel> bethakji84List = [
     // 1 to 10
-BethakjiModel(
+    BethakjiModel(
       id: '1',
       number: '01',
       name: 'શ્રીમદ ગોકુળ પહેલી બેઠક – શ્રી મહાપ્રભુજી બેઠકજી',
@@ -28,6 +28,20 @@ BethakjiModel(
         'જારી ચરણસ્પર્શ કરતી વખતે ઘડિયાળ, વીંટી જેવી વસ્તુ ના પહેરવી. બહેનોએ બંગડી પહેરવી જરૂરી છે.',
         'સેવા દરમ્યાન લૌકીક વાતો ના કરતાં ભગવત નામ લેવું.',
       ],
+      isFavorite: 0,
+    ),
+    BethakjiModel(
+      id: '2',
+      number: '2',
+      name: 'શ્રીમદ ગોકુળ બીજી બેઠકજી',
+      address:
+          'શ્રી મહાપ્રભુજી બેઠકજી, બડી બેઠકજી, ગોકુળ, જીલ્લો મથુરા (ઉ. પ્ર.)',
+      contacts: ['9358706176', '9675613532'],
+      mahatmy:
+          'આ મોટા બેઠકજી કહેવાય છે. અહીં આપશ્રી ભોજન તેમજ કથા પણ કરતાં. વૃંદાવનના મહંતોના સેવા કરવાના અહંકારનો નાશ કર્યો.',
+      directions:
+          'મથુરાથી ૧૨ કિ.મી. દૂર ગોકુળમાં યમુનાજીના કિનારે ઠકુરાણીઘાટ પર બિરાજમાન છે.',
+      rules: [],
       isFavorite: 0,
     ),
     BethakjiModel(
@@ -81,6 +95,19 @@ BethakjiModel(
       isFavorite: 0,
     ),
     BethakjiModel(
+      id: '6',
+      number: '6',
+      name: 'મધુવન મહોલી બેઠકજી',
+      address:
+          'શ્રી મહાપ્રભુજી બેઠકજી, મુ. મધુવન મહોલી, જિલ્લો મથુરા (ઉ. પ્ર.)',
+      contacts: ['9568738398', '9319991231'],
+      mahatmy:
+          'ક્રુષ્ણકુંડ પર સપ્તાહ પારાયણમાં મધુવનિયા ઠાકોરજી કથા સાંભળવા સ્વયં પધારતા.',
+      directions: 'મથુરાથી ૬ કિ.મી. દૂર ક્રુષ્ણકુંડ પર આ બેઠકજી આવેલા છે.',
+      rules: [],
+      isFavorite: 0,
+    ),
+    BethakjiModel(
       id: '7',
       number: '07',
       name: 'કુમુદવન – શ્રી મહાપ્રભુજી બેઠકજી',
@@ -125,6 +152,19 @@ BethakjiModel(
           'અહીં યુગલ સ્વરૂપનું સ્મરણ કરતાં આપશ્રી ગિરિરાજજીના શિખર પર પધાર્યા હતા. ઉદ્ધવજીની વિનંતીથી ભ્રમરગીતના એક જ શ્લોકનું વ્યાખ્યાન કરતાં બાર પ્રહર વિત્યા.',
       directions:
           'ગોવર્ધનથી ૫ કી.મી. ને મથુરાથી ૨૧ કી.મી. દૂર. ક્રુષ્ણકુંડ અને રાધાકુંડ ની ઉપર છોકરનાં વૃક્ષ નીચે બિરાજમાન છે.',
+      rules: [],
+      isFavorite: 0,
+    ),
+    BethakjiModel(
+      id: '10',
+      number: '10',
+      name: 'માનસીગંગા બેઠકજી',
+      address:
+          'શ્રી મહાપ્રભુજી બેઠકજી, શ્રી વલ્લભઘાટ, ચકલેશ્વર મહાદેવ પાસે, પોસ્ટ- ગોવર્ધન, જિલ્લો મથુરા (ઉ. પ્ર.)',
+      contacts: ['9760876622'],
+      mahatmy:
+          'ચકલેશ્વર મહાદેવના ઘાટ પર સાત દિવસ બિરાજી સપ્તાહ પારાયણ કર્યું. મહાદેવજી રોજ કથા સાંભળવા આવતા.',
+      directions: 'ગોવર્ધન ગામ વચ્ચે માનસીગંગા કુંડ કિનારે આ બેઠકજી છે.',
       rules: [],
       isFavorite: 0,
     ),
@@ -829,7 +869,7 @@ BethakjiModel(
           'મહર્ષિ વેદવ્યાસજી સાથે શ્રાદ્ધ અને બ્રહ્મસૂત્ર અંગે ગહન ચર્ચા કરી.',
       directions: 'ભારતના છેલ્લા ગામ "માણા" ખાતે વ્યાસ ગુફા નજીક.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '73',
@@ -842,7 +882,7 @@ BethakjiModel(
           'સાંદીપનિ આશ્રમ ક્ષેત્રમાં ક્ષિપ્રા તીરે બિરાજીને શ્રીમદ્ ભાગવત પારાયણ કર્યું.',
       directions: 'ઉજ્જૈનમાં ક્ષિપ્રા નદીના કાંઠે સાંદીપનિ આશ્રમ પાસે.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '74',
@@ -855,7 +895,7 @@ BethakjiModel(
           'પવિત્ર પુષ્કર સરોવરના તીરે બિરાજીને દૈવી આત્માઓનો બ્રહ્મસંબંધ કરાવ્યો.',
       directions: 'અજમેર નજીક પુષ્કર સરોવરના બ્રહ્મા ઘાટ પાસે.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
 
     BethakjiModel(
@@ -869,7 +909,7 @@ BethakjiModel(
           'સૂર્યગ્રહણ સમયે બ્રહ્મ સરોવર પર બિરાજી ગીતાજી તથા ભાગવતજીનું વ્યાખ્યાન કર્યું.',
       directions: 'કુરુક્ષેત્રમાં બ્રહ્મ સરોવરના તીર પર.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '76',
@@ -882,7 +922,7 @@ BethakjiModel(
           'ગજેન્દ્ર મોક્ષના સ્થાનકે બિરાજી પ્રભુના નામ સ્મરણનો મહિમા સમજાવ્યો.',
       directions: 'હાજીપુર-સોનપુર વચ્ચે ગંડકી નદી સંગમ પાસે.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '77',
@@ -895,7 +935,7 @@ BethakjiModel(
           'પયસ્વિની નદીના રામઘાટ પર બિરાજી શ્રી રામચંદ્રજીના લીલા ગુણ ગાયા.',
       directions: 'ચિત્રકૂટમાં પયસ્વિની નદીના રામઘાટ પર.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '78',
@@ -908,7 +948,7 @@ BethakjiModel(
           'ગંગા, યમુના અને સરસ્વતીના ત્રિવેણી સંગમે અરેલ ગામ ખાતે બિરાજી સુબોધિનીજીની રચના કરી.',
       directions: 'પ્રયાગરાજ (અલહાબાદ) અરેલ ઘાટ પાસે.',
       rules: ['જારીજી ભરવા માટે નિયમાનુસાર ઉપવાસ કરવો.'],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '79',
@@ -920,7 +960,7 @@ BethakjiModel(
           'અરેલમાં પોતાના નિવાસસ્થાને બિરાજીને અનેક ગ્રંથોની રચના કરી અને સેવકો પર કૃપા કરી.',
       directions: 'પ્રયાગરાજ ત્રિવેણી સંગમ સામે પાર અરેલ ગામે.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '80',
@@ -932,7 +972,7 @@ BethakjiModel(
           'પંચગંગા ઘાટ પર વિદ્વાનો સાથે ચર્ચા કરી વિષ્ણુસ્વામી સંપ્રદાયના આચાર્ય તરીકે વિજય પત્રિકા લખી.',
       directions: 'વારાણસીમાં પંચગંગા ઘાટ પર.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '81',
@@ -943,7 +983,7 @@ BethakjiModel(
       mahatmy: 'નર્મદા તીરે બિરાજી ભક્તોને ભગવદ્ રસનું પાન કરાવ્યું.',
       directions: 'જબલપુર નજીક ગોપાલપુર ખાતે.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '82',
@@ -955,7 +995,7 @@ BethakjiModel(
           'અડાલજમાં બિરાજીને સ્થાનિક સત્સંગીઓને પુષ્ટિમાર્ગીય સેવા પ્રણાલી સમજાવી.',
       directions: 'ગાંધીનગર-અમદાવાદ રોડ પર અડાલજ વાવ પાસે.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '83',
@@ -966,7 +1006,7 @@ BethakjiModel(
       mahatmy: 'રામનાથ તળાવના કાંઠે બિરાજી સપ્તાહ પારાયણ કર્યું.',
       directions: 'ગોધરા શહેરમાં રામનાથ તળાવ નજીક.',
       rules: [],
-      isFavorite: 0
+      isFavorite: 0,
     ),
     BethakjiModel(
       id: '84',
@@ -980,7 +1020,7 @@ BethakjiModel(
       rules: [
         'જારીજી ભરવા માટે કાર્યાલયમાંથી પહોંચ મેળવીને વિધિપૂર્વક સેવા કરવી.',
       ],
-     isFavorite: 0
+      isFavorite: 0,
     ),
   ];
   factory DatabaseHelper() => _instance;
@@ -1000,7 +1040,8 @@ BethakjiModel(
   Future<Database> initDatabase() async {
     String path = join(await getDatabasesPath(), 'bethakji_yadi.db');
 
-    const String sql = '''
+    const String sql =
+        '''
       CREATE TABLE $tableName (
         id INTEGER PRIMARY KEY,
         number TEXT,
