@@ -166,10 +166,28 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                                 color: theme.colorScheme.onSurface,
                               ),
                             ),
-                            trailing: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 16,
-                              color: theme.colorScheme.onSurface.withOpacity(0.3),
+                            // Updated trailing widget to include Favorite Icon + Arrow
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    item.isFavorite ? Icons.favorite : Icons.favorite_border,
+                                    color: item.isFavorite ? Colors.red : theme.colorScheme.onSurface.withOpacity(0.4),
+                                    size: 22,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      item.isFavorite = !item.isFavorite;
+                                    });
+                                  },
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 16,
+                                  color: theme.colorScheme.onSurface.withOpacity(0.3),
+                                ),
+                              ],
                             ),
                             onTap: () {
                               Navigator.push(
