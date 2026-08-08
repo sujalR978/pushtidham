@@ -15,6 +15,7 @@ import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/notesScreen.dart';
 
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/gita%20shloke/gita_list_page.dart';
 import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_list.dart';
 import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_list.dart';
 import 'package:pushtidham/screen/Home%20Screen/vraj%20bhasha/vrajbhasha_list_page.dart';
@@ -274,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                     "title": l10n.grid_252_vaishnav,
                     "subtitle": l10n.sub_252_varta,
                     "icon": Icons.collections_bookmark_rounded,
-                    "screen": const ChorasiVartaListPage(),
+                    "screen": const GitaListPage(),
                   },
                 ]),
               ),
