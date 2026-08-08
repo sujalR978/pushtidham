@@ -10,6 +10,26 @@ class PathavaliItem {
     required this.content,
     this.isFavorite = false,
   });
+
+  // Factory constructor to create a PathavaliItem from a map (e.g., from SQLite)
+  factory PathavaliItem.fromMap(Map<String, dynamic> map) {
+    return PathavaliItem(
+      id: map['id'].toString(),
+      title: map['title'],
+      content: map['content'],
+      isFavorite: map['isFavorite'] == 1,
+    );
+  }
+
+  // Method to convert a PathavaliItem to a map (e.g., for inserting into SQLite)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'content': content,
+      'isFavorite': isFavorite ? 1 : 0,
+    };
+  }
 }
 
 // Data corresponding to the provided Hindi list
