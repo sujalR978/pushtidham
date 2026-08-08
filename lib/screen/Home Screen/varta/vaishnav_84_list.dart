@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/model/varta_model.dart';
-
 import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_detail.dart';
 
 class ChorasiVartaListPage extends StatefulWidget {
@@ -15,27 +15,28 @@ class ChorasiVartaListPage extends StatefulWidget {
 
 class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
   final TextEditingController _searchController = TextEditingController();
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+  bool _isLoading = true;
 
-  final List<VartaModel> _allVartas = [
-    VartaModel(
-      id: '1',
-      number: '૦૧',
-      titleGujarati: 'દામોદરદાસ હરસાનીની વાર્તા',
-      titleBraj: 'દામોદરદાસ હરસાની કી વાર્તા',
-      shloka: 'पठनीयं प्रयत्नैन सर्वहेतुविवर्जितम् ॥ १ ॥',
-      arth: 'શ્રીમદ્ ભાગવત શાસ્ત્રનો પ્રયત્ન કરીને પાઠ કરવો.',
-      vartaContent: 'દામોદરદાસ હરસાની મહાપ્રભુજીના પ્રથમ શિષ્ય હતા...',
-      saar: 'શુદ્ધ કૃપા પાત્ર જીવોને વારંવાર કહેવામાં આવતું નથી.',
-    ),
-    
-  ];
-
+  List<VartaModel> _allVartas = [];
   List<VartaModel> _filteredVartas = [];
+  final Set<String> _favoriteVartaIds = <String>{};
 
   @override
   void initState() {
     super.initState();
-    _filteredVartas = _allVartas;
+    _loadVartas();
+  }
+
+  Future<void> _loadVartas() async {
+    // Assuming you will create this method in your DatabaseHelper
+    final data = await _dbHelper.getAll84Vartas();
+    if (!mounted) return;
+    setState(() {
+      _allVartas = data;
+      _filteredVartas = data;
+      _isLoading = false;
+    });
   }
 
   void _filterVartas(String query) {
@@ -44,12 +45,26 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
         _filteredVartas = _allVartas;
       } else {
         _filteredVartas = _allVartas.where((item) {
-          final title = widget.isBrajLanguage ? item.titleBraj : item.titleGujarati;
+          final title = widget.isBrajLanguage
+              ? item.titleBraj
+              : item.titleGujarati;
           return title.toLowerCase().contains(query.toLowerCase()) ||
               item.number.contains(query);
         }).toList();
       }
     });
+  }
+
+  Future<void> _toggleFavorite(VartaModel varta) async {
+    final isFavorite = !_favoriteVartaIds.contains(varta.id);
+    setState(() {
+      if (isFavorite) {
+        _favoriteVartaIds.add(varta.id);
+      } else {
+        _favoriteVartaIds.remove(varta.id);
+      }
+    });
+    await _dbHelper.update84VartaFavoriteStatus(varta.id, isFavorite);
   }
 
   @override
@@ -77,13 +92,24 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.onPrimary,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, size: 20),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+          },
+        ),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // Search Bar
+            // 1. DYNAMIC THEMED SEARCH BAR
             Container(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 12.0,
+              ),
               color: theme.colorScheme.primary,
               child: TextField(
                 controller: _searchController,
@@ -95,10 +121,16 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
                     color: theme.colorScheme.onPrimary.withOpacity(0.6),
                     fontSize: 14,
                   ),
-                  prefixIcon: Icon(Icons.search, color: theme.colorScheme.onPrimary),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: theme.colorScheme.onPrimary,
+                  ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: theme.colorScheme.onPrimary),
+                          icon: Icon(
+                            Icons.clear,
+                            color: theme.colorScheme.onPrimary,
+                          ),
                           onPressed: () {
                             _searchController.clear();
                             _filterVartas('');
@@ -116,45 +148,130 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
               ),
             ),
 
-            // Varta List
+            // 2. VARTA LIST VIEW
             Expanded(
-              child: _filteredVartas.isEmpty
+              child: _isLoading
                   ? Center(
-                      child: Text(
-                        l10n.search_placeholder,
-                        style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
+                      child: CircularProgressIndicator(
+                        color: theme.colorScheme.primary,
                       ),
                     )
-                  : ListView.separated(
+                  : _filteredVartas.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.menu_book_rounded,
+                            size: 60,
+                            color: theme.colorScheme.onSurface.withOpacity(0.2),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            l10n.search_placeholder,
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.4,
+                              ),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
                       itemCount: _filteredVartas.length,
-                      separatorBuilder: (context, index) => const Divider(height: 1, thickness: 0.8),
                       itemBuilder: (context, index) {
                         final varta = _filteredVartas[index];
                         final displayTitle = widget.isBrajLanguage
                             ? varta.titleBraj
                             : varta.titleGujarati;
 
-                        return ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                          title: Text(
-                            "(${varta.number}) $displayTitle",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: theme.colorScheme.onSurface,
+                        return Card(
+                          color: theme.cardTheme.color,
+                          elevation: theme.cardTheme.elevation ?? 1,
+                          shape:
+                              theme.cardTheme.shape ??
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 6,
                             ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChorasiVartaDetailPage(
-                                  varta: varta,
-                                  isBrajLanguage: widget.isBrajLanguage,
+                            leading: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: theme.colorScheme.primary
+                                  .withOpacity(0.1),
+                              child: Text(
+                                varta.number,
+                                style: TextStyle(
+                                  color: theme.colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                            title: Text(
+                              displayTitle,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: theme.colorScheme.onSurface,
+                              ),
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    _favoriteVartaIds.contains(varta.id)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: _favoriteVartaIds.contains(varta.id)
+                                        ? Colors.red
+                                        : theme.colorScheme.onSurface
+                                              .withOpacity(0.4),
+                                  ),
+                                  onPressed: () => _toggleFavorite(varta),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 16,
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.3),
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChorasiVartaDetailPage(
+                                    varta: varta,
+                                    isBrajLanguage: widget.isBrajLanguage,
+                                  ),
+                                ),
+                              ).then((_) async {
+                                // Refresh favorite status when returning from detail page
+                                final updatedItem = await _dbHelper.get84Varta(
+                                  varta.id,
+                                );
+                                if (updatedItem != null && mounted) {
+                                  setState(() {
+                                    // Favorite state is stored separately because
+                                    // VartaModel has no mutable isFavorite field.
+                                  });
+                                }
+                              });
+                            },
+                          ),
                         );
                       },
                     ),

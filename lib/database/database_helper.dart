@@ -2,7 +2,83 @@ import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:pushtidham/model/pathavali_model.dart';
+import 'package:pushtidham/model/kirtan_model.dart';
+import 'package:pushtidham/model/varta_model.dart';
 import 'package:pushtidham/model/bethakji_model.dart'; // Ensure correct import path
+
+// This list is used to populate the database on first creation.
+final List<KirtanModel> kirtanList = [
+  KirtanModel(
+    id: '1',
+    number: '૦૧',
+    title: 'યમુનાષ્ટક',
+    imageAsset: 'assets/images/img1.png',
+    audioAsset: 'sounds/track_1.mp3',
+  ),
+  KirtanModel(
+    id: '2',
+    number: '૦૨',
+    title: 'મંગલાચરણ',
+    imageAsset: 'assets/images/img2.png',
+    audioAsset: 'sounds/track_2.mp3',
+  ),
+  KirtanModel(
+    id: '3',
+    number: '૦૩',
+    title: 'કૃષ્ણાશ્રય',
+    imageAsset: 'assets/images/img3.png',
+    audioAsset: 'sounds/track_3.mp3',
+  ),
+  KirtanModel(
+    id: '4',
+    number: '૦૪',
+    title: 'ગોપીગીત',
+    imageAsset: 'assets/images/img4.png',
+    audioAsset: 'sounds/track_4.mp3',
+  ),
+  KirtanModel(
+    id: '5',
+    number: '૦૫',
+    title: 'યુગલગીત',
+    imageAsset: 'assets/images/img5.png',
+    audioAsset: 'sounds/track_5.mp3',
+  ),
+  KirtanModel(
+    id: '6',
+    number: '૦૬',
+    title: 'વેણુગીત',
+    imageAsset: 'assets/images/img6.png',
+    audioAsset: 'sounds/track_6.mp3',
+  ),
+  KirtanModel(
+    id: '7',
+    number: '૦૭',
+    title: 'ભ્રમરગીત',
+    imageAsset: 'assets/images/img7.png',
+    audioAsset: 'sounds/track_7.mp3',
+  ),
+  KirtanModel(
+    id: '8',
+    number: '૦૮',
+    title: 'મધુરાષ્ટક',
+    imageAsset: 'assets/images/img8.png',
+    audioAsset: 'sounds/track_8.mp3',
+  ),
+];
+
+final List<VartaModel> varta84List = [
+  VartaModel(
+    id: '1',
+    number: '૦૧',
+    titleGujarati: 'દામોદરદાસ હરસાનીની વાર્તા',
+    titleBraj: 'દામોદરદાસ હરસાની કી વાર્તા',
+    shloka: 'पठनीयं प्रयत्नैन सर्वहेतुविवर्जितम् ॥ १ ॥',
+    arth: 'શ્રીમદ્ ભાગવત શાસ્ત્રનો પ્રયત્ન કરીને પાઠ કરવો.',
+    vartaContent: 'દામોદરદાસ હરસાની મહાપ્રભુજીના પ્રથમ શિષ્ય હતા...',
+    saar: 'શુદ્ધ કૃપા પાત્ર જીવોને વારંવાર કહેવામાં આવતું નથી.',
+  ),
+  // Add other Vartas here if you have them
+];
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -1044,10 +1120,12 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 4, // Incremented version for audio asset column
+      version: 6, // Incremented version for Varta table
       onCreate: (db, version) async {
         await _createBethakjiTable(db);
         await _createPathavaliTable(db);
+        await _createKirtanTable(db);
+        await _createVarta84Table(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         // A non-destructive upgrade.
@@ -1070,6 +1148,12 @@ class DatabaseHelper {
             }
           }
           await batch.commit(noResult: true);
+        }
+        if (oldVersion < 5) {
+          await _createKirtanTable(db);
+        }
+        if (oldVersion < 6) {
+          await _createVarta84Table(db);
         }
       },
     );
@@ -1114,6 +1198,53 @@ class DatabaseHelper {
     for (final item in pathavaliList) {
       batch.insert(
         'pathavali',
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
+  }
+
+  Future<void> _createKirtanTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS kirtan(
+        id TEXT PRIMARY KEY,
+        number TEXT,
+        title TEXT NOT NULL,
+        imageAsset TEXT,
+        audioAsset TEXT,
+        isFavorite INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    final batch = db.batch();
+    for (final item in kirtanList) {
+      batch.insert(
+        'kirtan',
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
+  }
+
+  Future<void> _createVarta84Table(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS varta84(
+        id TEXT PRIMARY KEY,
+        number TEXT,
+        titleGujarati TEXT,
+        titleBraj TEXT,
+        shloka TEXT,
+        arth TEXT,
+        vartaContent TEXT,
+        saar TEXT,
+        isFavorite INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    final batch = db.batch();
+    for (final item in varta84List) {
+      batch.insert(
+        'varta84',
         item.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
@@ -1213,6 +1344,84 @@ class DatabaseHelper {
     final db = await database;
     await db.update(
       'pathavali',
+      {'isFavorite': isFavorite ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // --- Kirtan Methods ---
+
+  /// Fetches all Kirtan items from the database.
+  Future<List<KirtanModel>> getAllKirtans() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('kirtan');
+    return List.generate(maps.length, (i) {
+      return KirtanModel.fromMap(maps[i]);
+    });
+  }
+
+  /// Fetches only the favorite Kirtan items.
+  Future<List<KirtanModel>> getFavoriteKirtans() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'kirtan',
+      where: 'isFavorite = 1',
+    );
+    return List.generate(maps.length, (i) {
+      return KirtanModel.fromMap(maps[i]);
+    });
+  }
+
+  /// Updates the favorite status of a specific Kirtan item.
+  Future<void> updateKirtanFavoriteStatus(String id, bool isFavorite) async {
+    final db = await database;
+    await db.update(
+      'kirtan',
+      {'isFavorite': isFavorite ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // --- 84 Varta Methods ---
+
+  Future<List<VartaModel>> getAll84Vartas() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('varta84');
+    return List.generate(maps.length, (i) {
+      return VartaModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<VartaModel?> get84Varta(String id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'varta84',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return VartaModel.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  Future<List<VartaModel>> getFavorite84Vartas() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'varta84',
+      where: 'isFavorite = 1',
+    );
+    return List.generate(maps.length, (i) {
+      return VartaModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<void> update84VartaFavoriteStatus(String id, bool isFavorite) async {
+    final db = await database;
+    await db.update(
+      'varta84',
       {'isFavorite': isFavorite ? 1 : 0},
       where: 'id = ?',
       whereArgs: [id],

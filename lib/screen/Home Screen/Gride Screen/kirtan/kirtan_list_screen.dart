@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/model/kirtan_model.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +15,8 @@ class KirtanListPage extends StatefulWidget {
 
 class _KirtanListPageState extends State<KirtanListPage> {
   final TextEditingController _searchController = TextEditingController();
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+  bool _isLoading = true;
 
   // Audio Player State
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -29,86 +32,13 @@ class _KirtanListPageState extends State<KirtanListPage> {
   StreamSubscription? _playerCompleteSubscription;
   StreamSubscription? _playerStateChangeSubscription;
 
-  // Updated list with IDs 1 to 10
-  final List<KirtanModel> _allKirtans = [
-    KirtanModel(
-      id: '1',
-      number: '૦૧',
-      title: 'યમુનાષ્ટક',
-      imageAsset: 'assets/images/img1.png',
-      audioAsset: 'sounds/track_1.mp3',
-    ),
-    KirtanModel(
-      id: '2',
-      number: '૦૨',
-      title: 'મંગલાચરણ',
-      imageAsset: 'assets/images/img2.png',
-      audioAsset: 'sounds/track_2.mp3',
-    ),
-    KirtanModel(
-      id: '3',
-      number: '૦૩',
-      title: 'કૃષ્ણાશ્રય',
-      imageAsset: 'assets/images/img3.png',
-      audioAsset: 'sounds/track_3.mp3',
-    ),
-    KirtanModel(
-      id: '4',
-      number: '૦૪',
-      title: 'ગોપીગીત',
-      imageAsset: 'assets/images/img4.png',
-      audioAsset: 'sounds/track_4.mp3',
-    ),
-    KirtanModel(
-      id: '5',
-      number: '૦૫',
-      title: 'યુગલગીત',
-      imageAsset: 'assets/images/img5.png',
-      audioAsset: 'sounds/track_5.mp3',
-    ),
-    KirtanModel(
-      id: '6',
-      number: '૦૬',
-      title: 'વેણુગીત',
-      imageAsset: 'assets/images/img6.png',
-      audioAsset: 'sounds/track_6.mp3',
-    ),
-    KirtanModel(
-      id: '7',
-      number: '૦૭',
-      title: 'ભ્રમરગીત',
-      imageAsset: 'assets/images/img7.png',
-      audioAsset: 'sounds/track_7.mp3',
-    ),
-    KirtanModel(
-      id: '8',
-      number: '૦૮',
-      title: 'મધુરાષ્ટક',
-      imageAsset: 'assets/images/img8.png',
-      audioAsset: 'sounds/track_8.mp3',
-    ),
-    // KirtanModel(
-    //   id: '9',
-    //   number: '૦૯',
-    //   title: 'નવરત્ન',
-    //   imageAsset: 'assets/images/img9.png',
-    //   audioAsset: 'sounds/track_9.mp3',
-    // ),
-    // KirtanModel(
-    //   id: '10',
-    //   number: '૧૦',
-    //   title: 'સિદ્ધાંત રહસ્ય',
-    //   imageAsset: 'assets/images/img10.png',
-    //   audioAsset: 'sounds/track_10.mp3',
-    // ),
-  ];
-
+  List<KirtanModel> _allKirtans = [];
   List<KirtanModel> _filteredKirtans = [];
 
   @override
   void initState() {
     super.initState();
-    _filteredKirtans = _allKirtans;
+    _loadKirtans();
     _setupAudioPlayerForBackground();
 
     // Listen to player state changes
@@ -135,6 +65,16 @@ class _KirtanListPageState extends State<KirtanListPage> {
     // Listen for when the audio completes and play the next one
     _playerCompleteSubscription = _audioPlayer.onPlayerComplete.listen((event) {
       if (mounted) _playNext();
+    });
+  }
+
+  Future<void> _loadKirtans() async {
+    final data = await _dbHelper.getAllKirtans();
+    if (!mounted) return;
+    setState(() {
+      _allKirtans = data;
+      _filteredKirtans = data;
+      _isLoading = false;
     });
   }
 
@@ -205,6 +145,13 @@ class _KirtanListPageState extends State<KirtanListPage> {
     } else if (_filteredKirtans.isNotEmpty) {
       _playKirtan(_filteredKirtans.first);
     }
+  }
+
+  Future<void> _toggleFavorite(KirtanModel kirtan) async {
+    setState(() {
+      kirtan.isFavorite = !kirtan.isFavorite;
+    });
+    await _dbHelper.updateKirtanFavoriteStatus(kirtan.id, kirtan.isFavorite);
   }
 
   // --- WEBSITE REDIRECT LOGIC ---
@@ -347,7 +294,13 @@ class _KirtanListPageState extends State<KirtanListPage> {
             Expanded(
               child: Stack(
                 children: [
-                  _filteredKirtans.isEmpty
+                  _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: theme.colorScheme.primary,
+                          ),
+                        )
+                      : _filteredKirtans.isEmpty
                       ? Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -449,24 +402,44 @@ class _KirtanListPageState extends State<KirtanListPage> {
                                             .withOpacity(0.5),
                                       ),
                                     ),
-                                    trailing: IconButton(
-                                      icon: Icon(
-                                        isThisPlaying && _isPlaying
-                                            ? Icons.pause_circle_filled_rounded
-                                            : Icons.play_circle_filled_rounded,
-                                      ),
-                                      iconSize: 32,
-                                      color: isThisPlaying
-                                          ? theme.colorScheme.primary
-                                          : theme.colorScheme.onSurface
-                                                .withOpacity(0.4),
-                                      onPressed: () {
-                                        if (isThisPlaying) {
-                                          _togglePlayPause();
-                                        } else {
-                                          _playKirtan(kirtan);
-                                        }
-                                      },
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            kirtan.isFavorite
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                          ),
+                                          color: kirtan.isFavorite
+                                              ? Colors.red
+                                              : theme.colorScheme.onSurface
+                                                    .withOpacity(0.4),
+                                          onPressed: () =>
+                                              _toggleFavorite(kirtan),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            isThisPlaying && _isPlaying
+                                                ? Icons
+                                                      .pause_circle_filled_rounded
+                                                : Icons
+                                                      .play_circle_filled_rounded,
+                                          ),
+                                          iconSize: 32,
+                                          color: isThisPlaying
+                                              ? theme.colorScheme.primary
+                                              : theme.colorScheme.onSurface
+                                                    .withOpacity(0.4),
+                                          onPressed: () {
+                                            if (isThisPlaying) {
+                                              _togglePlayPause();
+                                            } else {
+                                              _playKirtan(kirtan);
+                                            }
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   if (isThisPlaying)
