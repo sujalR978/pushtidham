@@ -1044,15 +1044,32 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 3, // Incremented version for new table
+      version: 4, // Incremented version for audio asset column
       onCreate: (db, version) async {
         await _createBethakjiTable(db);
         await _createPathavaliTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        // A non-destructive upgrade. If the old version didn't have the pathavali table, add it.
+        // A non-destructive upgrade.
         if (oldVersion < 3) {
+          // If the old version didn't have the pathavali table, add it.
           await _createPathavaliTable(db);
+        }
+        if (oldVersion < 4) {
+          // If the old version doesn't have the audioAsset column, add it and populate it.
+          await db.execute('ALTER TABLE pathavali ADD COLUMN audioAsset TEXT');
+          final batch = db.batch();
+          for (final item in pathavaliList) {
+            if (item.audioAsset != null) {
+              batch.update(
+                'pathavali',
+                {'audioAsset': item.audioAsset},
+                where: 'id = ?',
+                whereArgs: [item.id],
+              );
+            }
+          }
+          await batch.commit(noResult: true);
         }
       },
     );
@@ -1089,7 +1106,8 @@ class DatabaseHelper {
         id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         content TEXT NOT NULL,
-        isFavorite INTEGER NOT NULL DEFAULT 0
+        isFavorite INTEGER NOT NULL DEFAULT 0,
+        audioAsset TEXT
       )
     ''');
     final batch = db.batch();
