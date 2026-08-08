@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async'; // Import the async library for Timer
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/model/varta_model.dart';
@@ -19,6 +20,7 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
   bool _isLoading = true;
 
   List<VartaModel> _allVartas = [];
+  Timer? _debounce;
   List<VartaModel> _filteredVartas = [];
   final Set<String> _favoriteVartaIds = <String>{};
 
@@ -29,12 +31,24 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
   }
 
   Future<void> _loadVartas() async {
-    // Assuming you will create this method in your DatabaseHelper
-    final data = await _dbHelper.getAll84Vartas();
+    final allItems = await _dbHelper.getAll84Vartas();
+    final favoriteIds = allItems
+        .where((varta) => varta.isFavorite)
+        .map((varta) => varta.id)
+        .toSet();
     if (!mounted) return;
+
+    _favoriteVartaIds.clear();
+    _favoriteVartaIds.addAll(favoriteIds);
+
+    for (var varta in allItems) {
+      varta.isFavorite = _favoriteVartaIds.contains(varta.id);
+    }
+
     setState(() {
-      _allVartas = data;
-      _filteredVartas = data;
+      _allVartas = allItems;
+      // This is the key fix: Initialize the filtered list with all items.
+      _filteredVartas = allItems;
       _isLoading = false;
     });
   }
@@ -55,21 +69,34 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
     });
   }
 
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _filterVartas(query);
+    });
+  }
+
   Future<void> _toggleFavorite(VartaModel varta) async {
-    final isFavorite = !_favoriteVartaIds.contains(varta.id);
+    final wasFavorite = _favoriteVartaIds.contains(varta.id);
+    final isNowFavorite = !wasFavorite;
+
     setState(() {
-      if (isFavorite) {
+      if (isNowFavorite) {
         _favoriteVartaIds.add(varta.id);
       } else {
         _favoriteVartaIds.remove(varta.id);
       }
+      // This is crucial: update the isFavorite property on the model
+      // in both the main list and the filtered list.
+      varta.isFavorite = isNowFavorite;
     });
-    await _dbHelper.update84VartaFavoriteStatus(varta.id, isFavorite);
+    await _dbHelper.update84VartaFavoriteStatus(varta.id, isNowFavorite);
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -114,7 +141,7 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
               child: TextField(
                 controller: _searchController,
                 style: TextStyle(color: theme.colorScheme.onPrimary),
-                onChanged: _filterVartas,
+                onChanged: _onSearchChanged,
                 decoration: InputDecoration(
                   hintText: l10n.search_placeholder,
                   hintStyle: TextStyle(
@@ -173,7 +200,7 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
                               color: theme.colorScheme.onSurface.withOpacity(
                                 0.4,
                               ),
-                              fontSize: 14,
+                              fontSize: 16,
                             ),
                           ),
                         ],
@@ -258,17 +285,19 @@ class _ChorasiVartaListPageState extends State<ChorasiVartaListPage> {
                                     isBrajLanguage: widget.isBrajLanguage,
                                   ),
                                 ),
-                              ).then((_) async {
-                                // Refresh favorite status when returning from detail page
-                                final updatedItem = await _dbHelper.get84Varta(
-                                  varta.id,
-                                );
-                                if (updatedItem != null && mounted) {
-                                  setState(() {
-                                    // Favorite state is stored separately because
-                                    // VartaModel has no mutable isFavorite field.
-                                  });
-                                }
+                              ).then((_) {
+                                // When returning from the detail page, we only need to update the UI
+                                // for the favorite status, as the `varta` object's `isFavorite`
+                                // property was already updated on the detail page.
+                                final isNowFavorite = varta.isFavorite;
+                                final isListedAsFavorite = _favoriteVartaIds
+                                    .contains(varta.id);
+
+                                // If the state is inconsistent, sync it and rebuild the widget.
+                                if (isNowFavorite != isListedAsFavorite) {
+                                  _toggleFavorite(varta);
+                                } else
+                                  setState(() {});
                               });
                             },
                           ),

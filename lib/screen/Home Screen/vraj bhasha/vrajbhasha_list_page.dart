@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
+import 'dart:async';
 import 'package:pushtidham/model/vraj_model.dart';
+import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/screen/Home%20Screen/vraj%20bhasha/vrajbhasha_detail_page.dart'; // Adjust if needed
 // IMPORT YOUR MODEL AND DETAIL PAGE HERE:
 // import 'package:pushtidham/model/vrajbhasha_model.dart';
@@ -15,26 +17,44 @@ class VrajbhashaListPage extends StatefulWidget {
 
 class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
   final TextEditingController _searchController = TextEditingController();
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+  bool _isLoading = true;
+  Timer? _debounce;
 
-  // Dummy data - Move this to your vrajbhasha_model.dart file later
-  final List<VrajbhashaModel> _allPads = [
-    VrajbhashaModel(
-      id: '1',
-      number: '૦૧',
-      title: 'દ્રઢ ઇન ચરનન કેરો ભરોસો',
-      padText: 'દ્રઢ ઇન ચરનન કેરો ભરોસો...\nશ્રી વલ્લભ નખ ચંદ્ર છટા બિન,\nસબ જગ માંઝ અંધેરો...',
-      bhavarth: 'શ્રી મહાપ્રભુજીના ચરણારવિંદનો જ મને દ્રઢ ભરોસો છે. તેમના નખની ચંદ્ર સમાન કાંતિ વિના આખા જગતમાં અંધકાર છે.',
-      prasang: 'આ પદ શ્રી સૂરદાસજીએ શ્રી મહાપ્રભુજીના આશ્રયનો દ્રઢ મહિમા સમજાવવા ગાયું હતું.',
-    ),
-    // Add more Vrajbhasha pads here...
-  ];
-
+  List<VrajbhashaModel> _allPads = [];
   List<VrajbhashaModel> _filteredPads = [];
+  final Set<String> _favoritePadIds = <String>{};
 
   @override
   void initState() {
     super.initState();
-    _filteredPads = _allPads;
+    _loadPads();
+    _searchController.addListener(() {
+      _onSearchChanged(_searchController.text);
+    });
+  }
+
+  Future<void> _loadPads() async {
+    // Assumes you create `getAllVrajbhashaPads` in your DatabaseHelper
+    final allItems = await _dbHelper.getAllVrajbhashaPads();
+    final favoriteIds = allItems
+        .where((pad) => pad.isFavorite)
+        .map((pad) => pad.id)
+        .toSet();
+    if (!mounted) return;
+
+    _favoritePadIds.clear();
+    _favoritePadIds.addAll(favoriteIds);
+
+    for (var pad in allItems) {
+      pad.isFavorite = _favoritePadIds.contains(pad.id);
+    }
+
+    setState(() {
+      _allPads = allItems;
+      _filteredPads = allItems;
+      _isLoading = false;
+    });
   }
 
   void _filterPads(String query) {
@@ -44,14 +64,36 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
       } else {
         _filteredPads = _allPads.where((item) {
           return item.title.toLowerCase().contains(query.toLowerCase()) ||
-                 item.number.contains(query);
+              item.number.contains(query);
         }).toList();
       }
     });
   }
 
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _filterPads(query);
+    });
+  }
+
+  Future<void> _toggleFavorite(VrajbhashaModel item) async {
+    setState(() {
+      item.isFavorite = !item.isFavorite;
+      if (item.isFavorite) {
+        _favoritePadIds.add(item.id);
+      } else {
+        _favoritePadIds.remove(item.id);
+      }
+    });
+    // Assumes you create `updateVrajbhashaFavoriteStatus` in your DatabaseHelper
+    await _dbHelper.updateVrajbhashaFavoriteStatus(item.id, item.isFavorite);
+  }
+
   @override
   void dispose() {
+    // Cancel the timer when the widget is disposed
+    _debounce?.cancel();
     _searchController.dispose();
     super.dispose();
   }
@@ -85,22 +127,31 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
           children: [
             // 1. DYNAMIC THEMED SEARCH BAR
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 12.0,
+              ),
               color: theme.colorScheme.primary,
               child: TextField(
                 controller: _searchController,
                 style: TextStyle(color: theme.colorScheme.onPrimary),
-                onChanged: _filterPads,
+                onChanged: _onSearchChanged,
                 decoration: InputDecoration(
                   hintText: l10n.search_placeholder,
                   hintStyle: TextStyle(
                     color: theme.colorScheme.onPrimary.withOpacity(0.6),
                     fontSize: 14,
                   ),
-                  prefixIcon: Icon(Icons.search, color: theme.colorScheme.onPrimary),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: theme.colorScheme.onPrimary,
+                  ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: theme.colorScheme.onPrimary),
+                          icon: Icon(
+                            Icons.clear,
+                            color: theme.colorScheme.onPrimary,
+                          ),
                           onPressed: () {
                             _searchController.clear();
                             _filterPads('');
@@ -120,7 +171,13 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
 
             // 2. VRAJBHASHA LIST VIEW
             Expanded(
-              child: _filteredPads.isEmpty
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: theme.colorScheme.primary,
+                      ),
+                    )
+                  : _filteredPads.isEmpty
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +191,9 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
                           Text(
                             l10n.search_placeholder,
                             style: TextStyle(
-                              color: theme.colorScheme.onSurface.withOpacity(0.4),
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.4,
+                              ),
                               fontSize: 14,
                             ),
                           ),
@@ -142,7 +201,10 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
                       ),
                     )
                   : ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
                       itemCount: _filteredPads.length,
                       itemBuilder: (context, index) {
                         final item = _filteredPads[index];
@@ -150,7 +212,8 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
                         return Card(
                           color: theme.cardTheme.color,
                           elevation: theme.cardTheme.elevation ?? 1,
-                          shape: theme.cardTheme.shape ??
+                          shape:
+                              theme.cardTheme.shape ??
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -162,7 +225,8 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
                             ),
                             leading: CircleAvatar(
                               radius: 20,
-                              backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                              backgroundColor: theme.colorScheme.primary
+                                  .withOpacity(0.1),
                               child: Text(
                                 item.number,
                                 style: TextStyle(
@@ -180,19 +244,48 @@ class _VrajbhashaListPageState extends State<VrajbhashaListPage> {
                                 color: theme.colorScheme.onSurface,
                               ),
                             ),
-                            trailing: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 16,
-                              color: theme.colorScheme.onSurface.withOpacity(0.3),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    _favoritePadIds.contains(item.id)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: _favoritePadIds.contains(item.id)
+                                        ? Colors.red
+                                        : theme.colorScheme.onSurface
+                                              .withOpacity(0.4),
+                                  ),
+                                  onPressed: () => _toggleFavorite(item),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 16,
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.3),
+                                ),
+                              ],
                             ),
                             onTap: () {
                               // Navigate to the Vrajbhasha Detail Page
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => VrajbhashaDetailPage(item: item),
+                                  builder: (context) =>
+                                      VrajbhashaDetailPage(item: item),
                                 ),
-                              );
+                              ).then((_) {
+                                // When returning, check if the favorite status is out of sync
+                                // and rebuild the widget state if necessary.
+                                final isListedAsFavorite = _favoritePadIds
+                                    .contains(item.id);
+                                if (item.isFavorite != isListedAsFavorite) {
+                                  _toggleFavorite(item);
+                                } else {
+                                  setState(() {});
+                                }
+                              });
                             },
                           ),
                         );

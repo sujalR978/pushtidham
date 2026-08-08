@@ -4,8 +4,10 @@ import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/kirtan_model.dart';
 import 'package:pushtidham/model/varta_model.dart';
+import 'package:pushtidham/model/vraj_model.dart';
 import 'package:pushtidham/model/pathavali_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_detail.dart';
+import 'package:pushtidham/screen/Home%20Screen/vraj%20bhasha/vrajbhasha_detail_page.dart';
 import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_detail_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_detail.dart';
@@ -36,6 +38,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
   List<VartaModel> _favorite84Vartas = [];
   bool _isLoading84Vartas = true;
 
+  List<VrajbhashaModel> _favoriteVrajbhasha = [];
+  bool _isLoadingVrajbhasha = true;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +48,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     _fetchFavoritePathavalis();
     _fetchFavoriteKirtans();
     _fetchFavorite84Vartas();
+    _fetchFavoriteVrajbhasha();
   }
 
   // Fetch favorite Bethakjis directly from SQLite DB (isFavorite = 1)
@@ -113,6 +119,24 @@ class _FavoritesPageState extends State<FavoritesPage> {
       setState(() {
         _isLoading84Vartas = false;
       });
+    }
+  }
+
+  // Fetch favorite Vrajbhasha from SQLite DB
+  Future<void> _fetchFavoriteVrajbhasha() async {
+    try {
+      // Assuming you will create this method in your DatabaseHelper
+      final List<VrajbhashaModel> data = await _dbHelper
+          .getFavoriteVrajbhashaPads();
+      if (!mounted) return;
+      setState(() {
+        _favoriteVrajbhasha = data;
+        _isLoadingVrajbhasha = false;
+      });
+    } catch (e) {
+      debugPrint("Error fetching Vrajbhasha favorites: $e");
+      if (!mounted) return;
+      setState(() => _isLoadingVrajbhasha = false);
     }
   }
 
@@ -287,6 +311,46 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
+  // Remove Vrajbhasha from favorites
+  Future<void> _removeVrajbhashaFavorite(int index) async {
+    HapticFeedback.mediumImpact();
+
+    final removedItem = _favoriteVrajbhasha[index];
+
+    // Update SQLite database (isFavorite = 0)
+    await _dbHelper.updateVrajbhashaFavoriteStatus(removedItem.id, false);
+
+    setState(() {
+      _favoriteVrajbhasha.removeAt(index);
+    });
+
+    if (!mounted) return;
+
+    // Show beautiful premium SnackBar confirmation
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.explore_rounded, color: Colors.white, size: 20),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                "Removed ${removedItem.title}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -350,12 +414,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               _buildKirtanTab(theme),
               _buildPathavaliTab(theme),
               _build84VartaTab(theme),
-              _buildPlaceholderTab(
-                theme,
-                "84 Vrajbhasha",
-                "Save Vrajbhasha literature and stories.",
-                Icons.explore_rounded,
-              ),
+              _buildVrajbhashaTab(theme),
               _buildPlaceholderTab(
                 theme,
                 "252 Vaishnav Varta",
@@ -463,6 +522,30 @@ class _FavoritesPageState extends State<FavoritesPage> {
       itemBuilder: (context, index) {
         final item = _favoritePathavalis[index];
         return _buildPathavaliFavoriteCard(theme, item, index);
+      },
+    );
+  }
+
+  Widget _buildVrajbhashaTab(ThemeData theme) {
+    if (_isLoadingVrajbhasha) {
+      return Center(
+        child: CircularProgressIndicator(color: theme.colorScheme.primary),
+      );
+    }
+    if (_favoriteVrajbhasha.isEmpty) {
+      return _buildEmptyState(
+        theme,
+        "No Favorite Vrajbhasha",
+        "Tap the heart icon on any Vrajbhasha pad to save it here.",
+        Icons.explore_rounded,
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+      itemCount: _favoriteVrajbhasha.length,
+      itemBuilder: (context, index) {
+        final item = _favoriteVrajbhasha[index];
+        return _buildVrajbhashaFavoriteCard(theme, item, index);
       },
     );
   }
@@ -1068,6 +1151,119 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     ),
                     onPressed: () => _remove84VartaFavorite(index),
                     tooltip: "Remove from Favorites",
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Premium Custom Card for Vrajbhasha items
+  Widget _buildVrajbhashaFavoriteCard(
+    ThemeData theme,
+    VrajbhashaModel item,
+    int index,
+  ) {
+    return Padding(
+      key: ValueKey(item.id),
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Dismissible(
+        key: ValueKey(item.id),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(right: 24),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.error,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.favorite_border_rounded,
+                color: Colors.white,
+                size: 28,
+              ),
+              SizedBox(height: 4),
+              Text(
+                "Remove",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        onDismissed: (direction) => _removeVrajbhashaFavorite(index),
+        child: GestureDetector(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VrajbhashaDetailPage(item: item),
+              ),
+            ).then((_) {
+              _fetchFavoriteVrajbhasha();
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: theme.colorScheme.onSurface.withOpacity(0.05),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                // Sacred Number Badge
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: theme.colorScheme.primary.withOpacity(0.2),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      item.number,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    item.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
                 ),
               ],
