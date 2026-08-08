@@ -3,11 +3,13 @@ class PathavaliItem {
   final String title;
   final String content;
   bool isFavorite;
+  final String? audioAsset; // Path to the audio file in assets
 
   PathavaliItem({
     required this.id,
     required this.title,
     required this.content,
+    this.audioAsset,
     this.isFavorite = false,
   });
 
@@ -17,6 +19,7 @@ class PathavaliItem {
       id: map['id'].toString(),
       title: map['title'],
       content: map['content'],
+      audioAsset: map['audioAsset'],
       isFavorite: map['isFavorite'] == 1,
     );
   }
@@ -27,6 +30,7 @@ class PathavaliItem {
       'id': id,
       'title': title,
       'content': content,
+      'audioAsset': audioAsset,
       'isFavorite': isFavorite ? 1 : 0,
     };
   }
@@ -37,6 +41,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "1",
     title: "प्रातः स्मरण एवं मंगलाचरण",
+    audioAsset: "sounds/pathavali/pathavali_1.mp3",
     content: '''॥ प्रातः स्मरण एवं मंगलाचरण ॥
 
 श्री गोवर्धन नाथ पाद युगलम हे यंगवीन प्रियं ।
@@ -73,6 +78,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "2",
     title: "सर्वोत्तम स्तोत्र (संस्कृत)",
+    audioAsset: "sounds/pathavali/pathavali_2.mp3",
     content: '''॥ सर्वोत्तम स्तोत्र (संस्कृत) ॥
 प्राकृत धर्मानाश्रयम प्राकृत निखिल धर्म रूपमिति ।
 निगम प्रतिपाद्यमं यत्तच्छुद्धं साकृत सतौमि ॥१॥
@@ -184,6 +190,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "3",
     title: "सर्वोत्तम स्तोत्र (गुजराती धौल)",
+    audioAsset: "sounds/pathavali/pathavali_3.mp3",
     content: '''॥ सर्वोत्तम स्तोत्र (गुजराती धौल) ॥
 
 भले प्रकट्या श्री वल्लभदेव, श्री पुरुषोत्तम भूतल फरी जी।
@@ -337,6 +344,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "4",
     title: "यमुनाष्टक",
+    audioAsset: "sounds/pathavali/pathavali_4.mp3",
     content: '''॥ यमुनाष्टक ॥
 
 नमामि यमुनामहं सकल सिद्धि हेतुं मुदा
@@ -398,6 +406,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "5",
     title: "मधुराष्टक",
+    audioAsset: "sounds/pathavali/pathavali_5.mp3",
     content: '''॥ मधुराष्टक ॥
 
 अधरं मधुरं वदनं मधुरं, नयनं मधुरं हसितं मधुरं।
@@ -430,6 +439,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "6",
     title: "कृष्णाश्रय",
+    audioAsset: "sounds/pathavali/pathavali_6.mp3",
     content: '''॥ कृष्णाश्रय ॥
 
 सर्वदा सर्वभावेन निश्चिन्तैः श्रीपतिर्भजेत् ।
@@ -469,6 +479,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "7",
     title: "बालबोध",
+    audioAsset: "sounds/pathavali/pathavali_7.mp3",
     content: '''॥ बालबोध ॥
 
 नत्वा हरिं सदानन्दं सर्व सिद्धान्त संग्रहम ।
@@ -534,6 +545,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "8",
     title: "सिद्धांत रहस्यं",
+    audioAsset: "sounds/pathavali/pathavali_8.mp3",
     content: '''॥ सिद्धांत रहस्यं ॥
 
 श्रावण स्यामले पक्षे एकादश्यं महानिशि ।
@@ -567,6 +579,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "9",
     title: "नवरत्नं",
+    audioAsset: "sounds/pathavali/pathavali_9.mp3",
     content: '''॥ नवरत्नं ॥
 
 चिन्ताकापि न कार्या निवेदितात्मभिः कदापीति।
@@ -601,6 +614,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "10",
     title: "चतु:श्लोकी",
+    audioAsset: "sounds/pathavali/pathavali_10.mp3",
     content: '''॥ चतु:श्लोकी ॥
 
 सर्वदा सर्वभावेन भजनीयो व्रजाधिपः ।
@@ -620,6 +634,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "11",
     title: "श्री गिरिराजधार्याष्टकम",
+    audioAsset: "sounds/pathavali/pathavali_11.mp3",
     content: '''॥ श्री गिरिराजधार्याष्टकम ॥
 
 भक्ताभिलाषा चरितानुसारी दुग्धादिचौर्यण यशोविसारी ।
@@ -651,6 +666,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "12",
     title: "श्री नंदकुमाराष्टकं",
+    audioAsset: "sounds/pathavali/pathavali_12.mp3",
     content: '''॥ श्री नंदकुमाराष्टकं ॥
 
 सुन्दर गोपालं उरवनमालं नयन विशालं दुःख हरं,
@@ -698,6 +714,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "13",
     title: "सिद्धांतमुक्तावली",
+    audioAsset: "sounds/pathavali/pathavali_13.mp3",
     content: '''॥ सिद्धांतमुक्तावली ॥
 
 नत्वा हरिं प्रवक्ष्यामि स्वसिद्धांत विनिश्चयम।
@@ -768,6 +785,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "14",
     title: "पुष्टिप्रवाहमर्यादा",
+    audioAsset: "sounds/pathavali/pathavali_14.mp3",
     content: '''॥ पुष्टिप्रवाहमर्यादा ॥
 
 पुष्टिप्रवाह मर्यादा विशेषेण पृथक पृथक।
@@ -851,6 +869,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "15",
     title: "विवेकधैर्याश्रय",
+    audioAsset: "sounds/pathavali/pathavali_15.mp3",
     content: '''॥ विवेकधैर्याश्रय ॥
 
 विवेकधैर्ये सततं रक्षरणीय तथाश्रयः
@@ -909,6 +928,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "16",
     title: "अंतःकरणप्रबोध",
+    audioAsset: "sounds/pathavali/pathavali_16.mp3",
     content: '''॥ अंतःकरणप्रबोध ॥
 
 अंतःकरण मद्वाक्यं सावधानतया शृणु।
@@ -947,6 +967,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "17",
     title: "भक्तिवर्द्धिनी",
+    audioAsset: "sounds/pathavali/pathavali_17.mp3",
     content: '''॥ भक्तिवर्द्धिनी ॥
 
 यथा भक्तिः प्रवृद्धा स्यात्तथोपायो निरूप्यते।
@@ -987,6 +1008,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "18",
     title: "पच्चपद्यानि",
+    audioAsset: "sounds/pathavali/pathavali_18.mp3",
     content: '''॥ पच्चपद्यानि ॥
 
 श्रीकृष्णरसविक्षिप्तमानसा रतिवर्जिताः।
@@ -1009,6 +1031,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "19",
     title: "सन्यासनिर्णय",
+    audioAsset: "sounds/pathavali/pathavali_19.mp3",
     content: '''॥ सन्यासनिर्णय ॥
 
 पश्चात्तपनिवृत्यर्थं परित्यागो विचार्यते।
@@ -1082,6 +1105,7 @@ final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
     id: "20",
     title: "निरोधलक्षण",
+    audioAsset: "sounds/pathavali/pathavali_20.mp3",
     content: '''॥ निरोधलक्षण ॥
 
 यच्च दुःखं यशोदाया नन्दादीनां च गोकुले।
