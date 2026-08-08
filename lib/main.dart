@@ -3,16 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:pushtidham/Provider/theme_manager.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/screen/Splesh%20Screen/spleshScreen.dart';
-import 'package:pushtidham/theme/app_theme.dart'; // Ensure this 
-
+import 'package:pushtidham/theme/app_theme.dart'; // Ensure this
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeManager(),
-      child: const MyApp(),
-    ),
+    ChangeNotifierProvider(create: (_) => ThemeManager(), child: const MyApp() ),
   );
 }
 
