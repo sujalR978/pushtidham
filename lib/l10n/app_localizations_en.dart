@@ -69,7 +69,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get grid_84_vaishnav_vraj => '84 Vaishnav Varta (Vraj Bhasha)';
 
   @override
-  String get grid_252_vaishnav => '252 Vaishnav Varta';
+  String get grid_252_vaishnav => 'Divine Wisdom';
 
   @override
   String get grid_review => 'Review';

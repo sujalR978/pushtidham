@@ -69,7 +69,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get grid_84_vaishnav_vraj => '८४ वैष्णव वार्ता (व्रज भाषा)';
 
   @override
-  String get grid_252_vaishnav => '२५२ वैष्णव वार्ता';
+  String get grid_252_vaishnav => 'आध्यात्मिक ज्ञान';
 
   @override
   String get grid_review => 'समीक्षा';

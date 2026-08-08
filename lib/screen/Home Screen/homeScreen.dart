@@ -31,6 +31,98 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = "";
 
+  List<Map<String, dynamic>> _getFilteredItems(AppLocalizations l10n) {
+    final allItems = [
+      {
+        "title": l10n.grid_about_mahaprabhuji,
+        "subtitle": l10n.sub_mahaprabhuji_charitra,
+        "icon": Icons.auto_awesome_rounded,
+        "screen": const AboutMahaprabhujiPage(),
+      },
+      {
+        "title": l10n.grid_bethakji_list,
+        "subtitle": l10n.sub_bethakji_yatra,
+        "icon": Icons.place_rounded,
+        "screen": const BethakjiListPage(),
+      },
+      {
+        "title": l10n.grid_calendar,
+        "subtitle": l10n.sub_calendar_details,
+        "icon": Icons.calendar_month_rounded,
+        "screen": const TippaniCalendarPage(),
+      },
+      {
+        "title": l10n.grid_pathavali,
+        "subtitle": l10n.sub_pathavali_stotra,
+        "icon": Icons.menu_book_outlined,
+        "screen": const PathavaliListPage(),
+      },
+      {
+        "title": l10n.grid_kirtan,
+        "subtitle": l10n.sub_kirtan_pad,
+        "icon": Icons.music_note_rounded,
+        "screen": const KirtanListPage(),
+      },
+      {
+        "title": l10n.grid_jap_mala,
+        "subtitle": l10n.sub_jap_mala_count,
+        "icon": Icons.touch_app_rounded,
+        "screen": const JapMalaScreen(),
+      },
+      {
+        "title": l10n.grid_84_vaishnav,
+        "subtitle": l10n.sub_84_varta,
+        "icon": Icons.groups_rounded,
+        "screen": const ChorasiVartaListPage(),
+      },
+      {
+        "title": l10n.grid_84_vaishnav_vraj,
+        "subtitle": l10n.sub_vrajbhakt_charitra,
+        "icon": Icons.explore_rounded,
+        "screen": const VrajbhashaListPage(),
+      },
+      {
+        "title": l10n.grid_252_vaishnav,
+        "subtitle": l10n.sub_252_varta,
+        "icon": Icons.collections_bookmark_rounded,
+        "screen": const GitaListPage(),
+      },
+      {
+        "title": l10n.nav_gallery,
+        "subtitle": "View media",
+        "icon": Icons.photo_library_rounded,
+        "screen": const GalleryPage(),
+      },
+      {
+        "title": l10n.nav_notes,
+        "subtitle": "Your personal notes",
+        "icon": Icons.note_alt_rounded,
+        "screen": const NotesPage(),
+      },
+      {
+        "title": l10n.grid_review,
+        "subtitle": "Leave a review",
+        "icon": Icons.rate_review_rounded,
+        "screen": const ReviewPage(),
+      },
+      {
+        "title": l10n.grid_contact,
+        "subtitle": "Get in touch",
+        "icon": Icons.contact_support_rounded,
+        "screen": const ContactPage(),
+      },
+    ];
+
+    if (_searchQuery.isEmpty) {
+      return [];
+    }
+
+    return allItems.where((item) {
+      final title = (item['title'] as String).toLowerCase();
+      return title.contains(_searchQuery);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -86,292 +178,345 @@ class _HomePageState extends State<HomePage> {
       // Decorative Sacred Drawer
       drawer: _buildSacredDrawer(context, theme, l10n),
 
-      body: Stack(
+      body: Column(
         children: [
-          CustomScrollView(
-            slivers: [
-              // 1. Daily Suvichar & Quick Action Hero Banner
-              SliverToBoxAdapter(
-                child: _buildDailyDarshanHeader(context, theme, l10n),
-              ),
+          // 1. Daily Suvichar & Quick Action Hero Banner
+          _buildDailyDarshanHeader(context, theme, l10n),
 
-              // 2. Search Bar Integration
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
+          // 2. Search Bar Integration
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (val) {
+                setState(() {
+                  _searchQuery = val.trim().toLowerCase();
+                });
+              },
+              decoration: InputDecoration(
+                hintText: l10n.search_placeholder,
+                hintStyle: TextStyle(
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  fontSize: 14,
+                ),
+                prefixIcon: Icon(
+                  Icons.search_rounded,
+                  color: theme.colorScheme.primary,
+                ),
+                suffixIcon: _searchQuery.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, size: 18),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() {
+                            _searchQuery = "";
+                          });
+                          FocusScope.of(context).unfocus();
+                        },
+                      )
+                    : null,
+                filled: true,
+                fillColor: theme.cardTheme.color ?? theme.colorScheme.surface,
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary.withOpacity(0.2),
                   ),
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: (val) {
-                      setState(() {
-                        _searchQuery = val.trim().toLowerCase();
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: l10n.search_placeholder,
-                      hintStyle: TextStyle(
-                        color: theme.colorScheme.onSurface.withOpacity(0.5),
-                        fontSize: 14,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search_rounded,
-                        color: theme.colorScheme.primary,
-                      ),
-                      suffixIcon: _searchQuery.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.clear, size: 18),
-                              onPressed: () {
-                                _searchController.clear();
-                                setState(() {
-                                  _searchQuery = "";
-                                });
-                              },
-                            )
-                          : null,
-                      filled: true,
-                      fillColor:
-                          theme.cardTheme.color ?? theme.colorScheme.surface,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide(
-                          color: theme.colorScheme.primary.withOpacity(0.2),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide(
-                          color: theme.colorScheme.primary,
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary,
+                    width: 1.5,
                   ),
                 ),
               ),
+            ),
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                if (_searchQuery.isNotEmpty)
+                  _buildSearchResults(theme, _getFilteredItems(l10n))
+                else
+                  _buildDefaultHomePage(theme, l10n),
 
-              // 3. Featured Sacred Experiences (Horizontal Carousel Cards)
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                // Quick Access Floating Nam-Smaran Bar
+                Positioned(
+                  left: 16,
+                  right: 16,
+                  bottom: 16,
+                  child: _buildQuickJaapFloatingBar(context, theme, l10n),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchResults(
+    ThemeData theme,
+    List<Map<String, dynamic>> filteredItems,
+  ) {
+    if (filteredItems.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: theme.colorScheme.primary.withOpacity(0.5),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              "No results found",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "Try searching for something else.",
+              style: TextStyle(
+                color: theme.colorScheme.onSurface.withOpacity(0.6),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      itemCount: filteredItems.length,
+      itemBuilder: (context, index) {
+        final item = filteredItems[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: 8),
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+              child: Icon(item['icon'], color: theme.colorScheme.primary),
+            ),
+            title: Text(
+              item['title'],
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(item['subtitle']),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+            onTap: () => _navigateTo(context, item['screen']),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDefaultHomePage(ThemeData theme, AppLocalizations l10n) {
+    return CustomScrollView(
+      slivers: [
+        // 3. Featured Sacred Experiences (Horizontal Carousel Cards)
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionTitle(
+                context,
+                theme,
+                l10n.section_sacred_highlights,
+                Icons.stars_rounded,
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 140,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: [
-                    _buildSectionTitle(
-                      context,
-                      theme,
-                      l10n.section_sacred_highlights,
-                      Icons.stars_rounded,
+                    _buildHeroFeatureCard(
+                      context: context,
+                      title: l10n.grid_about_mahaprabhuji,
+                      subtitle: l10n.sub_mahaprabhuji_charitra,
+                      icon: Icons.auto_awesome_rounded,
+                      badge: l10n.badge_path,
+                      onTap: () {
+                        _navigateTo(context, const AboutMahaprabhujiPage());
+                      },
                     ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      height: 140,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        children: [
-                          _buildHeroFeatureCard(
-                            context: context,
-                            title: l10n.grid_about_mahaprabhuji,
-                            subtitle: l10n.sub_mahaprabhuji_charitra,
-                            icon: Icons.auto_awesome_rounded,
-                            badge: l10n.badge_path,
-                            onTap: () {
-                              _navigateTo(
-                                context,
-                                const AboutMahaprabhujiPage(),
-                              );
-                            },
-                          ),
-                          _buildHeroFeatureCard(
-                            context: context,
-                            title: l10n.grid_bethakji_list,
-                            subtitle: l10n.sub_bethakji_yatra,
-                            icon: Icons.place_rounded,
-                            badge: l10n.badge_yatra,
-                            onTap: () =>
-                                _navigateTo(context, const BethakjiListPage()),
-                          ),
-                          _buildHeroFeatureCard(
-                            context: context,
-                            title: l10n.grid_calendar,
-                            subtitle: l10n.sub_calendar_details,
-                            icon: Icons.calendar_month_rounded,
-                            badge: l10n.badge_today,
-                            onTap: () => _navigateTo(
-                              context,
-                              const TippaniCalendarPage(),
-                            ),
-                          ),
-                        ],
-                      ),
+                    _buildHeroFeatureCard(
+                      context: context,
+                      title: l10n.grid_bethakji_list,
+                      subtitle: l10n.sub_bethakji_yatra,
+                      icon: Icons.place_rounded,
+                      badge: l10n.badge_yatra,
+                      onTap: () =>
+                          _navigateTo(context, const BethakjiListPage()),
+                    ),
+                    _buildHeroFeatureCard(
+                      context: context,
+                      title: l10n.grid_calendar,
+                      subtitle: l10n.sub_calendar_details,
+                      icon: Icons.calendar_month_rounded,
+                      badge: l10n.badge_today,
+                      onTap: () =>
+                          _navigateTo(context, const TippaniCalendarPage()),
                     ),
                   ],
                 ),
               ),
-
-              // 4. Category 1: Nitya Seva & Path
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: _buildSectionTitle(
-                    context,
-                    theme,
-                    l10n.section_daily_worship,
-                    Icons.menu_book_rounded,
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: _buildHorizontalCategoryRow(context, theme, [
-                  {
-                    "title": l10n.grid_pathavali,
-                    "subtitle": l10n.sub_pathavali_stotra,
-                    "icon": Icons.menu_book_outlined,
-                    "screen": const PathavaliListPage(),
-                  },
-                  {
-                    "title": l10n.grid_kirtan,
-                    "subtitle": l10n.sub_kirtan_pad,
-                    "icon": Icons.music_note_rounded,
-                    "screen": const KirtanListPage(),
-                  },
-                  {
-                    "title": l10n.grid_jap_mala,
-                    "subtitle": l10n.sub_jap_mala_count,
-                    "icon": Icons.touch_app_rounded,
-                    "screen": const JapMalaScreen(),
-                  },
-                ]),
-              ),
-
-              // 5. Category 2: Pushti Varta & Literature
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: _buildSectionTitle(
-                    context,
-                    theme,
-                    l10n.section_sacred_stories,
-                    Icons.auto_stories_rounded,
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: _buildVerticalListGroup(context, theme, [
-                  {
-                    "title": l10n.grid_84_vaishnav,
-                    "subtitle": l10n.sub_84_varta,
-                    "icon": Icons.groups_rounded,
-                    "screen": const ChorasiVartaListPage(),
-                  },
-                  {
-                    "title": l10n.grid_84_vaishnav_vraj,
-                    "subtitle": l10n.sub_vrajbhakt_charitra,
-                    "icon": Icons.explore_rounded,
-                    "screen": const VrajbhashaListPage(),
-                  },
-                  {
-                    "title": l10n.grid_252_vaishnav,
-                    "subtitle": l10n.sub_252_varta,
-                    "icon": Icons.collections_bookmark_rounded,
-                    "screen": const GitaListPage(),
-                  },
-                ]),
-              ),
-
-              // 6. Category 3: Community & Seva Tools
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: _buildSectionTitle(
-                    context,
-                    theme,
-                    l10n.section_community_seva,
-                    Icons.hub_rounded,
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _buildTileCard(
-                          context: context,
-                          theme: theme,
-                          title: l10n.nav_gallery,
-                          icon: Icons.photo_library_rounded,
-                          onTap: () =>
-                              _navigateTo(context, const GalleryPage()),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildTileCard(
-                          context: context,
-                          theme: theme,
-                          title: l10n.nav_notes,
-                          icon: Icons.note_alt_rounded,
-                          onTap: () => _navigateTo(context, const NotesPage()),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 4.0,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _buildTileCard(
-                          context: context,
-                          theme: theme,
-                          title: l10n.grid_review,
-                          icon: Icons.rate_review_rounded,
-                          onTap: () => _navigateTo(context, const ReviewPage()),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildTileCard(
-                          context: context,
-                          theme: theme,
-                          title: l10n.grid_contact,
-                          icon: Icons.contact_support_rounded,
-                          onTap: () =>
-                              _navigateTo(context, const ContactPage()),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ), // Bottom padding for float bar
             ],
           ),
+        ),
 
-          // Quick Access Floating Nam-Smaran Bar
-          Positioned(
-            left: 16,
-            right: 16,
-            bottom: 16,
-            child: _buildQuickJaapFloatingBar(context, theme, l10n),
+        // 4. Category 1: Nitya Seva & Path
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: _buildSectionTitle(
+              context,
+              theme,
+              l10n.section_daily_worship,
+              Icons.menu_book_rounded,
+            ),
           ),
-        ],
-      ),
+        ),
+        SliverToBoxAdapter(
+          child: _buildHorizontalCategoryRow(context, theme, [
+            {
+              "title": l10n.grid_pathavali,
+              "subtitle": l10n.sub_pathavali_stotra,
+              "icon": Icons.menu_book_outlined,
+              "screen": const PathavaliListPage(),
+            },
+            {
+              "title": l10n.grid_kirtan,
+              "subtitle": l10n.sub_kirtan_pad,
+              "icon": Icons.music_note_rounded,
+              "screen": const KirtanListPage(),
+            },
+            {
+              "title": l10n.grid_jap_mala,
+              "subtitle": l10n.sub_jap_mala_count,
+              "icon": Icons.touch_app_rounded,
+              "screen": const JapMalaScreen(),
+            },
+          ]),
+        ),
+
+        // 5. Category 2: Pushti Varta & Literature
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: _buildSectionTitle(
+              context,
+              theme,
+              l10n.section_sacred_stories,
+              Icons.auto_stories_rounded,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: _buildVerticalListGroup(context, theme, [
+            {
+              "title": l10n.grid_84_vaishnav,
+              "subtitle": l10n.sub_84_varta,
+              "icon": Icons.groups_rounded,
+              "screen": const ChorasiVartaListPage(),
+            },
+            {
+              "title": l10n.grid_84_vaishnav_vraj,
+              "subtitle": l10n.sub_vrajbhakt_charitra,
+              "icon": Icons.explore_rounded,
+              "screen": const VrajbhashaListPage(),
+            },
+            {
+              "title": l10n.grid_252_vaishnav,
+              "subtitle": l10n.sub_252_varta,
+              "icon": Icons.collections_bookmark_rounded,
+              "screen": const GitaListPage(),
+            },
+          ]),
+        ),
+
+        // 6. Category 3: Community & Seva Tools
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: _buildSectionTitle(
+              context,
+              theme,
+              l10n.section_community_seva,
+              Icons.hub_rounded,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _buildTileCard(
+                    context: context,
+                    theme: theme,
+                    title: l10n.nav_gallery,
+                    icon: Icons.photo_library_rounded,
+                    onTap: () => _navigateTo(context, const GalleryPage()),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildTileCard(
+                    context: context,
+                    theme: theme,
+                    title: l10n.nav_notes,
+                    icon: Icons.note_alt_rounded,
+                    onTap: () => _navigateTo(context, const NotesPage()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 4.0,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _buildTileCard(
+                    context: context,
+                    theme: theme,
+                    title: l10n.grid_review,
+                    icon: Icons.rate_review_rounded,
+                    onTap: () => _navigateTo(context, const ReviewPage()),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildTileCard(
+                    context: context,
+                    theme: theme,
+                    title: l10n.grid_contact,
+                    icon: Icons.contact_support_rounded,
+                    onTap: () => _navigateTo(context, const ContactPage()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        const SliverToBoxAdapter(
+          child: SizedBox(height: 100),
+        ), // Bottom padding for float bar
+      ],
     );
   }
 

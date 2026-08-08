@@ -223,7 +223,7 @@ abstract class AppLocalizations {
   /// No description provided for @grid_252_vaishnav.
   ///
   /// In en, this message translates to:
-  /// **'252 Vaishnav Varta'**
+  /// **'Divine Wisdom'**
   String get grid_252_vaishnav;
 
   /// No description provided for @grid_review.
