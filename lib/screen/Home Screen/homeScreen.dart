@@ -13,7 +13,7 @@ import 'package:pushtidham/screen/Home%20Screen/calander/calendar_page.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/galleryScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/notesScreen.dart';
-import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/offlineContantScreen.dart';
+
 import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_list.dart';
 import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_list.dart';
@@ -941,20 +941,7 @@ class _HomePageState extends State<HomePage> {
               _navigateTo(context, const GalleryPage());
             },
           ),
-          ListTile(
-            leading: Icon(
-              Icons.download_for_offline_rounded,
-              color: theme.colorScheme.primary,
-            ),
-            title: Text(
-              l10n.nav_offline,
-              style: TextStyle(color: theme.colorScheme.onSurface),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              _navigateTo(context, const OfflineContentPage());
-            },
-          ),
+
           const Divider(),
           ListTile(
             leading: Icon(
