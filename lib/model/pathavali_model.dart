@@ -2,99 +2,117 @@ class PathavaliItem {
   final String id;
   final String title;
   final String content;
+  bool isFavorite;
 
   PathavaliItem({
     required this.id,
     required this.title,
     required this.content,
+    this.isFavorite = false,
   });
 }
 
-// Sample Data corresponding to Shodash Granth Pathavali
+// Data corresponding to the provided Hindi list
 final List<PathavaliItem> pathavaliList = [
   PathavaliItem(
-    id: "૦૧",
-    title: "પ્રાત: સ્મરણ",
-    content: "॥ પ્રાત: સ્મરણ ॥\n\nપ્રાતઃ સ્મરામિ ભવભીતિહરં સુરેશમ્...",
+    id: "1",
+    title: "प्रातः स्मरण एवं मंगलाचरण",
+    content: "॥ प्रातः स्मरण एवं मंगलाचरण ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૨",
-    title: "૫ સ્વરૂપનું વર્ણન",
-    content: "॥ ૫ સ્વરૂપનું વર્ણન ॥\n\nશ્રીવલ્લભાધીશ કી જય...",
+    id: "2",
+    title: "सर्वोत्तम स्तोत्र (संस्कृत)",
+    content: "॥ सर्वोत्तम स्तोत्र (संस्कृत) ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૩",
-    title: "મંગલાચરણ",
-    content: """
-॥ મંગલાચરણ ॥
-
-ચિન્તા સન્તાન હન્તારો યત્પાદાંબુજ રેણવઃ ।
-સ્વીયાનાં તાનિજાયાનિ પ્રણમામિ મુહુર્ર્મુહુઃ ॥ ૧ ॥
-
-યદનુગ્રહતો જન્તુઃ સર્વ દુઃખાતિગો ભવેત્ ।
-તમહં સર્વદા વંદે શ્રી મદ વલ્લભ નન્દનમ્ ॥ ૨ ॥
-
-અજ્ઞાન તિમિરાન્ધસ્ય જ્ઞાનાન્જનશલા કયા ।
-ચક્ષુરુન્મીલિતં યેન તસ્મૈ શ્રી ગુરુવૈ નમઃ ॥ ૩ ॥
-
-નમામિ હૃદયે શેષે લીલાક્ષીરાબ્ધિશાયિનમ્ ।
-લક્ષ્મી સહસ્ત્રલીલાભિઃ સેવ્યમાનં કલાનિધિમ ॥ ૪ ॥
-
-ચતુર્ભિશ્ચ ચતુર્ભિશ્ચ ચતુર્ભિશ્ચ ત્રિભિસ્તથા ।
-ષડ્ભિર્વિરાજતે યોડસૌ પંચધા હૃદયે મમઃ ॥ ૫ ॥
-
-॥ ઇતિ શ્રી મંગલાચરણ સંપૂર્ણમ્ ॥
-॥ શ્રીમદાચાર્ય ચરણ કમલેભ્ય નમઃ ॥
-""",
+    id: "3",
+    title: "सर्वोत्तम स्तोत्र (गुजराती धौल)",
+    content:
+        "॥ सर्वोत्तम स्तोत्र (गुजराती धौल) ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૪",
-    title: "યમુનાષ્ટક",
-    content: "॥ શ્રી યમુનાષ્ટકમ્ ॥\n\nનમામિ યમુનામહં સકલ સિદ્ધિ હેતું મુદા...",
+    id: "4",
+    title: "यमुनाष्टक",
+    content: "॥ यमुनाष्टक ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૫",
-    title: "શ્રી સર્વોત્તમ સ્તોત્ર",
-    content: "॥ શ્રી સર્વોત્તમ સ્તોત્રમ્ ॥\n\nશ્રીકૃષ્ણમુખપદ્માબ્જવિનિર્ગતવરામૃતમ્...",
+    id: "5",
+    title: "मधुराष्टक",
+    content: "॥ मधुराष्टक ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૬",
-    title: "ચતુઃ શ્લોકી",
-    content: "॥ શ્રી ચતુઃશ્લોકી ॥\n\nસર્વદા સર્વકાલેષુ ભાવનીયો વ્રજાધિપઃ...",
+    id: "6",
+    title: "कृष्णाश्रय",
+    content: "॥ कृष्णाश्रय ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૭",
-    title: "નવરત્નમ",
-    content: "॥ શ્રી નવરત્ન સ્તોત્રમ્ ॥\n\nઅવિકલ્પમનાયાસં મનો રાજ્યાદિ વર્જિતમ્...",
+    id: "7",
+    title: "बालबोध",
+    content: "॥ बालबोध ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૮",
-    title: "સિદ્ધાંત રહસ્ય",
-    content: "॥ શ્રી સિદ્ધાંત રહસ્યમ્ ॥\n\nશ્રાવણસ્યામલે પક્ષે એકાદશ્યાં મિશાનિશિ...",
+    id: "8",
+    title: "सिद्धांत रहस्यं",
+    content: "॥ सिद्धांत रहस्यं ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૦૯",
-    title: "કૃષ્ણાશ્રય",
-    content: "॥ શ્રી કૃષ્ણાશ્રય ॥\n\nસર્વમાર્ગેષુ નષ્ટેષુ કલૌ સંપ્રાર્થિતે હરૌ...",
+    id: "9",
+    title: "नवरत्नं",
+    content: "॥ नवरत्नं ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૧૦",
-    title: "શ્રી ગિરિરાજધાર્યાષ્ટકમ",
-    content: "॥ શ્રી ગિરિરાજધાર્યાષ્ટકમ્ ॥...",
+    id: "10",
+    title: "चतु:श्लोकी",
+    content: "॥ चतु:श्लोकी ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૧૧",
-    title: "મધુરાષ્ટકં",
-    content: "॥ શ્રી મધુરાષ્ટકમ્ ॥\n\nઅધરં મધુરં વદનં મધુરં નયનં મધુરં હસિતં મધુરમ્...",
+    id: "11",
+    title: "श्री गिरिराजधार्याष्टकम",
+    content: "॥ श्री गिरिराजधार्याष्टकम ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૧૨",
-    title: "સિદ્ધાંતમુક્તાવલી",
-    content: "॥ શ્રી સિદ્ધાંતમુક્તાવલી ॥...",
+    id: "12",
+    title: "श्री नंदकुमाराष्टकं",
+    content: "॥ श्री नंदकुमाराष्टकं ॥\n\n[Add your content here...]",
   ),
   PathavaliItem(
-    id: "૧૩",
-    title: "વિવેકધૈર્યાશ્રય",
-    content: "॥ શ્રી વિવેકધૈર્ઝ્યાશ્રય ॥...",
+    id: "13",
+    title: "सिद्धांतमुक्तावली",
+    content: "॥ सिद्धांतमुक्तावली ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "14",
+    title: "पुष्टिप्रवाहमर्यादा",
+    content: "॥ पुष्टिप्रवाहमर्यादा ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "15",
+    title: "विवेकधैर्याश्रय",
+    content: "॥ विवेकधैर्याश्रय ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "16",
+    title: "अंतःकरणप्रबोध",
+    content: "॥ अंतःकरणप्रबोध ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "17",
+    title: "भक्तिवर्द्धिनी",
+    content: "॥ भक्तिवर्द्धिनी ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "18",
+    title: "पच्चपद्यानि",
+    content: "॥ पच्चपद्यानि ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "19",
+    title: "सन्यासनिर्णय",
+    content: "॥ सन्यासनिर्णय ॥\n\n[Add your content here...]",
+  ),
+  PathavaliItem(
+    id: "20",
+    title: "निरोधलक्षण",
+    content: "॥ निरोधलक्षण ॥\n\n[Add your content here...]",
   ),
 ];
