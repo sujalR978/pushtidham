@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:pushtidham/model/pathavali_model.dart';
 import 'package:pushtidham/model/bethakji_model.dart'; // Ensure correct import path
 
 class DatabaseHelper {
@@ -1031,6 +1032,7 @@ class DatabaseHelper {
   // Single source of truth for table name
   static const String tableName = 'bethakji';
 
+  // --- Database Initialization ---
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await initDatabase();
@@ -1040,9 +1042,25 @@ class DatabaseHelper {
   Future<Database> initDatabase() async {
     String path = join(await getDatabasesPath(), 'bethakji_yadi.db');
 
-    const String sql =
-        '''
-      CREATE TABLE $tableName (
+    return await openDatabase(
+      path,
+      version: 3, // Incremented version for new table
+      onCreate: (db, version) async {
+        await _createBethakjiTable(db);
+        await _createPathavaliTable(db);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        // A non-destructive upgrade. If the old version didn't have the pathavali table, add it.
+        if (oldVersion < 3) {
+          await _createPathavaliTable(db);
+        }
+      },
+    );
+  }
+
+  Future<void> _createBethakjiTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS $tableName (
         id INTEGER PRIMARY KEY,
         number TEXT,
         name TEXT NOT NULL,
@@ -1053,34 +1071,40 @@ class DatabaseHelper {
         rules TEXT,
         isFavorite INTEGER DEFAULT 0
       )
-    ''';
-
-    return await openDatabase(
-      path,
-      version: 2, // Increment version if schema changed
-      onCreate: (db, version) async {
-        await db.execute(sql);
-
-        Batch batch = db.batch();
-        for (var bethakji in bethakji84List) {
-          batch.insert(tableName, bethakji.toMap());
-        }
-        await batch.commit(noResult: true);
-      },
-      onUpgrade: (db, oldVersion, newVersion) async {
-        await db.execute('DROP TABLE IF EXISTS $tableName');
-        await db.execute(sql);
-
-        Batch batch = db.batch();
-        for (var bethakji in bethakji84List) {
-          batch.insert(tableName, bethakji.toMap());
-        }
-        await batch.commit(noResult: true);
-      },
-    );
+    ''');
+    final batch = db.batch();
+    for (final item in bethakji84List) {
+      batch.insert(
+        tableName,
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
   }
 
-  // Fetch all records
+  Future<void> _createPathavaliTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS pathavali(
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        isFavorite INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    final batch = db.batch();
+    for (final item in pathavaliList) {
+      batch.insert(
+        'pathavali',
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
+  }
+
+  // --- Bethakji Methods ---
+
   Future<List<BethakjiModel>> getAllBethakji() async {
     final db = await database;
 
@@ -1127,5 +1151,53 @@ class DatabaseHelper {
       whereArgs: [1],
     );
     return List.generate(maps.length, (i) => BethakjiModel.fromMap(maps[i]));
+  }
+
+  // --- Pathavali Methods ---
+
+  /// Fetches all Pathavali items from the database.
+  Future<List<PathavaliItem>> getAllPathavalis() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('pathavali');
+    return List.generate(maps.length, (i) {
+      return PathavaliItem.fromMap(maps[i]);
+    });
+  }
+
+  /// Fetches a single Pathavali item by its ID.
+  Future<PathavaliItem?> getPathavaliItem(String id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'pathavali',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return PathavaliItem.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  /// Fetches only the favorite Pathavali items.
+  Future<List<PathavaliItem>> getFavoritePathavalis() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'pathavali',
+      where: 'isFavorite = 1',
+    );
+    return List.generate(maps.length, (i) {
+      return PathavaliItem.fromMap(maps[i]);
+    });
+  }
+
+  /// Updates the favorite status of a specific Pathavali item.
+  Future<void> updatePathavaliFavoriteStatus(String id, bool isFavorite) async {
+    final db = await database;
+    await db.update(
+      'pathavali',
+      {'isFavorite': isFavorite ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
