@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:pushtidham/model/pathavali_model.dart';
 import 'package:pushtidham/model/kirtan_model.dart';
 import 'package:pushtidham/model/varta_model.dart';
+import 'package:pushtidham/model/gita_model.dart';
 import 'package:pushtidham/model/vraj_model.dart';
 import 'package:pushtidham/model/bethakji_model.dart'; // Ensure correct import path
 
@@ -3063,6 +3064,562 @@ final List<VartaModel> varta84List = [
   ),
 ];
 
+final List<GitaShlokModel> gitaList = [
+ // 1. અધ્યાય ૧ - શ્લોક ૧
+  GitaShlokModel(
+    id: '1',
+    chapterVerse: 'અધ્યાય ૧ - શ્લોક ૧',
+    title: 'ધર્મક્ષેત્રે કુરુક્ષેત્રે',
+    sanskritShlok: '''धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः ।
+मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ॥''',
+    GujaratiArth: 'સંજય બોલ્યા: ધર્મક્ષેત્ર એવા કુરુક્ષેત્રમાં યુદ્ધ કરવાની ઇચ્છાથી ભેગા થયેલા મારા અને પાંડુના પુત્રોએ શું કર્યું?',
+    tatparya: 'ધૃતરાષ્ટ્રના મનમાં પોતાના પુત્રો અને પાંડવોના ભેદભાવને કારણે યુદ્ધના પરિણામ વિશેની ચિંતા દર્શાવવામાં આવી છે.',
+  ),
+
+  // 2. અધ્યાય ૨ - શ્લોક ૧૧
+  GitaShlokModel(
+    id: '2',
+    chapterVerse: 'અધ્યાય ૨ - શ્લોક ૧૧',
+    title: 'અશોચ્યાનન્વશોચસ્ત્વમ્',
+    sanskritShlok: '''श्रीभगवानुवाच 
+अशोच्यानन्वशोचस्त्वं प्रज्ञावादांश्च भाषसे ।
+गतासूनगतासूंश्च नानुशोचन्ति पण्डिताः ॥''',
+    GujaratiArth: 'શ્રી ભગવાન બોલ્યા: તું શોક ન કરવા યોગ્ય લોકો માટે શોક કરે છે અને વળી પાછી જ્ઞાનીઓની માફક વાત કરે છે. વિદ્વાન લોકો મૃત કે જીવિત કોઈના માટે પણ શોક કરતા નથી.',
+    tatparya: 'શ્રીકૃષ્ણ અર્જુનને અજ્ઞાનતા અને મોહ ત્યાગીને વાસ્તવિક જ્ઞાન સમજાવે છે.',
+  ),
+
+  // 3. અધ્યાય ૨ - શ્લોક ૨૦
+  GitaShlokModel(
+    id: '3',
+    chapterVerse: 'અધ્યાય ૨ - શ્લોક ૨૦',
+    title: 'ન જાયતે મ્રિયતે વા કદાચિત્',
+    sanskritShlok: '''न जायते म्रियते वा कदाचिन्नायं भूत्वा भविता वा न भूयः ।
+अजो नित्यः शाश्वतोऽयं पुराणो न हन्यते हन्यमाने શરીરે ॥''',
+    GujaratiArth: 'આ આત્મા ક્યારેય જન્મતો નથી કે મરતો પણ નથી. તે ક્યારેય ઉત્પન્ન થયો નથી અને ભવિષ્યમાં પણ ક્યારેય ઉત્પન્ન થવાનો નથી. તે અજ્ન્મ, નિત્ય, સનાતન અને પુરાતન છે; શરીર હણાઈ જવાથી આત્મા હણાતો નથી.',
+    tatparya: 'આત્માની અમરતા અને શરીરની નશ્વરતાનું આ સૌથી મોટું સત્ય છે.',
+  ),
+
+  // 4. અધ્યાય ૨ - શ્લોક ૨૨
+  GitaShlokModel(
+    id: '4',
+    chapterVerse: 'અધ્યાય ૨ - શ્લોક ૨૨',
+    title: 'વાસાંસિ જીર્ણાનિ યથા વિહાય',
+    sanskritShlok: '''वासांसि जीर्णानि यथा विहाय नवानि गृह्णाति नरोऽपराणि ।
+तथा शरीराणि विहाय जीर्णा नान्यాని संयाति नवानि देही ॥''',
+    GujaratiArth: 'જેમ મનુષ્ય જૂના વસ્ત્રોને ત્યાગીને બીજા નવા વસ્ત્રો ધારણ કરે છે, તેમ જ આત્મા જૂના શરીરને છોડીને બીજા નવા શરીરોમાં પ્રવેશ કરે છે.',
+    tatparya: 'આત્માના સ્થળાંતર (પુનર્જન્મ) ની પ્રક્રિયાને વસ્ત્ર બદલવાનાં ઉદાહરણ દ્વારા સરળતાથી સમજાવવામાં આવી છે.',
+  ),
+
+  // 5. અધ્યાય ૨ - શ્લોક ૪૭
+  GitaShlokModel(
+    id: '5',
+    chapterVerse: 'અધ્યાય ૨ - શ્લોક ૪૭',
+    title: 'કર્મણ્યેવાધિકારસ્તે',
+    sanskritShlok: '''कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।
+मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥''',
+    GujaratiArth: 'તારો અધિકાર માત્ર કર્મ કરવાનો જ છે, તેના ફળો પર ક્યારેય નહીં. તું કર્મનું ફળ હેતુ બનાવનારો ના થા, તેમ જ અકર્મ (કર્મ ન કરવા) માં પણ તમારી આસક્તિ ન હોવો જોઈએ.',
+    tatparya: 'આ શ્લોક શ્રીકૃષ્ણ દ્વારા અર્જુનને નિષ્કામ કર્મનો સિદ્ધાંત સમજાવવા માટે કહેવામાં આવ્યો છે.',
+  ),
+
+  // 6. અધ્યાય ૩ - શ્લોક ૧૯
+  GitaShlokModel(
+    id: '6',
+    chapterVerse: 'અધ્યાય ૩ - શ્લોક ૧૯',
+    title: 'તસ્માદસક્તઃ સતતમ્',
+    sanskritShlok: '''तस्मादसत सतत कार्यं कर्म समाचर ।
+असतो ह्याचरन्कर्म परमाप्नोति पूरुषः ॥''',
+    GujaratiArth: 'માટે તું સદા આસક્તિ વિના હંમેશાં કરવા યોગ્ય કર્મને સારી રીતે કર; કારણ કે આસક્તિ વિના કર્મ કરતો મનુષ્ય પરમાત્માને પામે છે.',
+    tatparya: 'અનાસક્ત ભાવથી કર્મ કરવાથી જ મોક્ષ કે પરમ પદની પ્રાપ્તિ થાય છે.',
+  ),
+
+  // 7. અધ્યાય ૪ - શ્લોક ૭
+  GitaShlokModel(
+    id: '7',
+    chapterVerse: 'અધ્યાય ૪ - શ્લોક ૭',
+    title: 'યદા યદા હિ ધર્મસ્ય',
+    sanskritShlok: '''यदा यदा हि धर्मस्य ग्लानिर्भवति भारत ।
+अभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम् ॥''',
+    GujaratiArth: 'હે ભારત! જ્યારે જ્યારે ધર્મની ગ્લાનિ (હાથ) થાય છે અને અધર્મમાં વૃદ્ધિ થાય છે, ત્યારે ત્યારે હું મારી જાતને (અવતારને) સર્જું છું.',
+    tatparya: 'ભગવાન પૃથ્વી પર ધર્મની સ્થાપના અને સજ્જનોના રક્ષણ માટે અવતાર લે છે.',
+  ),
+
+  // 8. અધ્યાય ૪ - શ્લોક ૮
+  GitaShlokModel(
+    id: '8',
+    chapterVerse: 'અધ્યાય ૪ - શ્લોક ૮',
+    title: 'પરિત્રાણાય સાધૂનામ્',
+    sanskritShlok: '''परित्राणाय साधूनां विनाशाय च दुष्कृताम् ।
+धर्मसंस्थापनार्थाय सम्भवामि युगे युगे ॥''',
+    GujaratiArth: 'સાધુ પુરુષોનું રક્ષણ કરવા માટે, પાપીઓનો નાશ કરવા માટે અને ધર્મની સ્થાપના કરવા માટે હું યુગે યુગે પ્રગટ થાઉં છું.',
+    tatparya: 'ઈશ્વરના અવતરણ પાછળનો મુખ્ય ઉદ્દેશ્ય સજ્જનોનું રક્ષણ અને ધર્મની રક્ષા કરવાનો છે.',
+  ),
+
+  // 9. અધ્યાય ૫ - શ્લોક ૧૦
+  GitaShlokModel(
+    id: '9',
+    chapterVerse: 'અધ્યાય ૫ - શ્લોક ૧૦',
+    title: 'બ્રહ્મણ્યાધાય કર્માણિ',
+    sanskritShlok: '''ब्रह्मण्याधाय कर्माणि सङ्गं त्यक्त्वा करोति यः ।
+लिप्यते न स पापेन पद्मपत्रमिवाम्भसा ॥''',
+    GujaratiArth: 'જે મનુષ્ય પોતાના બધા કર્મો પરમાત્માને અર્પણ કરીને અને આસક્તિ છોડીને કર્મ કરે છે, તે પાપથી એવી રીતેલિપ્ત થતો નથી જેમ કમળનું પાન પાણીથીલિપ્ત થતું નથી.',
+    tatparya: 'ઈશ્વરાર્પણ બુદ્ધિથી કર્મ કરવાથી મનુષ્ય પાપ-પુણ્યના બંધનથી મુક્ત રહે છે.',
+  ),
+
+  // 10. અધ્યાય ૬ - શ્લોક ૫
+  GitaShlokModel(
+    id: '10',
+    chapterVerse: 'અધ્યાય ૬ - શ્લોક ૫',
+    title: 'ઉદ્ધરેદાત્મનાત્માનમ્',
+    sanskritShlok: '''उद्धरेदात्मनात्मानं नात्मानमअवसादयेत् ।
+आत्मैव ह्यात्मनो बन्धु आत्मैव रिपुरात्मनः ॥''',
+    GujaratiArth: 'માણસે પોતાના મન દ્વારા પોતાનો ઉદ્ધાર કરવો જોઈએ, પોતાનું અધઃપતન ન થવા દેવું જોઈએ. કારણ કે આત્મા પોતે જ પોતાનો મિત્ર છે અને આત્મા પોતે જ પોતાનો શત્રુ છે.',
+    tatparya: 'મનુષ્યની ઉન્નતિ કે પતન માટે તેનું પોતાનું મન જ જવાબદાર છે.',
+  ),
+
+  // 11. અધ્યાય ૬ - શ્લોક ૬
+  GitaShlokModel(
+    id: '11',
+    chapterVerse: 'અધ્યાય ૬ - શ્લોક ૬',
+    title: 'બન્ધુરાત્માત્મનસ્તસ્ય',
+    sanskritShlok: '''बन्धात्मात्मनस्तस्य యేनात्मైवात्मना जितः ।
+अनात्मनस्तु शत्रुत्वे वर्तेतात्मैव शत्रुवत् ॥''',
+    GujaratiArth: 'જેણે પોતાના મનને જીતી લીધું છે, તેના માટે આત્મા (મન) મિત્ર છે; પરંતુ જેણે મન પર વિજય મેળવ્યો નથી, તેના માટે તેનો જ આત્મા શત્રુની જેમ વર્તે છે.',
+    tatparya: 'વિજયી મન મિત્ર સમાન સુખ આપે છે, જ્યારે અસંયમી મન શત્રુ બનીને દુઃખ આપે છે.',
+  ),
+
+  // 12. અધ્યાય ૬ - શ્લોક ૨૬
+  GitaShlokModel(
+    id: '12',
+    chapterVerse: 'અધ્યાય ૬ - શ્લોક ૨૬',
+    title: 'યતો યતો નિશ્ચરતિ',
+    sanskritShlok: '''यतो यतो निश्चरति मनश्चञ्चलमस्थिरम् ।
+ततस्ततो नियम्यैतदात्मन्येव वशं नयेत् ॥''',
+    GujaratiArth: 'ચંચળ અને અસ્થિર મન જ્યાં-જ્યાં દોડે, ત્યાં-ત્યાંથી તેને રોકીને આત્મા (પરમાત્મા) ના વશમાં જ લાવવું જોઈએ.',
+    tatparya: 'મનની ચંચળતાને કાબૂમાં રાખીને તેને ઈશ્વરના ચરણોમાં કેન્દ્રિત કરવાનો અભ્યાસ કરવો જોઈએ.',
+  ),
+
+  // 13. અધ્યાય ૭ - શ્લોક ૭
+  GitaShlokModel(
+    id: '13',
+    chapterVerse: 'અધ્યાય ૭ - શ્લોક ૭',
+    title: 'મત્તઃ પરતરં નાન્યત્',
+    sanskritShlok: '''मत्तः परतरं नान्यकिंचिदस्ति धनंजय ।
+मयी सर्वमिदं प्रोतं सूत्रे मणिगण इव ॥''',
+    GujaratiArth: 'હે ધનંજય! મારાથી ઉત્કૃષ્ટ કે શ્રેષ્ઠ બીજું કોઈ તત્વ નથી. આ સમગ્ર જગત દોરામાં મણકાઓની માફક મારામાં જપ્રોવાયેલું છે.',
+    tatparya: 'સમગ્ર બ્રહ્માંડનો આધાર પરમાત્મા પોતે જ છે.',
+  ),
+
+  // 14. અધ્યાય ૮ - શ્લોક ૫
+  GitaShlokModel(
+    id: '14',
+    chapterVerse: 'અધ્યાય ૮ - શ્લોક ૫',
+    title: 'અન્તકાલે ચ મામેવ',
+    sanskritShlok: '''अन्तकाले च मामेव स्मरन्मुक्त्वा कलेवरम् ।
+यः प्रयाति स मद्भावं याति नास्त्यत्र संशयः ॥''',
+    GujaratiArth: 'જે મનુષ્ય અંતકાળે (মৃত্যુના સમયે) પણ મારું જ સ્મરણ કરતો શરીર છોડીને જાય છે, તે સીધો મારા સ્વરૂપને પામે છે; તેમાં કોઈ શંકા નથી.',
+    tatparya: 'આજીવન ઈશ્વરનું સ્મરણ કરવાથી અંતિમ સમયે પણ પ્રભુની સ્મૃતિ બની રહે છે.',
+  ),
+
+  // 15. અધ્યાય ૮ - શ્લોક ૭
+  GitaShlokModel(
+    id: '15',
+    chapterVerse: 'અધ્યાય ૮ - શ્લોક ૭',
+    title: 'તસ્માત્સર્વેषु कालेषु',
+    sanskritShlok: '''तस्मात्सर्वेषु कालेषु मामनुस्मरण युध्य च ।
+मय्यर्पितमनोबुद्धिर् मामैष्यस्यसंशयः ॥''',
+    GujaratiArth: 'માટે તું દરેક સમયમાં મારું સ્મરણ કર અને યુદ્ધ પણ કર. તારું મન અને બુદ્ધિ મારામાં અર્પણ કરનાર તું નિઃસંદેહ મને જ પામીશ.',
+    tatparya: 'કર્તવ્યકર્મ કરતાં-કરતાં પણ પ્રભુનું સ્મરણ કરવું એ જ સાચી ભક્તિ છે.',
+  ),
+
+  // 16. અધ્યાય ૯ - શ્લોક ૨૨
+  GitaShlokModel(
+    id: '16',
+    chapterVerse: 'અધ્યાય ૯ - શ્લોક ૨૨',
+    title: 'અનન્યાશ્ચિન્તયન્તો મામ્',
+    sanskritShlok: '''अनन्याश्चिन्तयन्तो मां ये जनाः पर्युपासते ।
+तेषां नित्याभियुक्तानां योगक्षेमं वहाम्यहम् ॥''',
+    GujaratiArth: 'જે અનન્ય ભક્તો સદા મારામાં મગ્ન રહીને મારું ચિંતન અને ઉપાસના કરે છે, તેમના નિત્ય જોડાયેલા રહેલા મનની પ્રાપ્તિ (યોગ) અને રક્ષણ (ક્ષેમ) નો ભાર હું જાતે વહું છું.',
+    tatparya: 'ભગવાન પોતાના અનન્ય ભક્તોની બધી જ જરૂરિયાતો અને રક્ષણની જવાબદારી પોતે સંભાળે છે.',
+  ),
+
+  // 17. અધ્યાય ૯ - શ્લોક ૨૬
+  GitaShlokModel(
+    id: '17',
+    chapterVerse: 'અધ્યાય ૯ - શ્લોક ૨૬',
+    title: 'પત્રં પુષ્પં ફલં તોયમ્',
+    sanskritShlok: '''पत्रं पुष्पं फलं तोयं यो मे भक्त्या प्रयच्छति ।
+तदहं भक्त्युपहृतम् अश्नामि प्रयतात्मनः ॥''',
+    GujaratiArth: 'જે કોઈ ભક્ત પ્રેમપૂર્વક મને પાત્ર, ફૂલ, ફળ કે પાણી (જળ) અર્પણ કરે છે, તે શુદ્ધ હૃદયના ભક્ત દ્વારા પ્રેમપૂર્વક ધરેલું ભોજન હું સ્વીકારું છું.',
+    tatparya: 'ભગવાનને મોટી કિંમતી વસ્તુઓ નહીં, પણ માત્ર શુદ્ધ પ્રેમ અને ભક્તિભાવ જ વ્હાલા છે.',
+  ),
+
+  // 18. અધ્યાય ૧૦ - શ્લોક ૮
+  GitaShlokModel(
+    id: '18',
+    chapterVerse: 'અધ્યાય ૧૦ - શ્લોક ૮',
+    title: 'અહં સર્વસ્ય પ્રભવઃ',
+    sanskritShlok: '''अहं सर्वस्य प्रभवो मत्तः सर्वं प्रवर्तते ।
+इति मत्वा भजन्ते मां बुधा समन्विताः ॥''',
+    GujaratiArth: 'હું જ સૌનો ઉત્પત્તિસ્થાન છું અને મારાથી જ બધું પ્રવર્તે છે—આવું જાણીને બુદ્ધિમાન ભક્તો શ્રદ્ધાપૂર્વક મારી ભક્તિ કરે છે.',
+    tatparya: 'સમગ્ર સૃષ્ટિનું મૂળ પરમાત્મા જ છે તેવું સમજીને ભક્તિ કરવી શ્રેષ્ઠ છે.',
+  ),
+
+  // 19. અધ્યાય ૧૦ - શ્લોક ૪૧
+  GitaShlokModel(
+    id: '19',
+    chapterVerse: 'અધ્યાય ૧૦ - શ્લોક ૪૧',
+    title: 'યચ્‍યદ્વિભૂતિમત્સત્ત્વમ્',
+    sanskritShlok: '''यद्यद्विभूतिमत्सत्त्वं श्रीमदूर्जितमेव वा ।
+तत्तदेवावगच्छ त्वं मम तेजोंऽशसम्भवम् ॥''',
+    GujaratiArth: 'આ સંસારમાં જે જે પદાર્થો ઐશ્વర్యયુક્ત, કાંતિમાન કે શક્તિશાળી છે, તે તે બધા મારા તેજના જ એક અંશમાંથી ઉત્પન્ન થયેલા છે એમ તું જાણ.',
+    tatparya: 'સંસારની તમામ શ્રેષ્ઠ અને અદભુત વસ્તુઓમાં ઈશ્વરનો જ પ્રભાવ રહેલો છે.',
+  ),
+
+  // 20. અધ્યાય ૧૧ - શ્લોક ૩૨
+  GitaShlokModel(
+    id: '20',
+    chapterVerse: 'અધ્યાય ૧૧ - શ્લોક ૩૨',
+    title: 'કાલોઽસ્મિ લોકક્ષયકૃત્પ્રવૃદ્ધો',
+    sanskritShlok: '''श्रीभगवानुवाच 
+कालोऽस्मि लोकक्षयकृत्प्रवृद्धो लोकान्समाहर्तुमिह प्रवृत्तः ।
+ऋतेऽपि त्वां न भविष्यन्ति सर्वे येऽवस्थिताः प्रत्यनीकेषु योद्धाः ॥''',
+    GujaratiArth: 'શ્રી ભગવાન બોલ્યા: હું લોકોનો નાશ કરનારો મહાન કાળ છું અને અત્યારે આ લોકોનો સંહાર કરવા માટે પ્રવૃત્ત થયો છું. તારી વિરુદ્ધ ઊભેલા આ સામેના યોદ્ધાઓમાંથી તું યુદ્ધ ન કરે તો પણ કોઈ જીવશે નહીં.',
+    tatparya: 'ઈશ્વરનું વિરાટ અને કાળસ્વરૂપ મૃત્યુ અને સમયની અતૂટ સચ્ાઈ દર્શાવે છે.',
+  ),
+
+  // 21. અધ્યાય ૧૧ - શ્લોક ૩૩
+  GitaShlokModel(
+    id: '21',
+    chapterVerse: 'અધ્યાય ૧૧ - શ્લોક ૩૩',
+    title: 'તસ્માત્ત્વમુત્તિષ્ઠ યશો લભસ્વ',
+    sanskritShlok: '''तस्मात्त्वमुत्तिष्ठ यशो लभस्व जित्वा शत्रून्भुंक्ष्व राज्यं समृद्धम् ।
+मयैवैते निहताः पूर्वमेव निमित्तमात्रं भव સવ્યસાચિન્ ॥''',
+    GujaratiArth: 'માટે તું ઊભો થા, કીર્તિ મેળવ અને शत्रુઓને જીતીને સમૃદ્ધ રાજ્ય ભોગવ. આ બધા પહેલાંથી જ મારા દ્વારા જ હણાયેલા છે, હે સવ્યસાચી (અર્જુન), તું તો માત્ર નિમિત્ત માત્ર જ બન.',
+    tatparya: 'મનુષ્યે કેવળ નિમિત્ત બનીને પોતાનું કર્તવ્ય કર્મ કરવું જોઈએ, જય-પરાજય પ્રભુના હાથમાં છે.',
+  ),
+
+  // 22. અધ્યાય ૧૨ - શ્લોક ૮
+  GitaShlokModel(
+    id: '22',
+    chapterVerse: 'અધ્યાય ૧૨ - શ્લોક ૮',
+    title: 'મય્યેવ મન આત્‍ધત્સ્વ',
+    sanskritShlok: '''मय्येव मन आधत्स्व मयि बुद्धिं निवेशय ।
+निवसिष्यसि मय्येव अत ऊर्ध्वं न संशयः ॥''',
+    GujaratiArth: 'તારું મન માત્ર મારામાં જ સ્થિર કર અને તારી બુદ્ધિ પણ મારામાં જ લગાડ; ત્યારબાદ તું મારામાં જ નિવાસ કરીશ, તેમાં કોઈ શંકા નથી.',
+    tatparya: 'ભગવાનમાં મન અને બુદ્ધિ સમર્પિત કરવાથી પરમ ધામની પ્રાપ્તિ થાય છે.',
+  ),
+
+  // 23. અધ્યાય ૧૨ - શ્લોક ૧૫
+  GitaShlokModel(
+    id: '23',
+    chapterVerse: 'અધ્યાય ૧૨ - શ્લોક ૧૫',
+    title: 'યસ્‍માન્‍નોદ્વિજતે લોકઃ',
+    sanskritShlok: '''यस्मान्नोद्विजते लोको लोकान्नोद्विजते च यः ।
+हर्षामर्षभयोद्वेगैर्मुक्तो यः स च मे प्रियः ॥''',
+    GujaratiArth: 'જેનાથી કોઈ મનુષ્ય ઉદ્વેગ પામતો નથી અને જે કોઈ મનુષ્યથી ઉદ્વેગ પામતો નથી, તથા જે હર્ષ, અમર્ષ, ભય અને ઉદ્વેગથી મુક્ત છે, તે ભક્ત મને અત્યંત વ્હાલો છે.',
+    tatparya: 'સાચા ભક્તનો સ્વભાવ શાંત, અભય અને બીજાને સુખ આપનારો હોય છે.',
+  ),
+
+  // 24. અધ્યાય ૧૩ - શ્લોક ૭
+  GitaShlokModel(
+    id: '24',
+    chapterVerse: 'અધ્યાય ૧૩ - શ્લોક ૭',
+    title: 'અમાનિત્વમદમ્ભિત્વમ્',
+    sanskritShlok: '''अमानित्वमदम्भित्वमहिंसा क्षान्तिरार्जवम् ।
+आचार्योपासनं शौचं स्थैर्यमात्मविनिग्रहः ॥''',
+    GujaratiArth: 'માન ન ઇચ્છવું, દંભ કે પાખંડ ન રાખવો, અહિંસા, ક્ષમા, સરળતા, ગુરુની સેવા, શૌચ (પવિત્રતા), સ્થિરતા અને મનનો નિગ્રહ—આ બધા જ્ઞાન છે.',
+    tatparya: 'સાચું જ્ઞાન માત્ર પુસ્તકીય નથી, પરંતુ આ ગુણોને જીવનમાં ઉતારવા તે જ વાસ્તવિક જ્ઞાન છે.',
+  ),
+
+  // 25. અધ્યાય ૧૪ - શ્લોક ૨૬
+  GitaShlokModel(
+    id: '25',
+    chapterVerse: 'અધ્યાય ૧૪ - શ્લોક ૨૬',
+    title: 'માંચ યોઽવ્યભિચારેણ',
+    sanskritShlok: '''माञ्च योऽव्यभिचारेण भक्तियोगेन सेवते ।
+स गुणान्समतीत्यैतान्ब्रह्मভূयाय कल्पते ॥''',
+    GujaratiArth: 'જે મનુષ્ય અવિચળ ભક્તિયોગ દ્વારા સદા મારી સેવા કરે છે, તે પ્રકૃતિના આ ત્રણેય ગુણોને ઓળંગીને બ્રહ્મભાવને પામવા માટે યોગ્ય બને છે.',
+    tatparya: 'ભક્તિયોગના પ્રભાવથી મનુષ્ય ત્રિગુણાતીત થઈને પરમાત્માને પ્રાપ્ત કરી શકે છે.',
+  ),
+
+  // 26. અધ્યાય ૧૫ - શ્લોક ૧૫
+  GitaShlokModel(
+    id: '26',
+    chapterVerse: 'અધ્યાય ૧૫ - શ્લોક ૧૫',
+    title: 'સર્વસ્ય ચાહં હૃદિ સન્નિવિષ્‍ટો',
+    sanskritShlok: '''सर्वस्य चाहं हृदि सन्निविष्टो मत्तस्मृतिर्ज्ञानमपोहनं च ।
+वेदैश्च सर्वैरहमेव वेद्यो वेदान्तकृद्वेदविदेव चाहम् ॥''',
+    GujaratiArth: 'હું જ સૌના હૃદયમાં સ્થિત છું; મારાથી જ સ્મૃતિ, જ્ઞાન અને અપોહન (વિસ્મૃતિ) થાય છે. બધા વેદો દ્વારા જાણવા યોગ્ય હું જ છું, વેદાંતનો રચનાકાર અને વેદને જાણનારો પણ હું જ છું.',
+    tatparya: 'પરમાત્મા દરેક જીવના હૃદયમાં અંતર્યામી રૂપે બિરાજેલા છે.',
+  ),
+
+  // 27. અધ્યાય ૧૬ - શ્લોક ૨૧
+  GitaShlokModel(
+    id: '27',
+    chapterVerse: 'અધ્યાય ૧૬ - શ્લોક ૨૧',
+    title: 'ત્રિવિધં નરકસ્યેદં',
+    sanskritShlok: '''त्रिविधं नरकस्येदं द्वारं नाशनमात्मनः ।
+कामः क्रोधस्तथा लोभस्तस्मादेतत्त्रयं त्यजेत् ॥''',
+    GujaratiArth: 'કામ, ક્રોધ અને લોભ—આ ત્રણ પ્રકારનાં દ્વાર આત્માનો નાશ કરનારાં (નરકનાં દ્વાર) છે; માટે આ ત્રણેયનો ત્યાગ કરવો જોઈએ.',
+    tatparya: 'આસુરી પ્રકૃતિ અને પતનના મુખ્ય કારણો કામ, ક્રોધ અને લોભ છે.',
+  ),
+
+  // 28. અધ્યાય ૧૭ - શ્લોક ૩
+  GitaShlokModel(
+    id: '28',
+    chapterVerse: 'અધ્યાય ૧૭ - શ્લોક ૩',
+    title: 'સત્‍વાનુરૂપા સર્વસ્ય',
+    sanskritShlok: '''सत्त्वानुरूपा सर्वस्य श्रद्धा भवति भारत ।
+श्रद्धामयोऽयं पुरुषो यो यच्छ्रद्धः स एव सः ॥''',
+    GujaratiArth: 'હે ભારત! દરેક મનુષ્યની શ્રદ્ધા તેના અંતઃકરણના સ્વભાવ અનુસાર હોય છે. આ પુરુષ શ્રદ્ધામય છે; જેવી જેની શ્રદ્ધા હોય છે, તે તેવો જ બને છે.',
+    tatparya: 'મનુષ્યનું વ્યક્તિત્વ અને જીવન તેની શ્રદ્ધા અને વિચારો પર આધાર રાખે છે.',
+  ),
+
+  // 29. અધ્યાય ૧૮ - શ્લોક ૬૧
+  GitaShlokModel(
+    id: '29',
+    chapterVerse: 'અધ્યાય ૧૮ - શ્લોક ૬૧',
+    title: 'ઈશ્વરઃ સર્વભૂતાનામ્',
+    sanskritShlok: '''ईश्वरः सर्वभूतानां हृद्देशेऽर्जुन तिष्ठति ।
+भ्रामयन्सर्वभूतानि यन्त्रારૂઢानि মায়યા ॥''',
+    GujaratiArth: 'હે અર્જુન! ઈશ્વર બધા પ્રાણીઓના હૃદયસ્થાનમાં બિરાજે છે, અને પોતાની માયાથી યંત્ર પર બેઠેલાં હોય તેમ બધાં પ્રાણીઓને ભ્રમાવે છે (ચલાવે છે).',
+    tatparya: 'પ્રભુ પ્રત્યેક જીવના હૃદયમાં રહીને સમગ્ર સંચાલન કરે છે.',
+  ),
+
+  // 30. અધ્યાય ૧૮ - શ્લોક ૬૬
+  GitaShlokModel(
+    id: '30',
+    chapterVerse: 'અધ્યાય ૧૮ - શ્લોક ૬૬',
+    title: 'સર્વધર્માન્‍પરિત્‍યજ્ય',
+    sanskritShlok: '''सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज ।
+अहं त्वा सर्वपापेभ्यो मोक्षयिष्यामि मा शुचः ॥''',
+    GujaratiArth: 'સંપૂર્ણ ધર્મોને (લૌકિક કર્મો અને સાધનોના આગ્રહોને) છોડીને તું માત્ર એક મારા જ શરણે આવી જા. હું તને બધા પાપોથી મુક્ત કરી દઈશ, તું શોક કરીશ નહીં.',
+    tatparya: 'ગીતાનો આ સૌથી પવિત્ર અને અંતિમ ચરમ ઉપદેશ છે — પ્રભુ પ્રત્યેની સંપૂર્ણ અનન્ય શરણાગતિ.',
+  ),
+
+  // 31. અધ્યાય ૨ - શ્લોક ૧૪
+  GitaShlokModel(
+    id: '31',
+    chapterVerse: 'અધ્યાય ૨ - શ્લોક ૧૪',
+    title: 'માત્રાસ્પર્શાસ્તુ કોન્તેય',
+    sanskritShlok: '''मात्रास्पर्शास्तु कौन्तेय शीतोष्णसुखदुःखદાઃ ।
+आगमापायिनोऽनित्यास्तांस्तितिक्षस्व भारत ॥''',
+    GujaratiArth: 'હે કુંતીપુત્ર! ઠંડી અને ગરમી, સુખ અને દુઃખ આપનારા ઇન્દ્રિયો અને વિષયોના સંયોગો તો માત્ર ઉત્પન્ન થનારા અને નાશ પામનારા અનિત્ય છે; માટે હે ભારત, તું તેને સહન કર.',
+    tatparya: 'જીવનના સુખ-દુઃખ ક્ષણિક છે, તેથી મનુષ્યે તેમાં વિચલિત થયા વિના સ્થિર રહેવું જોઈએ.',
+  ),
+
+  // 32. અધ્યાય ૨ - શ્લોક ૪૮
+  GitaShlokModel(
+    id: '32',
+    chapterVerse: 'અધ્યાય ૨ - શ્લોક ૪૮',
+    title: 'યોગસ્થઃ કુરુ કર્માણિ',
+    sanskritShlok: '''योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनंजय ।
+सिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते ॥''',
+    GujaratiArth: 'હે ધનંજય! આસક્તિનો ત્યાગ કરીને તથા સિદ્ધિ અને અસિદ્ધિ (સફળતા-નિષ્ફળતા) માં સમાન રહીને યોગમાં સ્થિર થઈને કર્મો કર; આ સમત્વભાવને જ યોગ કહેવામાં આવે છે.',
+    tatparya: 'ફળની આશા રાખ્યા વગર પ્રત્યેક પરિસ્થિતિમાં સંતુલિત રહેવું એ જ સાચો યોગ છે.',
+  ),
+
+  // 33. અધ્યાય ૩ - શ્લોક ૨૧
+  GitaShlokModel(
+    id: '33',
+    chapterVerse: 'અધ્યાય ૩ - શ્લોક ૨૧',
+    title: 'યચ્‍યાચરસ્ય શ્રેષ્ઠઃ',
+    sanskritShlok: '''यद्यदाचरति श्रेष्ठस्तत्तदेवेतरो जनः ।
+स यत्प्रमाणं कुरुते लोकस्तदनुवर्तते ॥''',
+    GujaratiArth: 'શ્રેષ્ઠ પુરુષ જેવું આચરણ કરે છે, બીજા સામાન્ય લોકો પણ તેવું જ આચરણ કરે છે; તે જે કંઈ પ્રમાણ (આદર્શ) સ્થાપિત કરે છે, સમસ્ત સંસાર તેનું જ અનુકરણ કરે છે.',
+    tatparya: 'સમાજમાં શ્રેષ્ઠ કે અગ્રણી લોકોની જવાબદારી વધી જાય છે કારણ કે અન્ય લોકો તેમના આચરણમાંથી પ્રેરણા લે છે.',
+  ),
+
+  // 34. અધ્યાય ૪ - શ્લોક ૩૪
+  GitaShlokModel(
+    id: '34',
+    chapterVerse: 'અધ્યાય ૪ - શ્લોક ૩૪',
+    title: 'તદ્વિદ્ધિ પ્રણિપાતેન',
+    sanskritShlok: '''तद्विद्धि प्रणिपातेन परिप्रश्नेन सेवया ।
+उपदेक्ष्यन्ति ते ज्ञानं ज्ञानिनस्तत्त्वदर्शिनः ॥''',
+    GujaratiArth: 'તત્વદર્શી જ્ઞાની મહાપુરુષો પાસે જઈને તું પ્રણામ દ્વારા, નમ્રતાપૂર્વક પ્રશ્નો પૂછીને અને તેમની સેવા કરીને તે જ્ઞાનને જાણી લે; તે તત્વજ્ઞાનીઓ તને સાચા જ્ઞાનનો ઉપદેશ આપશે.',
+    tatparya: 'સાચું આધ્યાત્મિક જ્ઞાન નમ્રતા, સેવા અને જિજ્ઞાસાપૂર્વક પ્રાપ્ત થાય છે.',
+  ),
+
+  // 35. અધ્યાય ૫ - શ્લોક ૧૮
+  GitaShlokModel(
+    id: '35',
+    chapterVerse: 'અધ્યાય ૫ - શ્લોક ૧૮',
+    title: 'વિદ્યાવિનયસમ્પન્‍ને',
+    sanskritShlok: '''विद्याविनयसम्पन्ने ब्राह्मणे गवि હસ્તિનિ ।
+शुनि चैव श्वपाके च पण्डिताः समदर्शिनः ॥''',
+    GujaratiArth: 'વિદ્યા અને વિનયથી યુક્ત બ્રાહ્મણ, ગાય, હાથી, કૂતરો અને ચાંડાળ—આ બધામાં જ્ઞાની (પંડિત) લોકો સમાન દ્રષ્ટિ રાખનારા હોય છે.',
+    tatparya: 'સાચા જ્ઞાની પુરુષો સર્વભૂતમાં એક જ પરમાત્માનું દર્શન કરે છે અને ભેદભાવ રાખતા નથી.',
+  ),
+
+  // 36. અધ્યાય ૬ - શ્લોક ૩૪
+  GitaShlokModel(
+    id: '36',
+    chapterVerse: 'અધ્યાય ૬ - શ્લોક ૩૪',
+    title: 'ચંચલં હિ મનઃ કૃષ્ણ',
+    sanskritShlok: '''चञ्चलं हि मनः कृष्ण प्रमाथि बलवद्દૃઢમ્ ।
+तस्याहं निग्रहं मन्ये वायोर्यदु सुदुष्కరમ્ ॥''',
+    GujaratiArth: 'અર્જુને કહ્યું: હે કૃષ્ણ! આ મન અત્યંત ચંચળ, પ્રમથન કરનાર (મથ નાખનાર), બળવાન અને દ્રઢ છે; તેનું નિગ્રહ કરવું (કાબૂમાં રાખવું) મને વાયુને રોકવા જેટલું અત્યંત મુશ્કેલ લાગે છે.',
+    tatparya: 'મનની ચંચળતા અને તેને નિયંત્રિત કરવાની કઠિનતા અર્જુન દ્વારા સ્વાભાવિક રીતે સ્વીકારવામાં આવી છે.',
+  ),
+
+  // 37. અધ્યાય ૭ - શ્લોક ૧૬
+  GitaShlokModel(
+    id: '37',
+    chapterVerse: 'અધ્યાય ૭ - શ્લોક ૧૬',
+    title: 'ચતુર્વિધા ભજન્‍તે મામ્',
+    sanskritShlok: '''चतुर्विधा भजन्ते मां जनाः सुकृतिनोऽर्जुन ।
+आर्तो जिज्ञासुरर्थार्थी ज्ञानी च भरतर्षभ ॥''',
+    GujaratiArth: 'હે અર્જુન! શ્રેષ્ઠ કર્મો કરનારા ચાર પ્રકારના ભક્તો મારી ભક્તિ કરે છે: આર્ત (દુઃખી), જિજ્ઞાસુ (જાણવાની ઇચ્છાવાળો), અર્થાર્થી (ધન કે સુખની ઇચ્છાવાળો) અને જ્ઞાની.',
+    tatparya: 'જીવનની વિભિન્ન પરિસ્થિતિઓમાં મનુષ્યો અલગ-અલગ હેતુઓ સાથે પ્રભુને યાદ કરે છે.',
+  ),
+
+  // 38. અધ્યાય ૮ - શ્લોક ૮
+  GitaShlokModel(
+    id: '38',
+    chapterVerse: 'અધ્યાય ૮ - શ્લોક ૮',
+    title: 'અભ્યાસયોગયુક્‍તેન',
+    sanskritShlok: '''अभ्यासयोगयुक्तेन चेतसा నాన్యगामिनਾ ।
+परमं पुरुषं दिव्यं याति पार्थानुचिन्तयन् ॥''',
+    GujaratiArth: 'હે પાર્થ! અભ્યાસરૂપી યોગથી યુક્ત થયેલા અને અન્યત્ર ન જનારા મનથી નિરંતર ચિંતન કરતો મનુષ્ય દિવ્ય પરમ પુરુષ પરમાત્માને જ પામે છે.',
+    tatparya: 'નિરંતર અભ્યાસ અને એકાગ્રતાથી પરમાત્માની પ્રાપ્તિ સરળ બને છે.',
+  ),
+
+  // 39. અધ્યાય ૯ - શ્લોક ૧૪
+  GitaShlokModel(
+    id: '39',
+    chapterVerse: 'અધ્યાય ૯ - શ્લોક ૧૪',
+    title: 'સતતં કીર્તયન્‍તો મામ્',
+    sanskritShlok: '''सततं कीर्तयन्तो मां यतन्तः च दृढव्रताः ।
+नमस्यन्तश्च मां भक्त्या नित्ययुक्ता उपासते ॥''',
+    GujaratiArth: 'તે મહાત્માઓ નિરંતર મારા નામ અને ગુણોનું કીર્તન કરે છે, દ્રઢ નિશ્ચય સાથે પ્રયત્ન કરે છે, મને પ્રણામ કરે છે અને ભક્તિભાવથી નિત્ય યુક્ત થઈને મારી ઉપાસના કરે છે.',
+    tatparya: 'સાચા ભક્તોની દિનચર્યા પ્રભુનીી ભક્તિ અને કીર્તનમાં જ વ્યતીત થાય છે.',
+  ),
+
+  // 40. અધ્યાય ૧૦ - શ્લોક ૨૦
+  GitaShlokModel(
+    id: '40',
+    chapterVerse: 'અધ્યાય ૧૦ - શ્લોક ૨૦',
+    title: 'અહમાત્મા ગુડાકેશ',
+    sanskritShlok: '''अहमात्मा गुडाकेश सर्वभूतास्थितः ।
+अहं च आदिश्मध्यं च भूतानामन्त एव च ॥''',
+    GujaratiArth: 'હે ગુડાકેશ (અર્જુન)! હું બધા પ્રાણીઓના હૃદયમાં સ્થિત આત્મા છું, તેમજ તમામ પ્રાણીઓની ઉત્પત્તિ, સ્થિતિ અને અંત (નાશ) પણ હું જ છું.',
+    tatparya: 'પરમાત્મા જ સમગ્ર સૃષ્ટિના આદિ, મધ્ય અને અંતનું એકમાત્ર મૂળ છે.',
+  ),
+
+  // 41. અધ્યાય ૧૧ - શ્લોક ૫૪
+  GitaShlokModel(
+    id: '41',
+    chapterVerse: 'અધ્યાય ૧૧ - શ્લોક ૫૪',
+    title: 'ભક્ત્યા ત્વનન્યયા શક્યા',
+    sanskritShlok: '''भक्त्या त्वनन्यया शक्या अहमेवंविधोऽर्जुन ।
+ज्ञातुं द्रष्टुं च तत्त्वेन प्रवेष्टुं च परंतप ॥''',
+    GujaratiArth: 'હે પરંતપ અર્જુન! કેવળ અનન્ય ભક્તિ દ્વારા જ આ પ્રકારે મારા ચતુર્ભુજ કે વિરાટ સ્વરૂપને તત્વથી જાણી શકાય છે, જોઈ શકાય છે અને તેમાં પ્રવેશી પણ શકાય છે.',
+    tatparya: 'પરમાત્માની પ્રાપ્તિ અને તેમના સ્વરૂપનું રહસ્ય માત્ર અનન્ય ભક્તિથી જ પામી શકાય છે.',
+  ),
+
+  // 42. અધ્યાય ૧૨ - શ્લોક ૧૪
+  GitaShlokModel(
+    id: '42',
+    chapterVerse: 'અધ્યાય ૧૨ - શ્લોક ૧૪',
+    title: 'સંતુષતઃ સતતં યોગી',
+    sanskritShlok: '''सन्तुष्टः सततं योगी यतात्मा दृढनिश्चयः ।
+मय्यर्पितमनोबुद्धिर्ये मद्भक्तः स मे प्रियः ॥''',
+    GujaratiArth: 'જે યોગી સદા સંતુષ્ટ છે, મન અને ઇન્દ્રિયોને વશમાં રાખનારો છે, દ્રઢ નિશ્ચયવાળો છે તથા મન અને બુદ્ધિ મને અર્પણ કરેલા છે—તે ભક્ત મને અત્યંત વ્હાલો છે.',
+    tatparya: 'સંતોષી અને પ્રભુમાં મન પરોવનાર ભક્ત ભગવાનને સૌથી વધુ પ્રિય હોય છે.',
+  ),
+
+  // 43. અધ્યાય ૧૩ - શ્લોક ૨૭
+  GitaShlokModel(
+    id: '43',
+    chapterVerse: 'અધ્યાય ૧૩ - શ્લોક ૨૭',
+    title: 'યાવત્સંજાયતે કિઞ્ചിત્',
+    sanskritShlok: '''यावत्सञ्जायते किञ्चित्सत्त्वं स्थावरजङ्गमम् ।
+क्षेत्रक्षेत्रज्ञसंयोगात्तद्विद्धि भरतर्षभ ॥''',
+    GujaratiArth: 'હે ભારતશ્રેષ્ઠ અર્જુન! સ્થાવર (સ્થિર) કે જંગમ (ગતિશીલ) જે કોઈ પણ પ્રાણી કે પદાર્થ ઉત્પન્ન થાય છે, તે ક્ષેત્ર (શરીર) અને ક્ષેત્રજ્ઞ (આત્મા) ના સંયોગથી જ થાય છે એમ તું જાણ.',
+    tatparya: 'જડ શરીર અને ચેતન આત્માના મિલનથી જ આખી સૃષ્ટિની પ્રવૃત્તિ ચાલે છે.',
+  ),
+
+  // 44. અધ્યાય ૧૪ - શ્લોક ૨૦
+  GitaShlokModel(
+    id: '44',
+    chapterVerse: 'અધ્યાય ૧૪ - શ્લોક ૨૦',
+    title: 'ગુણાનેતાનતીત્ય ત્રીન્',
+    sanskritShlok: '''गुणानेतानतीत्य त्रीन्देही দেহસમુદ્ભવાન્ ।
+जन्ममृत्युजसुखैर्विमुक्तोऽमृतमश्नुते ॥''',
+    GujaratiArth: 'શરીરને ઉત્પન્ન કરનારા આ ત્રણેય ગુણોને (સત્વ, રજ અને તમ) ઓળંગીને મનુષ્ય જન્મ, મૃત્યુ, જરા (ઘડપણ) અને તમામ દુઃખોથી મુક્ત થઈને અમૃતત્વ (મોક્ષ) ને પામે છે.',
+    tatparya: 'ત્રિગુણોથી મુક્ત થવું એટલે કે આધ્યાત્મિક ઉન્નતિની સર્વોચ્ચ અવસ્થા પ્રાપ્ત કરવી.',
+  ),
+
+  // 45. અધ્યાય ૧૫ - શ્લોક ૪
+  GitaShlokModel(
+    id: '45',
+    chapterVerse: 'અધ્યાય ૧૫ - શ્લોક ૪',
+    title: 'તતઃ પદં તત્પરિમાર્ગિતવ્યમ્',
+    sanskritShlok: '''ततः पदं तत्परिમાર્ગિતવ્યं यस्मिन्गता न निवर्तन्ति भूयः ।
+तमेव चाद्यं पुरुषं प्रपद्ये यतः प्रवृत्ता प्रसृता पुराणी ॥''',
+    GujaratiArth: 'ત્યારે તે પરમ પદની શોધ કરવી જોઈએ, જ્યાં પહોંચ્યા પછી મનુષ્ય ફરી સંસારમાં પાછો આવતો નથી. જે આદિ પુરુષમાંથી આ સનાતન પ્રવાહ પ્રવૃત્ત થયો છે, તેવા તે પરમાત્માની જ હું શરણે જાઉં છું.',
+    tatparya: 'જ્યાંથી સંસારની શરૂઆત થઈ છે તે પરમ ધામને પામવા માટે પ્રભુની શરણાગતિ જરૂરી છે.',
+  ),
+
+  // 46. અધ્યાય ૧૬ - શ્લોક ૨૪
+  GitaShlokModel(
+    id: '46',
+    chapterVerse: 'અધ્યાય ૧૬ - શ્લોક ૨૪',
+    title: 'તસ્માચ્છાસ્ત્રં પ્રમાણં તે',
+    sanskritShlok: '''तस्माच्छास्त्रं प्रमाणं ते कार्याकार्यव्यवस्थितौ ।
+ज्ञात्वा शास्त्रविधानोक्तं कर्म कर्तुमिहार्हसि ॥''',
+    GujaratiArth: 'માટે શું કરવા યોગ્ય છે અને શું ન કરવા યોગ્ય છે, તેની વ્યવસ્થા જાણવા માટે શાસ્ત્ર જ તારા માટે પ્રમાણ છે. શાસ્ત્રમાં જણાવેલી વિધિઓને જાણીને જ તું અહીં કર્મ કરવા યોગ્ય બને છે.',
+    tatparya: 'મનુષ્યે પોતાના જીવનમાં ધર્મ અને કર્તવ્યના માર્ગ માટે શાસ્ત્રોક્ત નિયમોનું પાલન કરવું જોઈએ.',
+  ),
+
+  // 47. અધ્યાય ૧૭ - શ્લોક ૨૨
+  GitaShlokModel(
+    id: '47',
+    chapterVerse: 'અધ્યાય ૧૭ - શ્લોક ૨૨',
+    title: 'दातव्यमिति यद्दानम्',
+    sanskritShlok: '''दातव्यमिति यद्दानं दीयतेऽनुपकारिणे ।
+देशे काले च पात्रे च तद्दानं सात्विकं स्मृतम् ॥''',
+    GujaratiArth: 'જે દાન આપવું જ કર્તવ્ય છે એવી ભાવનાથી, બદલામાં કોઈ ઉપકારની અપેક્ષા રાખ્યા વગર, યોગ્ય દેશમાં, યોગ્ય સમયે અને યોગ્ય પાત્રને આપવામાં આવે છે, તે દાન સાત્વિક દાન કહેવાય છે.',
+    tatparya: 'નિષ્કામ અને સાચી સમજપૂર્વક અપાયેલું દાન જ સાત્વિક અને શ્રેષ્ઠ છે.',
+  ),
+
+  // 48. અધ્યાય ૧૮ - શ્લોક ૪૬
+  GitaShlokModel(
+    id: '48',
+    chapterVerse: 'અધ્યાય ૧૮ - શ્લોક ૪૬',
+    title: 'યતઃ પ્રવૃત્તિર્ભૂતાનામ્',
+    sanskritShlok: '''यतः प्रवृत्तिर्भूतानां येन सर्वमिदं ततम् ।
+स्वकर्मणा तमభ్యर्च्य सिद्धिं विन्दति मानवः ॥''',
+    GujaratiArth: 'જે પરમાત્માથી તમામ પ્રાણીઓની ઉત્પત્તિ થઈ છે અને જેનાથી આ સમગ્ર જગત વ્યાપ્ત છે, તે પ્રભુની પોતપોતાના સ્વાભાવિક કર્મો દ્વારા પૂજા કરીને મનુષ્ય પરમ સિદ્ધિને પામે છે.',
+    tatparya: 'પોતાના નિત્ય કર્તવ્ય કર્મોને જ ઈશ્વરની પૂજા માનીને કરવાથી સિદ્ધિ પ્રાપ્ત થાય છે.',
+  ),
+
+  // 49. અધ્યાય ૧૮ - શ્લોક ૫૫
+  GitaShlokModel(
+    id: '49',
+    chapterVerse: 'અધ્યાય ૧૮ - શ્લોક ૫૫',
+    title: 'ਭਕ੍ਤ੍ਯਾ ਮਾਮਭਿਜਾਨਾਤਿ',
+    sanskritShlok: '''ਭਕ੍ਤ੍ਯਾ ਮਾਮਭਿਜਾਨਾਤਿ ਯਾਵਾਨ੍ਸ਼੍ਚਾਸ੍ਮਿ ਤਤ੍ਤ੍ਵਤਃ ।
+ਤਤੋ ਮਾਂ ਤਤ੍ਤ੍ਵਤੋ ਜ੍ਞਾਤ੍ਵਾ ਵਿਸ਼ਤੇ ਤਦਨਨ੍ਤਰਮ੍ ॥''',
+    GujaratiArth: 'ભક્તિ દ્વારા જ મનુષ્ય જાણી શકે છે કે હું જેવો છું અને જે કોઈ છું; તે તત્વથી મને જાણીને તે તત્કાલ મારામાં જ પ્રવેશી જાય છે (મળી જાય છે).',
+    tatparya: 'ભક્તિ એ જ પ્રભુને સાચા અર્થમાં જાણવાની અને પામવાની એકમાત્ર ચાવી છે.',
+  ),
+
+  // 50. અધ્યાય ૧૮ - શ્લોક ૭૮
+  GitaShlokModel(
+    id: '50',
+    chapterVerse: 'અધ્યાય ૧૮ - શ્લોક ૭૮',
+    title: 'ਯਤ੍ਰ ਯੋਗੇਸ਼੍ਵਰਃ ਕृਸ਼੍ਣਃ',
+    sanskritShlok: '''यत्र योगेश्वरः कृष्णो यत्र पार्थो धनुर्धरः ।
+ਤਤ੍ਰ ਸ਼੍ਰੀਵਿਜਯੋ ਭੂਤਿਰ੍ਧ੍ਰੁਵਾ ਨੀਤਿਰ੍ਮਤਿਰ੍ਮਮ ॥''',
+    GujaratiArth: 'જ્યાં યોગેશ્વર ભગવાન શ્રીકૃષ્ણ છે અને જ્યાં ગાંડિવધારી અર્જુન છે, ત્યાં જ શ્રી (સમૃદ્ધિ), વિજય, વિભૂતિ અને અચળ નીતિ રહેલી છે—એવું મારું મંતવ્ય છે.',
+    tatparya: 'ગીતાના આ અંતિમ શ્લોકમાં સંજય ધૃતરાષ્ટ્રને કહે છે કે જ્યાં ધર્મ અને ભગવાનની શરણાગતિ છે ત્યાં વિજય નિશ્ચિત છે.',
+  ),
+
+  
+];
+
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
 
@@ -4103,22 +4660,21 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 7, // Incremented version for Vrajbhasha table
+      version: 8, // Incremented version for Gita table
       onCreate: (db, version) async {
         await _createBethakjiTable(db);
         await _createPathavaliTable(db);
         await _createKirtanTable(db);
         await _createVarta84Table(db);
         await _createVrajbhashaTable(db);
+        await _createGitaTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         // A non-destructive upgrade.
         if (oldVersion < 3) {
-          // If the old version didn't have the pathavali table, add it.
           await _createPathavaliTable(db);
         }
         if (oldVersion < 4) {
-          // If the old version doesn't have the audioAsset column, add it and populate it.
           await db.execute('ALTER TABLE pathavali ADD COLUMN audioAsset TEXT');
           final batch = db.batch();
           for (final item in pathavaliList) {
@@ -4141,6 +4697,9 @@ class DatabaseHelper {
         }
         if (oldVersion < 7) {
           await _createVrajbhashaTable(db);
+        }
+        if (oldVersion < 8) {
+          await _createGitaTable(db);
         }
       },
     );
@@ -4253,15 +4812,40 @@ class DatabaseHelper {
     ''');
     final batch = db.batch();
     for (final item in vrajbhashaList) {
-      batch.insert('vrajbhasha', {
-        'id': item.id,
-        'number': item.number,
-        'title': item.title,
-        'padText': item.padText,
-        'bhavarth': item.bhavarth,
-        'prasang': item.prasang,
-        'isFavorite': item.isFavorite ? 1 : 0,
-      }, conflictAlgorithm: ConflictAlgorithm.replace);
+      batch.insert(
+        'vrajbhasha',
+        {
+          'id': item.id,
+          'number': item.number,
+          'title': item.title,
+          'padText': item.padText,
+          'bhavarth': item.bhavarth,
+          'prasang': item.prasang,
+          'isFavorite': item.isFavorite ? 1 : 0,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
+  }
+
+  Future<void> _createGitaTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS gita(
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        shlok TEXT NOT NULL,
+        translation TEXT NOT NULL,
+        isFavorite INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    final batch = db.batch();
+    for (final item in gitaList) {
+      batch.insert(
+        'gita',
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
     }
     await batch.commit(noResult: true);
   }
@@ -4270,8 +4854,6 @@ class DatabaseHelper {
 
   Future<List<BethakjiModel>> getAllBethakji() async {
     final db = await database;
-
-    // Standardized table name
     final List<Map<String, dynamic>> maps = await db.query(tableName);
 
     debugPrint("RAW DB MAPS COUNT: ${maps.length}");
@@ -4284,7 +4866,6 @@ class DatabaseHelper {
     });
   }
 
-  // Insert or update individual item
   Future<int> insertBethakji(BethakjiModel bethakji) async {
     final db = await database;
     return await db.insert(
@@ -4294,18 +4875,16 @@ class DatabaseHelper {
     );
   }
 
-  // Update favorite status
   Future<int> updateFavoriteStatus(String id, int isFavorite) async {
     final db = await database;
     return await db.update(
       tableName,
       {'isFavorite': isFavorite},
       where: 'id = ?',
-      whereArgs: [int.tryParse(id) ?? id], // Safe parse for INTEGER primary key
+      whereArgs: [int.tryParse(id) ?? -1],
     );
   }
 
-  // Fetch only favorite Bethakji items
   Future<List<BethakjiModel>> getFavoriteBethakji() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -4318,7 +4897,6 @@ class DatabaseHelper {
 
   // --- Pathavali Methods ---
 
-  /// Fetches all Pathavali items from the database.
   Future<List<PathavaliItem>> getAllPathavalis() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('pathavali');
@@ -4327,7 +4905,6 @@ class DatabaseHelper {
     });
   }
 
-  /// Fetches a single Pathavali item by its ID.
   Future<PathavaliItem?> getPathavaliItem(String id) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -4341,7 +4918,6 @@ class DatabaseHelper {
     return null;
   }
 
-  /// Fetches only the favorite Pathavali items.
   Future<List<PathavaliItem>> getFavoritePathavalis() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -4353,7 +4929,6 @@ class DatabaseHelper {
     });
   }
 
-  /// Updates the favorite status of a specific Pathavali item.
   Future<void> updatePathavaliFavoriteStatus(String id, bool isFavorite) async {
     final db = await database;
     await db.update(
@@ -4366,7 +4941,6 @@ class DatabaseHelper {
 
   // --- Kirtan Methods ---
 
-  /// Fetches all Kirtan items from the database.
   Future<List<KirtanModel>> getAllKirtans() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('kirtan');
@@ -4375,7 +4949,6 @@ class DatabaseHelper {
     });
   }
 
-  /// Fetches only the favorite Kirtan items.
   Future<List<KirtanModel>> getFavoriteKirtans() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -4387,7 +4960,6 @@ class DatabaseHelper {
     });
   }
 
-  /// Updates the favorite status of a specific Kirtan item.
   Future<void> updateKirtanFavoriteStatus(String id, bool isFavorite) async {
     final db = await database;
     await db.update(
@@ -4447,17 +5019,7 @@ class DatabaseHelper {
   Future<List<VrajbhashaModel>> getAllVrajbhashaPads() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('vrajbhasha');
-    return List.generate(maps.length, (i) {
-      return VrajbhashaModel(
-        id: maps[i]['id'],
-        number: maps[i]['number'],
-        title: maps[i]['title'],
-        padText: maps[i]['padText'],
-        bhavarth: maps[i]['bhavarth'],
-        prasang: maps[i]['prasang'],
-        isFavorite: maps[i]['isFavorite'] == 1,
-      );
-    });
+    return List.generate(maps.length, (i) => VrajbhashaModel.fromMap(maps[i]));
   }
 
   Future<List<VrajbhashaModel>> getFavoriteVrajbhashaPads() async {
@@ -4466,17 +5028,7 @@ class DatabaseHelper {
       'vrajbhasha',
       where: 'isFavorite = 1',
     );
-    return List.generate(maps.length, (i) {
-      return VrajbhashaModel(
-        id: maps[i]['id'],
-        number: maps[i]['number'],
-        title: maps[i]['title'],
-        padText: maps[i]['padText'],
-        bhavarth: maps[i]['bhavarth'],
-        prasang: maps[i]['prasang'],
-        isFavorite: maps[i]['isFavorite'] == 1,
-      );
-    });
+    return List.generate(maps.length, (i) => VrajbhashaModel.fromMap(maps[i]));
   }
 
   Future<void> updateVrajbhashaFavoriteStatus(
@@ -4486,6 +5038,37 @@ class DatabaseHelper {
     final db = await database;
     await db.update(
       'vrajbhasha',
+      {'isFavorite': isFavorite ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // --- Gita Methods ---
+
+  Future<List<GitaShlokModel>> getAllGitaShloks() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('gita');
+    return List.generate(maps.length, (i) {
+      return GitaShlokModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<List<GitaShlokModel>> getFavoriteGitaShloks() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'gita',
+      where: 'isFavorite = 1',
+    );
+    return List.generate(maps.length, (i) {
+      return GitaShlokModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<void> updateGitaShlokFavoriteStatus(String id, bool isFavorite) async {
+    final db = await database;
+    await db.update(
+      'gita',
       {'isFavorite': isFavorite ? 1 : 0},
       where: 'id = ?',
       whereArgs: [id],

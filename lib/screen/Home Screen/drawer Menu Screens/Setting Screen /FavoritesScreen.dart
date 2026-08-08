@@ -5,6 +5,7 @@ import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/kirtan_model.dart';
 import 'package:pushtidham/model/varta_model.dart';
 import 'package:pushtidham/model/vraj_model.dart';
+import 'package:pushtidham/model/gita_model.dart';
 import 'package:pushtidham/model/pathavali_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_detail.dart';
 import 'package:pushtidham/screen/Home%20Screen/vraj%20bhasha/vrajbhasha_detail_page.dart';
@@ -12,6 +13,7 @@ import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_detail_screen.dart';
 import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_detail.dart';
 
+import '../../gita shloke/gita_detail_page.dart';
 // IMPORTANT: Uncomment this to enable your custom sounds!
 // import 'package:pushtidham/services/sound_service.dart';
 
@@ -41,6 +43,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
   List<VrajbhashaModel> _favoriteVrajbhasha = [];
   bool _isLoadingVrajbhasha = true;
 
+  List<GitaShlokModel> _favoriteGitaShloks = [];
+  bool _isLoadingGitaShloks = true;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +54,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     _fetchFavoriteKirtans();
     _fetchFavorite84Vartas();
     _fetchFavoriteVrajbhasha();
+    _fetchFavoriteGitaShloks();
   }
 
   // Fetch favorite Bethakjis directly from SQLite DB (isFavorite = 1)
@@ -137,6 +143,24 @@ class _FavoritesPageState extends State<FavoritesPage> {
       debugPrint("Error fetching Vrajbhasha favorites: $e");
       if (!mounted) return;
       setState(() => _isLoadingVrajbhasha = false);
+    }
+  }
+
+  // Fetch favorite Gita Shloks from SQLite DB
+  Future<void> _fetchFavoriteGitaShloks() async {
+    try {
+      // Assuming you will create this method in your DatabaseHelper
+      final List<GitaShlokModel> data =
+          await _dbHelper.getFavoriteGitaShloks();
+      if (!mounted) return;
+      setState(() {
+        _favoriteGitaShloks = data;
+        _isLoadingGitaShloks = false;
+      });
+    } catch (e) {
+      debugPrint("Error fetching Gita Shlok favorites: $e");
+      if (!mounted) return;
+      setState(() => _isLoadingGitaShloks = false);
     }
   }
 
@@ -351,13 +375,53 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
+  // Remove Gita Shlok from favorites
+  Future<void> _removeGitaShlokFavorite(int index) async {
+    HapticFeedback.mediumImpact();
+
+    final removedItem = _favoriteGitaShloks[index];
+
+    // Update SQLite database (isFavorite = 0)
+    await _dbHelper.updateGitaShlokFavoriteStatus(removedItem.id, false);
+
+    setState(() {
+      _favoriteGitaShloks.removeAt(index);
+    });
+
+    if (!mounted) return;
+
+    // Show beautiful premium SnackBar confirmation
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.book_rounded, color: Colors.white, size: 20),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                "Removed ${removedItem.title}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
     return DefaultTabController(
-      length: 6, // We now have 6 categorized sections!
+      length: 7, // We now have 7 categorized sections!
       child: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         // NestedScrollView allows the AppBar to collapse, but keeps the TabBar pinned to the top!
@@ -399,6 +463,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     Tab(text: "Pathavali"),
                     Tab(text: "84 Varta"),
                     Tab(text: "84 Vrajbhasha"),
+                    Tab(text: "Gita"),
                     Tab(text: "252 Varta"),
                   ],
                 ),
@@ -415,6 +480,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               _buildPathavaliTab(theme),
               _build84VartaTab(theme),
               _buildVrajbhashaTab(theme),
+              _buildGitaTab(theme),
               _buildPlaceholderTab(
                 theme,
                 "252 Vaishnav Varta",
@@ -546,6 +612,30 @@ class _FavoritesPageState extends State<FavoritesPage> {
       itemBuilder: (context, index) {
         final item = _favoriteVrajbhasha[index];
         return _buildVrajbhashaFavoriteCard(theme, item, index);
+      },
+    );
+  }
+
+  Widget _buildGitaTab(ThemeData theme) {
+    if (_isLoadingGitaShloks) {
+      return Center(
+        child: CircularProgressIndicator(color: theme.colorScheme.primary),
+      );
+    }
+    if (_favoriteGitaShloks.isEmpty) {
+      return _buildEmptyState(
+        theme,
+        "No Favorite Gita Shloks",
+        "Tap the heart icon on any Gita shlok to save it here.",
+        Icons.book_rounded,
+      );
+    }
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+      itemCount: _favoriteGitaShloks.length,
+      itemBuilder: (context, index) {
+        final item = _favoriteGitaShloks[index];
+        return _buildGitaFavoriteCard(theme, item, index);
       },
     );
   }
@@ -1251,6 +1341,111 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         color: theme.colorScheme.primary,
                       ),
                     ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    item.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Premium Custom Card for Gita Shlok items
+  Widget _buildGitaFavoriteCard(
+      ThemeData theme, GitaShlokModel item, int index) {
+    return Padding(
+      key: ValueKey(item.id),
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Dismissible(
+        key: ValueKey(item.id),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(right: 24),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.error,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.favorite_border_rounded,
+                color: Colors.white,
+                size: 28,
+              ),
+              SizedBox(height: 4),
+              Text(
+                "Remove",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        onDismissed: (direction) => _removeGitaShlokFavorite(index),
+        child: GestureDetector(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GitaDetailPage(item: item),
+              ),
+            ).then((_) {
+              _fetchFavoriteGitaShloks();
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: theme.colorScheme.onSurface.withOpacity(0.05),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                // Sacred Icon Badge
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: theme.colorScheme.primary.withOpacity(0.2),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.menu_book_rounded,
+                    color: theme.colorScheme.primary,
+                    size: 24,
                   ),
                 ),
                 const SizedBox(width: 16),
