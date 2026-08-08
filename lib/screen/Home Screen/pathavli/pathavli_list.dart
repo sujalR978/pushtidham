@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/pathavali_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_detail.dart';
@@ -12,26 +13,49 @@ class PathavaliListPage extends StatefulWidget {
 
 class _PathavaliListPageState extends State<PathavaliListPage> {
   final TextEditingController _searchController = TextEditingController();
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+
+  List<PathavaliItem> _allPathavalis = [];
   List<PathavaliItem> _filteredList = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _filteredList = pathavaliList;
+    _loadPathavalis();
+  }
+
+  Future<void> _loadPathavalis() async {
+    final data = await _dbHelper.getAllPathavalis();
+    if (!mounted) return;
+    setState(() {
+      _allPathavalis = data;
+      _filteredList = data;
+      _isLoading = false;
+    });
   }
 
   void _filterPathavali(String query) {
     setState(() {
       if (query.trim().isEmpty) {
-        _filteredList = pathavaliList;
+        _filteredList = _allPathavalis;
       } else {
-        _filteredList = pathavaliList
-            .where((item) =>
-                item.title.toLowerCase().contains(query.toLowerCase()) ||
-                item.id.contains(query))
+        _filteredList = _allPathavalis
+            .where(
+              (item) =>
+                  item.title.toLowerCase().contains(query.toLowerCase()) ||
+                  item.id.contains(query),
+            )
             .toList();
       }
     });
+  }
+
+  Future<void> _toggleFavorite(PathavaliItem item) async {
+    setState(() {
+      item.isFavorite = !item.isFavorite;
+    });
+    await _dbHelper.updatePathavaliFavoriteStatus(item.id, item.isFavorite);
   }
 
   @override
@@ -69,7 +93,10 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
           children: [
             // 1. DYNAMIC THEMED SEARCH BAR
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 12.0,
+              ),
               color: theme.colorScheme.primary,
               child: TextField(
                 controller: _searchController,
@@ -87,7 +114,10 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                   ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: theme.colorScheme.onPrimary),
+                          icon: Icon(
+                            Icons.clear,
+                            color: theme.colorScheme.onPrimary,
+                          ),
                           onPressed: () {
                             _searchController.clear();
                             _filterPathavali('');
@@ -107,7 +137,13 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
 
             // 2. PATHAVALI LIST VIEW
             Expanded(
-              child: _filteredList.isEmpty
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: theme.colorScheme.primary,
+                      ),
+                    )
+                  : _filteredList.isEmpty
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -121,7 +157,9 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                           Text(
                             l10n.search_placeholder,
                             style: TextStyle(
-                              color: theme.colorScheme.onSurface.withOpacity(0.4),
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.4,
+                              ),
                               fontSize: 14,
                             ),
                           ),
@@ -129,14 +167,18 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                       ),
                     )
                   : ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
                       itemCount: _filteredList.length,
                       itemBuilder: (context, index) {
                         final item = _filteredList[index];
                         return Card(
                           color: theme.cardTheme.color,
                           elevation: theme.cardTheme.elevation ?? 1,
-                          shape: theme.cardTheme.shape ??
+                          shape:
+                              theme.cardTheme.shape ??
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -148,7 +190,8 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                             ),
                             leading: CircleAvatar(
                               radius: 18,
-                              backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                              backgroundColor: theme.colorScheme.primary
+                                  .withOpacity(0.1),
                               child: Text(
                                 item.id,
                                 style: TextStyle(
@@ -172,20 +215,24 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                               children: [
                                 IconButton(
                                   icon: Icon(
-                                    item.isFavorite ? Icons.favorite : Icons.favorite_border,
-                                    color: item.isFavorite ? Colors.red : theme.colorScheme.onSurface.withOpacity(0.4),
+                                    item.isFavorite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: item.isFavorite
+                                        ? Colors.red
+                                        : theme.colorScheme.onSurface
+                                              .withOpacity(0.4),
                                     size: 22,
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      item.isFavorite = !item.isFavorite;
-                                    });
+                                    _toggleFavorite(item);
                                   },
                                 ),
                                 Icon(
                                   Icons.arrow_forward_ios_rounded,
                                   size: 16,
-                                  color: theme.colorScheme.onSurface.withOpacity(0.3),
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.3),
                                 ),
                               ],
                             ),
@@ -193,9 +240,18 @@ class _PathavaliListPageState extends State<PathavaliListPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PathavaliDetailPage(item: item),
-                                ),
-                              );
+                                  builder: (context) =>
+                                      PathavaliDetailPage(item: item),
+                                ), // When returning from details, refresh the favorite status
+                              ).then((_) async {
+                                final updatedItem = await _dbHelper
+                                    .getPathavaliItem(item.id);
+                                if (updatedItem != null && mounted)
+                                  setState(
+                                    () => item.isFavorite =
+                                        updatedItem.isFavorite,
+                                  );
+                              });
                             },
                           ),
                         );
