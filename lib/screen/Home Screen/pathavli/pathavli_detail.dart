@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/pathavali_model.dart';
 
@@ -14,6 +16,48 @@ class PathavaliDetailPage extends StatefulWidget {
 class _PathavaliDetailPageState extends State<PathavaliDetailPage> {
   double _fontSize = 18.0;
 
+  // Audio Player State
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+  Duration _duration = Duration.zero;
+  Duration _position = Duration.zero;
+
+  StreamSubscription? _durationSubscription;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _playerCompleteSubscription;
+  StreamSubscription? _playerStateChangeSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listen to player state changes
+    _playerStateChangeSubscription =
+        _audioPlayer.onPlayerStateChanged.listen((state) {
+      if (mounted) setState(() => _isPlaying = state == PlayerState.playing);
+    });
+
+    // Listen to audio duration changes
+    _durationSubscription = _audioPlayer.onDurationChanged.listen((newDuration) {
+      if (mounted) setState(() => _duration = newDuration);
+    });
+
+    // Listen to audio position changes
+    _positionSubscription = _audioPlayer.onPositionChanged.listen((newPosition) {
+      if (mounted) setState(() => _position = newPosition);
+    });
+
+    // Listen for when the audio completes
+    _playerCompleteSubscription = _audioPlayer.onPlayerComplete.listen((event) {
+      if (mounted) {
+        setState(() {
+          _position = Duration.zero;
+          _isPlaying = false;
+        });
+      }
+    });
+  }
+
   void _increaseFontSize() {
     if (_fontSize < 30.0) {
       setState(() {
@@ -28,6 +72,27 @@ class _PathavaliDetailPageState extends State<PathavaliDetailPage> {
         _fontSize -= 2.0;
       });
     }
+  }
+
+  Future<void> _playPause() async {
+    if (widget.item.audioAsset == null) return;
+
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource(widget.item.audioAsset!));
+    }
+  }
+
+  @override
+  void dispose() {
+    // Release all resources
+    _durationSubscription?.cancel();
+    _positionSubscription?.cancel();
+    _playerCompleteSubscription?.cancel();
+    _playerStateChangeSubscription?.cancel();
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -142,6 +207,77 @@ class _PathavaliDetailPageState extends State<PathavaliDetailPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  String _formatDuration(Duration d) {
+    final minutes = d.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = d.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return "$minutes:$seconds";
+  }
+
+  // The beautiful audio player widget at the bottom
+  Widget? get _audioPlayerControls {
+    if (widget.item.audioAsset == null) {
+      return null;
+    }
+
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+          .copyWith(bottom: MediaQuery.of(context).padding.bottom),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, -5),
+          )
+        ],
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(_formatDuration(_position),
+                  style: TextStyle(color: theme.colorScheme.onSurface)),
+              Expanded(
+                child: Slider(
+                  min: 0,
+                  max: _duration.inSeconds.toDouble(),
+                  value: _position.inSeconds
+                      .toDouble()
+                      .clamp(0.0, _duration.inSeconds.toDouble()),
+                  onChanged: (value) async {
+                    final position = Duration(seconds: value.toInt());
+                    await _audioPlayer.seek(position);
+                  },
+                  activeColor: theme.colorScheme.primary,
+                  inactiveColor: theme.colorScheme.primary.withOpacity(0.3),
+                ),
+              ),
+              Text(_formatDuration(_duration),
+                  style: TextStyle(color: theme.colorScheme.onSurface)),
+            ],
+          ),
+          IconButton(
+            icon: Icon(_isPlaying
+                ? Icons.pause_circle_filled_rounded
+                : Icons.play_circle_filled_rounded),
+            iconSize: 50,
+            color: theme.colorScheme.primary,
+            onPressed: _playPause,
+          ),
+        ],
       ),
     );
   }
