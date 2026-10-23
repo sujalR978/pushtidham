@@ -4,7 +4,7 @@ import 'package:pushtidham/database/database_helper.dart';
 import 'package:pushtidham/l10n/app_localizations.dart';
 import 'package:pushtidham/model/bethakji_model.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/bethakji%2084/bethakji_detail_screen.dart';
-import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen/FavoritesScreen.dart';
 
 // IMPORTANT: Uncomment to enable custom click sounds
 // import 'package:pushtidham/services/sound_service.dart';

@@ -10,11 +10,10 @@ import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/kirtan/kirtan_lis
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/mhaprbhuji_info.dart';
 import 'package:pushtidham/screen/Home%20Screen/Gride%20Screen/reviewScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/calander/calendar_page.dart';
-import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/FavoritesScreen.dart';
-import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/galleryScreen.dart';
-import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/notesScreen.dart';
-
-import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen%20/settingScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen/FavoritesScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen/galleryScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen/notesScreen.dart';
+import 'package:pushtidham/screen/Home%20Screen/drawer%20Menu%20Screens/Setting%20Screen/settingScreen.dart';
 import 'package:pushtidham/screen/Home%20Screen/gita%20shloke/gita_list_page.dart';
 import 'package:pushtidham/screen/Home%20Screen/pathavli/pathavli_list.dart';
 import 'package:pushtidham/screen/Home%20Screen/varta/vaishnav_84_list.dart';
@@ -168,7 +167,7 @@ class _HomePageState extends State<HomePage> {
               // SoundService().playClick(); // Play sound
 
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SettingsPage()),
+                MaterialPageRoute(builder: (context) => const NotesPage()),
               );
             },
           ),

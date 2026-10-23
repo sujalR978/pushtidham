@@ -150,8 +150,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Future<void> _fetchFavoriteGitaShloks() async {
     try {
       // Assuming you will create this method in your DatabaseHelper
-      final List<GitaShlokModel> data =
-          await _dbHelper.getFavoriteGitaShloks();
+      final List<GitaShlokModel> data = await _dbHelper.getFavoriteGitaShloks();
       if (!mounted) return;
       setState(() {
         _favoriteGitaShloks = data;
@@ -1366,7 +1365,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   // Premium Custom Card for Gita Shlok items
   Widget _buildGitaFavoriteCard(
-      ThemeData theme, GitaShlokModel item, int index) {
+    ThemeData theme,
+    GitaShlokModel item,
+    int index,
+  ) {
     return Padding(
       key: ValueKey(item.id),
       padding: const EdgeInsets.only(bottom: 16.0),

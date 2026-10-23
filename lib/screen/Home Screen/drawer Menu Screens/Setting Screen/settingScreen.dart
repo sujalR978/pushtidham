@@ -69,7 +69,8 @@ class SettingsPage extends StatelessWidget {
           // 2. Temple Gold (NEW)
           _buildThemeCard(
             context: context,
-            title: "Temple Gold", // Add to AppLocalizations if needed: l10n.theme_temple
+            title:
+                "Temple Gold", // Add to AppLocalizations if needed: l10n.theme_temple
             subtitle: "Traditional Pushtimarg gold & ivory aesthetic",
             value: AppThemeMode.temple,
             groupValue: themeManager.currentTheme,
